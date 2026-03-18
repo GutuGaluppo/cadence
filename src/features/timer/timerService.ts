@@ -5,11 +5,11 @@ export function getDurationByMode(
   config: TimerConfig
 ): number {
   switch (mode) {
-    case "focus":
+    case TimerMode.FOCUS:
       return config.focusDuration;
-    case "shortBreak":
+    case TimerMode.SHORT_BREAK:
       return config.shortBreakDuration;
-    case "longBreak":
+    case TimerMode.LONG_BREAK:
       return config.longBreakDuration;
   }
 }
@@ -37,11 +37,11 @@ export function getNextMode(
   completedCycles: number,
   config: TimerConfig
 ): TimerMode {
-  if (currentMode === "focus") {
+  if (currentMode === TimerMode.FOCUS) {
     return shouldTriggerLongBreak(completedCycles, config)
-      ? "longBreak"
-      : "shortBreak";
+      ? TimerMode.LONG_BREAK
+      : TimerMode.SHORT_BREAK;
   }
 
-  return "focus";
+  return TimerMode.FOCUS;
 }

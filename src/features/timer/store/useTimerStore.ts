@@ -1,20 +1,15 @@
+import { useSettingsStore } from "@/features/settings/store/store";
+import { useTaskStore } from "@/features/tasks/store/store";
+import { TimerMode, TimerState } from "@/types";
 import { create } from "zustand";
-import dayjs from "dayjs";
-import { TimerMode, TimerState, TimerConfig } from "@/types";
-import {
-  getDurationByMode,
-  getNextMode,
-} from "../timerService";
+import { TimerEngine } from "../components/TimerEngine";
 
 interface TimerStore {
-  state: TimerState;
   mode: TimerMode;
-  config: TimerConfig;
-
-  startedAt: number | null;
-  elapsed: number;
+  state: TimerState;
+  timeLeft: number;
+  totalDuration: number;
   completedCycles: number;
-
   start: () => void;
   pause: () => void;
   reset: () => void;
@@ -22,86 +17,98 @@ interface TimerStore {
   setMode: (mode: TimerMode) => void;
 }
 
+let timerInterval: ReturnType<typeof setInterval> | null = null;
+
 export const useTimerStore = create<TimerStore>((set, get) => ({
-  state: "idle",
-  mode: "focus",
-
-  config: {
-    focusDuration: 1500,
-    shortBreakDuration: 300,
-    longBreakDuration: 1200,
-    cyclesBeforeLongBreak: 4,
-  },
-
-  startedAt: null,
-  elapsed: 0,
+  mode: TimerMode.FOCUS,
+  state: TimerState.IDLE,
+  timeLeft: 25 * 60,
+  totalDuration: 25 * 60,
   completedCycles: 0,
 
   start: () => {
-    set({
-      state: "running",
-      startedAt: dayjs().valueOf(),
-    });
+    if (get().state === TimerState.RUNNING) return;
+
+    set({ state: TimerState.RUNNING });
+
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      get().tick();
+    }, 1000);
   },
 
   pause: () => {
-    set({ state: "paused" });
+    if (timerInterval) clearInterval(timerInterval);
+    set({ state: TimerState.PAUSED });
   },
 
   reset: () => {
+    if (timerInterval) clearInterval(timerInterval);
+    const settings = useSettingsStore.getState().settings;
+    const initialTime = TimerEngine.calculateInitialTime(get().mode, settings);
     set({
-      state: "idle",
-      elapsed: 0,
-      startedAt: null,
+      state: TimerState.IDLE,
+      timeLeft: initialTime,
+      totalDuration: initialTime,
     });
   },
 
   tick: () => {
-    const {
-      startedAt,
-      mode,
-      config,
-      completedCycles,
-    } = get();
+    const { timeLeft, state, mode, completedCycles } = get();
+    if (state !== TimerState.RUNNING) return;
 
-    if (!startedAt) return;
-
-    const duration = getDurationByMode(mode, config);
-    const now = dayjs().valueOf();
-    const elapsedSeconds = Math.floor((now - startedAt) / 1000);
-
-    if (elapsedSeconds >= duration) {
-      const nextCycles =
-        mode === "focus"
-          ? completedCycles + 1
-          : completedCycles;
-
-      const nextMode = getNextMode(
+    if (timeLeft <= 0) {
+      const settings = useSettingsStore.getState().settings;
+      const nextMode = TimerEngine.getNextMode(
         mode,
-        nextCycles,
-        config
+        completedCycles,
+        settings.cyclesBeforeLongBreak,
       );
+      const nextDuration = TimerEngine.calculateInitialTime(nextMode, settings);
 
-      set({
-        state: "idle",
+      // Handle completion side effects
+      if (mode === TimerMode.FOCUS) {
+        const activeTaskId = useTaskStore.getState().activeTaskId;
+        if (activeTaskId) {
+          useTaskStore.getState().incrementPomodoro(activeTaskId);
+        }
+      }
+
+      if (
+        typeof Notification !== "undefined" &&
+        Notification.permission === "granted"
+      ) {
+        new Notification("Cadence", {
+          body: `${mode.replace("_", " ")} finished. Starting ${nextMode.replace("_", " ")}.`,
+        });
+      }
+
+      set((state) => ({
         mode: nextMode,
-        elapsed: 0,
-        startedAt: null,
-        completedCycles: nextCycles,
-      });
+        timeLeft: nextDuration,
+        totalDuration: nextDuration,
+        completedCycles:
+          mode === TimerMode.FOCUS
+            ? state.completedCycles + 1
+            : state.completedCycles,
+        state: TimerState.RUNNING,
+      }));
 
       return;
     }
 
-    set({ elapsed: elapsedSeconds });
+    set({ timeLeft: timeLeft - 1 });
   },
 
   setMode: (mode: TimerMode) => {
+    if (timerInterval) clearInterval(timerInterval);
+    const settings = useSettingsStore.getState().settings;
+    const duration = TimerEngine.calculateInitialTime(mode, settings);
     set({
       mode,
-      state: "idle",
-      elapsed: 0,
-      startedAt: null,
+      state: TimerState.IDLE,
+      timeLeft: duration,
+      totalDuration: duration,
     });
   },
 }));

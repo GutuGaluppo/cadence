@@ -30,9 +30,9 @@ export const Tomato: React.FC<TomatoProps> = ({ progress, mode, state }) => {
   const center = 100;
 
   const getSegmentColor = () => {
-    if (state === "paused") return 'rgba(210, 180, 140, 0.3)';
-    if (mode === "shortBreak") return '#B4C6A6'; // Sage green
-    if (mode === "longBreak") return '#8E9775'; // Deeper sage
+    if (state === TimerState.PAUSED) return 'rgba(210, 180, 140, 0.3)';
+    if (mode === TimerMode.SHORT_BREAK) return '#B4C6A6'; // Sage green
+    if (mode === TimerMode.LONG_BREAK) return '#8E9775'; // Deeper sage
     return '#D2B48C'; // Beige
   };
 
@@ -45,7 +45,7 @@ export const Tomato: React.FC<TomatoProps> = ({ progress, mode, state }) => {
         <path
           d="M100 20 C105 20 110 25 110 35 L100 45 L90 35 C90 25 95 20 100 20"
           fill="#4A5D23"
-          opacity={state === "paused" ? 0.5 : 1}
+          opacity={state === TimerState.PAUSED ? 0.5 : 1}
         />
         
         {/* Tomato Body Segments */}
@@ -69,7 +69,7 @@ export const Tomato: React.FC<TomatoProps> = ({ progress, mode, state }) => {
               <motion.path
                 initial={false}
                 animate={{
-                  opacity: state === "paused" ? 0.4 : 1,
+                  opacity: state === TimerState.PAUSED ? 0.4 : 1,
                   fill: color,
                 }}
                 d={describeArc(center, center, radius, startAngle, startAngle + (endAngle - startAngle) * partialFill)}
