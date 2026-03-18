@@ -17,6 +17,7 @@
         "height": 420,
         "resizable": true,
         "decorations": true,
+        "titleBarStyle": "Overlay",
         "transparent": true,
         "center": true
       }
