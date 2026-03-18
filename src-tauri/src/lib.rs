@@ -38,7 +38,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
             let tray = TrayIconBuilder::new()
-                .icon(app.default_window_icon().unwrap().clone())
+                .icon(tauri::include_image!("icons/tray-icon.png"))
                 .icon_as_template(true)
                 .tooltip("Cadence")
                 .on_tray_icon_event(|tray, event| {
