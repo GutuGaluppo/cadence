@@ -4,7 +4,18 @@ export interface Task {
   completed: boolean;
   pomodoroCount: number;
   createdAt: number;
+  focusDuration?: number;
+  shortBreakDuration?: number;
+  longBreakDuration?: number;
+  cyclesBeforeLongBreak?: number;
 }
 
-export type CreateTaskDTO = Pick<Task, "title">;
+export type CreateTaskDTO = {
+  title: string;
+  focusDuration?: number;
+  shortBreakDuration?: number;
+  longBreakDuration?: number;
+  cyclesBeforeLongBreak?: number;
+};
+
 export type UpdateTaskDTO = Partial<Omit<Task, "id" | "createdAt">>;

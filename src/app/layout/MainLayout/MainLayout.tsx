@@ -1,7 +1,8 @@
 import DurationStepperPanel from "@/features/settings/DurationStepperPanel";
 import { SettingsPanel } from "@/features/settings/SettingsPanel";
+import { TaskCreatePanel } from "@/features/tasks/components/TaskCreatePanel";
+import { TasksPage } from "@/features/tasks/components/TasksPage";
 import { TimerDisplay } from "@/features/timer/components/TimerDisplay";
-import { Box } from "@mui/material";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { MainContainer } from "./styled";
@@ -12,7 +13,9 @@ export type View =
   | "focus-duration"
   | "short-break"
   | "long-break"
-  | "cycles-before-long-break";
+  | "cycles-before-long-break"
+  | "tasks"
+  | "task-create";
 
 const slide = {
   initial: { opacity: 0, y: 8 },
@@ -23,15 +26,17 @@ const slide = {
 
 export default function MainLayout() {
   const [view, setView] = useState<View>("timer");
-  const handleView = (value: View) => {
-    setView(value);
-  };
+  const handleView = (value: View) => setView(value);
+
   return (
     <MainContainer>
       <AnimatePresence mode="wait">
         {view === "timer" && (
           <motion.div key="timer" {...slide}>
-            <TimerDisplay onSettingsOpen={() => setView("settings")} />
+            <TimerDisplay
+              onSettingsOpen={() => setView("settings")}
+              onTasksOpen={() => setView("tasks")}
+            />
           </motion.div>
         )}
 
@@ -47,7 +52,7 @@ export default function MainLayout() {
               handleView={handleView}
               settingsKey="focusDuration"
               label="Focus Session"
-              unit={"min"}
+              unit="min"
               min={1}
               max={60}
             />
@@ -60,7 +65,7 @@ export default function MainLayout() {
               handleView={handleView}
               settingsKey="shortBreakDuration"
               label="Short Break"
-              unit={"min"}
+              unit="min"
               min={1}
               max={30}
             />
@@ -73,7 +78,7 @@ export default function MainLayout() {
               handleView={handleView}
               settingsKey="longBreakDuration"
               label="Long Break"
-              unit={"min"}
+              unit="min"
               min={5}
               max={60}
             />
@@ -86,10 +91,22 @@ export default function MainLayout() {
               handleView={handleView}
               settingsKey="cyclesBeforeLongBreak"
               label="Cycles Before Long Break"
-              unit={"cycles"}
+              unit="cycles"
               min={4}
               max={10}
             />
+          </motion.div>
+        )}
+
+        {view === "tasks" && (
+          <motion.div key="tasks" {...slide}>
+            <TasksPage handleView={handleView} />
+          </motion.div>
+        )}
+
+        {view === "task-create" && (
+          <motion.div key="task-create" {...slide}>
+            <TaskCreatePanel handleView={handleView} />
           </motion.div>
         )}
       </AnimatePresence>

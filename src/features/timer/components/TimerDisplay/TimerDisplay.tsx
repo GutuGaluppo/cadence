@@ -3,6 +3,7 @@ import { useTaskStore } from "@/features/tasks/store/store";
 import { TimerMode, TimerState } from "@/types";
 import {
   Coffee,
+  ListChecks,
   PauseIcon,
   PencilRuler,
   PlayIcon,
@@ -54,6 +55,7 @@ const FlipDigit: React.FC<{ digit: string }> = ({ digit }) => (
 
 interface TimerDisplayProps {
   onSettingsOpen?: () => void;
+  onTasksOpen?: () => void;
 }
 
 const MODE_COLOR: Record<TimerMode, string> = {
@@ -74,6 +76,7 @@ const MODE_GRADIENT: Record<TimerMode, [string, string]> = {
 
 export const TimerDisplay: React.FC<TimerDisplayProps> = ({
   onSettingsOpen,
+  onTasksOpen,
 }) => {
   const {
     state,
@@ -162,7 +165,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
             r={RING_RADIUS}
             fill="none"
             stroke="rgba(0,0,0,0.10)"
-            strokeWidth="12"
+            strokeWidth="6"
           />
           <circle
             cx="100"
@@ -170,7 +173,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
             r={RING_RADIUS}
             fill="none"
             stroke="url(#arcGradient)"
-            strokeWidth="12"
+            strokeWidth="4"
             strokeLinecap="round"
             strokeDasharray={CIRCUMFERENCE}
             strokeDashoffset={strokeDashoffset}
@@ -214,6 +217,10 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
         <PlayPauseButton onClick={isRunning ? pause : start}>
           {isRunning ? <PauseIcon size={30} /> : <PlayIcon size={30} />}
         </PlayPauseButton>
+
+        <CircleButton onClick={onTasksOpen}>
+          <ListChecks size={20} color="rgba(0,0,0,0.45)" />
+        </CircleButton>
 
         <CircleButton onClick={onSettingsOpen}>
           <Settings size={20} color="rgba(0,0,0,0.45)" />

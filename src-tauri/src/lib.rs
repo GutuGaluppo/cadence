@@ -31,6 +31,17 @@ pub fn run() {
                             "#,
                             kind: MigrationKind::Up,
                         },
+                        Migration {
+                            version: 2,
+                            description: "add_task_custom_settings",
+                            sql: r#"
+                                ALTER TABLE tasks ADD COLUMN focus_duration INTEGER;
+                                ALTER TABLE tasks ADD COLUMN short_break_duration INTEGER;
+                                ALTER TABLE tasks ADD COLUMN long_break_duration INTEGER;
+                                ALTER TABLE tasks ADD COLUMN cycles_before_long_break INTEGER;
+                            "#,
+                            kind: MigrationKind::Up,
+                        },
                     ],
                 )
                 .build(),
