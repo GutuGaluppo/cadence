@@ -7,8 +7,9 @@ import {
   PencilRuler,
   PlayIcon,
   RotateCcw,
-  Settings
+  Settings,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import React, { useEffect } from "react";
 import { formatTime } from "../../formatTime";
 import { useTimerStore } from "../../store/useTimerStore";
@@ -18,12 +19,38 @@ import {
   ControlsRow,
   CycleDot,
   DotsRow,
+  FlipClockRow,
+  FlipDigitSlot,
   ModeLabel,
   PlayPauseButton,
   RingContainer,
-  TimeDisplay,
   TimerWrapper,
 } from "./styled";
+
+const FlipDigit: React.FC<{ digit: string }> = ({ digit }) => (
+  <FlipDigitSlot>
+    <AnimatePresence mode="popLayout">
+      <motion.span
+        key={digit}
+        initial={{ rotateX: -90, opacity: 0 }}
+        animate={{ rotateX: 0, opacity: 1 }}
+        exit={{ rotateX: 90, opacity: 0 }}
+        transition={{ duration: 0.18, ease: "easeInOut" }}
+        style={{
+          display: "inline-block",
+          fontSize: "3rem",
+          fontWeight: 700,
+          letterSpacing: "-0.02em",
+          lineHeight: 1.1,
+          color: "#1A1A1A",
+          fontVariantNumeric: "tabular-nums",
+        }}
+      >
+        {digit}
+      </motion.span>
+    </AnimatePresence>
+  </FlipDigitSlot>
+);
 
 interface TimerDisplayProps {
   onSettingsOpen?: () => void;
@@ -77,6 +104,13 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
     if (mode === TimerMode.FOCUS) return "FOCUS";
     if (mode === TimerMode.SHORT_BREAK) return "SHORT BREAK";
     return "LONG BREAK";
+  };
+
+  const getModeColor = () => {
+    if (isRunning) {
+      return color;
+    }
+    return '#333'
   };
 
   useEffect(() => {
@@ -149,8 +183,16 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
         </svg>
 
         <CenterContent>
-          <ModeIcon size={26} color={color} style={{ opacity: 0.85 }} />
-          <TimeDisplay>{formatTime(timeLeft)}</TimeDisplay>
+          <ModeIcon size={26} color={getModeColor()} style={{ opacity: 0.85 }} />
+          <FlipClockRow>
+            {formatTime(timeLeft).split("").map((char, i) =>
+              char === ":" ? (
+                <span key={i} style={{ fontSize: "3rem", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#1A1A1A" }}>:</span>
+              ) : (
+                <FlipDigit key={i} digit={char} />
+              )
+            )}
+          </FlipClockRow>
           <DotsRow>
             {Array.from({ length: totalDots }).map((_, i) => (
               <CycleDot

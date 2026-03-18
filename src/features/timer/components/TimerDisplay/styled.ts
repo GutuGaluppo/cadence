@@ -34,6 +34,20 @@ export const TimeDisplay = styled(Typography)({
   fontVariantNumeric: "tabular-nums",
 });
 
+export const FlipClockRow = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  gap: "1px",
+});
+
+export const FlipDigitSlot = styled(Box)({
+  perspective: "300px",
+  minWidth: "1.9rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+
 export const DotsRow = styled(Box)({
   display: "flex",
   flexDirection: "row",
@@ -51,7 +65,7 @@ export const CycleDot = styled(Box)({
 export const ModeLabel = styled(Typography)({
   fontSize: "0.58rem",
   letterSpacing: "0.18em",
-  color: "rgba(0,0,0,0.35)",
+  color: "rgb(0,0,0)",
   marginTop: "2px",
 });
 
