@@ -17,8 +17,6 @@ interface TimerStore {
   setMode: (mode: TimerMode) => void;
 }
 
-let timerInterval: ReturnType<typeof setInterval> | null = null;
-
 export const useTimerStore = create<TimerStore>((set, get) => ({
   mode: TimerMode.FOCUS,
   state: TimerState.IDLE,
@@ -28,22 +26,14 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
 
   start: () => {
     if (get().state === TimerState.RUNNING) return;
-
     set({ state: TimerState.RUNNING });
-
-    if (timerInterval) clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-      get().tick();
-    }, 1000);
   },
 
   pause: () => {
-    if (timerInterval) clearInterval(timerInterval);
     set({ state: TimerState.PAUSED });
   },
 
   reset: () => {
-    if (timerInterval) clearInterval(timerInterval);
     const settings = useSettingsStore.getState().settings;
     const initialTime = TimerEngine.calculateInitialTime(get().mode, settings);
     set({
@@ -108,7 +98,6 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
   },
 
   setMode: (mode: TimerMode) => {
-    if (timerInterval) clearInterval(timerInterval);
     const settings = useSettingsStore.getState().settings;
     const duration = TimerEngine.calculateInitialTime(mode, settings);
     set({

@@ -1,12 +1,23 @@
 import { View } from "@/app/layout/MainLayout";
-import { Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { ArrowLeft, Minus, Plus } from "lucide-react";
 import { useSettingsStore } from "../store/store";
-import { BackButton, LabelText, PanelWrapper, StepButton, StepperRow, ValueBox } from "./styled";
+import {
+  AbsoluteBox,
+  LabelText,
+  PanelWrapper,
+  StepButton,
+  StepperRow,
+  ValueBox,
+} from "./styled";
 
 interface DurationStepperPanelProps {
   handleView: (currView: View) => void;
-  settingsKey: "focusDuration" | "shortBreakDuration" | "longBreakDuration" | "cyclesBeforeLongBreak";
+  settingsKey:
+    | "focusDuration"
+    | "shortBreakDuration"
+    | "longBreakDuration"
+    | "cyclesBeforeLongBreak";
   label: string;
   min: number;
   max: number;
@@ -29,19 +40,19 @@ export default function DurationStepperPanel({
 
   return (
     <PanelWrapper>
-      <BackButton component="button" onClick={() => handleView("settings")}>
-        <ArrowLeft size={16} color="rgba(0,0,0,0.55)" />
-      </BackButton>
+      <AbsoluteBox>
+        <IconButton onClick={() => handleView("settings")}>
+          <ArrowLeft size={20} color="rgba(0,0,0,0.55)" />
+        </IconButton>
+      </AbsoluteBox>
 
       <LabelText>{label}</LabelText>
 
       <StepperRow>
-        <StepButton
-          component="button"
-          onClick={() => update(-1)}
-          disabled={value <= min}
-        >
-          <Minus size={16} color="rgba(0,0,0,0.6)" />
+        <StepButton>
+          <IconButton onClick={() => update(-1)} disabled={value <= min}>
+            <Minus size={20} color="rgba(0,0,0,0.6)" />
+          </IconButton>
         </StepButton>
 
         <ValueBox>
@@ -68,12 +79,10 @@ export default function DurationStepperPanel({
           </Typography>
         </ValueBox>
 
-        <StepButton
-          component="button"
-          onClick={() => update(1)}
-          disabled={value >= max}
-        >
-          <Plus size={16} color="rgba(0,0,0,0.6)" />
+        <StepButton>
+          <IconButton onClick={() => update(1)} disabled={value >= max}>
+            <Plus size={20} color="rgba(0,0,0,0.6)" />
+          </IconButton>
         </StepButton>
       </StepperRow>
     </PanelWrapper>

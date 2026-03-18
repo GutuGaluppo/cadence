@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import styled from "styled-components";
+import { styled } from "@mui/material/styles";
 
 export const ListWrapper = styled(Box)({
   width: "100%",

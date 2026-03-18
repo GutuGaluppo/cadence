@@ -1,9 +1,8 @@
 import { Box, IconButton } from "@mui/material";
-import styled from "styled-components";
+import { styled } from "@mui/material/styles";
 
 export const PanelContainer = styled(Box)({
   padding: "24px",
-  paddingTop: 0,
   position: "relative",
 });
 
@@ -16,7 +15,7 @@ export const Wrapper = styled(Box)({
 export const BackButton = styled(IconButton)({
   position: "absolute",
   top: 40,
-  left: -10,
+  left: 10,
   width: 40,
   height: 40,
   borderRadius: "50%",

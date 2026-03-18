@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import styled from "styled-components";
+import { styled } from "@mui/material/styles";
 
 export const PanelWrapper = styled(Box)({
   height: "100vh",
@@ -11,12 +11,12 @@ export const PanelWrapper = styled(Box)({
   padding: "0 32px",
 });
 
-export const BackButton = styled(Box)({
+export const AbsoluteBox = styled(Box)({
   position: "absolute",
   top: 16,
   left: 16,
-  width: 32,
-  height: 32,
+  width: 40,
+  height: 40,
   borderRadius: "50%",
   backgroundColor: "rgba(0,0,0,0.06)",
   border: "none",
@@ -28,7 +28,8 @@ export const BackButton = styled(Box)({
   "&:hover": {
     backgroundColor: "rgba(0,0,0,0.1)",
   },
-});
+})
+
 
 export const LabelText = styled(Box)({
   fontSize: "0.95rem",

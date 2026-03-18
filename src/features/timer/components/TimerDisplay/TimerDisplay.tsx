@@ -1,7 +1,14 @@
 import { useSettingsStore } from "@/features/settings/store/store";
 import { useTaskStore } from "@/features/tasks/store/store";
 import { TimerMode, TimerState } from "@/types";
-import { Coffee, Eye, PauseIcon, PlayIcon, RotateCcw, Settings } from "lucide-react";
+import {
+  Coffee,
+  PauseIcon,
+  PencilRuler,
+  PlayIcon,
+  RotateCcw,
+  Settings
+} from "lucide-react";
 import React, { useEffect } from "react";
 import { formatTime } from "../../formatTime";
 import { useTimerStore } from "../../store/useTimerStore";
@@ -38,9 +45,19 @@ const MODE_GRADIENT: Record<TimerMode, [string, string]> = {
   [TimerMode.LONG_BREAK]: ["#FFF0A8", "#C8920A"],
 };
 
-export const TimerDisplay: React.FC<TimerDisplayProps> = ({ onSettingsOpen }) => {
-  const { state, mode, timeLeft, totalDuration, start, pause, reset, completedCycles } =
-    useTimerStore();
+export const TimerDisplay: React.FC<TimerDisplayProps> = ({
+  onSettingsOpen,
+}) => {
+  const {
+    state,
+    mode,
+    timeLeft,
+    totalDuration,
+    start,
+    pause,
+    reset,
+    completedCycles,
+  } = useTimerStore();
   const { activeTaskId, incrementPomodoro } = useTaskStore();
   const { settings } = useSettingsStore();
 
@@ -54,7 +71,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({ onSettingsOpen }) =>
   const color = MODE_COLOR[mode];
   const [gradientLight, gradientDark] = MODE_GRADIENT[mode];
   const isRunning = state === TimerState.RUNNING;
-  const ModeIcon = mode === TimerMode.FOCUS ? Eye : Coffee;
+  const ModeIcon = mode === TimerMode.FOCUS ? PencilRuler : Coffee;
 
   const getModeLabel = () => {
     if (mode === TimerMode.FOCUS) return "FOCUS";
@@ -133,9 +150,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({ onSettingsOpen }) =>
 
         <CenterContent>
           <ModeIcon size={26} color={color} style={{ opacity: 0.85 }} />
-
           <TimeDisplay>{formatTime(timeLeft)}</TimeDisplay>
-
           <DotsRow>
             {Array.from({ length: totalDots }).map((_, i) => (
               <CycleDot
