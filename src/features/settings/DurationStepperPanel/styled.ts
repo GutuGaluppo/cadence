@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const PanelWrapper = styled(Box)({
@@ -28,13 +28,13 @@ export const AbsoluteBox = styled(Box)({
   "&:hover": {
     backgroundColor: "rgba(0,0,0,0.1)",
   },
-})
-
+});
 
 export const LabelText = styled(Box)({
-  fontSize: "0.95rem",
+  fontSize: "1.5rem",
   fontWeight: 400,
   color: "#1A1A1A",
+  textAlign:'center',
   marginBottom: "32px",
 });
 
@@ -47,6 +47,28 @@ export const StepperRow = styled(Box)({
 export const ValueBox = styled(Box)({
   textAlign: "center",
   minWidth: 60,
+  height: 52,
+  overflow: "hidden",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "relative",
+});
+
+export const ValueText = styled(Typography)({
+  fontSize: "3rem",
+  fontWeight: 700,
+  color: "#1A1A1A",
+  lineHeight: 1,
+  fontVariantNumeric: "tabular-nums",
+});
+
+export const ValueUnit = styled(Typography)({
+  fontSize: "0.7rem",
+  color: "rgba(0,0,0,0.9)",
+  letterSpacing: "0.1em",
+  textTransform: "uppercase",
 });
 
 export const StepButton = styled(Box)({

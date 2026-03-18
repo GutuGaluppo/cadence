@@ -2,6 +2,7 @@ import { View } from "@/app/layout/MainLayout";
 import {
   Divider,
   FormControlLabel,
+  IconButton,
   Stack,
   Switch,
   Typography,
@@ -9,10 +10,10 @@ import {
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useSettingsStore } from "../store/store";
 import {
-  BackButton,
+  AbsoluteBox,
   PanelContainer,
   RowValueBox,
-  SettingRowContainer
+  SettingRowContainer,
 } from "./styled";
 
 interface SettingRowProps {
@@ -24,9 +25,7 @@ interface SettingRowProps {
 function SettingRow({ label, value, onEdit }: SettingRowProps) {
   return (
     <SettingRowContainer onClick={onEdit}>
-      <Typography variant="body2">
-        {label}
-      </Typography>
+      <Typography variant="body2">{label}</Typography>
       <RowValueBox>
         <Typography
           className="row-value"
@@ -54,18 +53,24 @@ export const SettingsPanel = ({
 
   return (
     <PanelContainer>
-      
-        <BackButton onClick={() => handleView("timer")}>
+      <AbsoluteBox>
+        <IconButton onClick={() => handleView("timer")}>
           <ArrowLeft size={20} color="rgba(0,0,0,0.5)" />
-        </BackButton>
+        </IconButton>
+      </AbsoluteBox>
 
-        <Typography
-          variant="h5"
-          sx={{ mb: 4, color: "#1A1A1A", fontWeight: 700, textAlign:'center' }}
-        >
-          Settings
-        </Typography>
-      
+      <Typography
+        variant="h5"
+        sx={{
+          fontSize: "1.5rem",
+          mb: 4,
+          color: "#1A1A1A",
+          fontWeight: 500,
+          textAlign: "center",
+        }}
+      >
+        Settings
+      </Typography>
 
       <Stack spacing={2}>
         <SettingRow
@@ -86,7 +91,7 @@ export const SettingsPanel = ({
 
         <SettingRow
           label="Long Break After"
-          value={`${settings.cyclesBeforeLongBreak} sess.`}
+          value={`${settings.cyclesBeforeLongBreak} cycles`}
           onEdit={() => handleView("cycles-before-long-break")}
         />
 
