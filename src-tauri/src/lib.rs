@@ -1,6 +1,6 @@
 use tauri::{
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-    Manager,
+    Listener, Manager,
 };
 use tauri_plugin_sql::{Builder as SqlBuilder, Migration, MigrationKind};
 
@@ -37,7 +37,7 @@ pub fn run() {
         )
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
-            TrayIconBuilder::new()
+            let tray = TrayIconBuilder::new()
                 .icon(app.default_window_icon().unwrap().clone())
                 .icon_as_template(true)
                 .tooltip("Cadence")
@@ -60,6 +60,29 @@ pub fn run() {
                     }
                 })
                 .build(app)?;
+
+            let tray_for_listener = tray.clone();
+            app.listen("timer-tick", move |event: tauri::Event| {
+                if let Ok(payload) =
+                    serde_json::from_str::<serde_json::Value>(event.payload())
+                {
+                    let time_left = payload["timeLeft"].as_i64().unwrap_or(0);
+                    let is_running = payload["isRunning"].as_bool().unwrap_or(false);
+
+                    #[cfg(target_os = "macos")]
+                    {
+                        let title = if is_running {
+                            let mins = time_left / 60;
+                            let secs = time_left % 60;
+                            Some(format!("{:02}:{:02}", mins, secs))
+                        } else {
+                            None
+                        };
+                        let _ = tray_for_listener.set_title(title.as_deref());
+                    }
+                }
+            });
+
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![greet])
