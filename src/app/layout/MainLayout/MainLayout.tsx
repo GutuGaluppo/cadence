@@ -4,7 +4,7 @@ import { TimerDisplay } from "@/features/timer/components/TimerDisplay";
 import { Box } from "@mui/material";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { MainContainer } from "./styled";
+import { DragRegion, MainContainer } from "./styled";
 
 export type View =
   | "timer"
@@ -29,6 +29,7 @@ export default function MainLayout() {
   };
   return (
     <MainContainer>
+      <DragRegion data-tauri-drag-region />
       <AnimatePresence mode="wait">
         {view === "timer" && (
           <motion.div key="timer" {...slide}>
@@ -50,6 +51,7 @@ export default function MainLayout() {
               handleView={handleView}
               settingsKey="focusDuration"
               label="Focus Session"
+              unit={"min"}
               min={1}
               max={60}
             />
@@ -59,9 +61,10 @@ export default function MainLayout() {
         {view === "short-break" && (
           <motion.div key="short-break" {...slide}>
             <DurationStepperPanel
-              handleView={setView}
+              handleView={handleView}
               settingsKey="shortBreakDuration"
               label="Short Break"
+              unit={"min"}
               min={1}
               max={30}
             />
@@ -71,9 +74,10 @@ export default function MainLayout() {
         {view === "long-break" && (
           <motion.div key="long-break" {...slide}>
             <DurationStepperPanel
-              handleView={setView}
+              handleView={handleView}
               settingsKey="longBreakDuration"
               label="Long Break"
+              unit={"min"}
               min={5}
               max={60}
             />
@@ -86,6 +90,7 @@ export default function MainLayout() {
             handleView={handleView}
             settingsKey="cyclesBeforeLongBreak"
             label="Cycles Before Long Break"
+            unit={"cycles"}
             min={4}
             max={10}
             />
