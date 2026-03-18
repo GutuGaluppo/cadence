@@ -67,11 +67,18 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
       const nextDuration = TimerEngine.calculateInitialTime(nextMode, settings);
 
       // Handle completion side effects
+      const { soundEnabled } = useSettingsStore.getState().settings;
+
       if (mode === TimerMode.FOCUS) {
+        if (soundEnabled) new Audio("/BreakAlert.mp3").play().catch(() => {});
         const activeTaskId = useTaskStore.getState().activeTaskId;
         if (activeTaskId) {
           useTaskStore.getState().incrementPomodoro(activeTaskId);
         }
+      } else if (mode === TimerMode.SHORT_BREAK) {
+        if (soundEnabled) new Audio("/FocusAlert.mp3").play().catch(() => {});
+      } else if (mode === TimerMode.LONG_BREAK) {
+        if (soundEnabled) new Audio("/SessionEndAlert.mp3").play().catch(() => {});
       }
 
       if (
@@ -112,3 +119,12 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
     });
   },
 }));
+
+// Sync timer duration whenever settings change while the timer is idle
+useSettingsStore.subscribe((newState) => {
+  const { state, mode } = useTimerStore.getState();
+  if (state === TimerState.IDLE) {
+    const duration = TimerEngine.calculateInitialTime(mode, newState.settings);
+    useTimerStore.setState({ timeLeft: duration, totalDuration: duration });
+  }
+});
