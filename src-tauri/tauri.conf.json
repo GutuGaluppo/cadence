@@ -12,9 +12,13 @@
   "app": {
     "windows": [
       {
-        "title": "cadence",
-        "width": 800,
-        "height": 600
+        "title": "Cadence",
+        "width": 340,
+        "height": 420,
+        "resizable": true,
+        "decorations": true,
+        "transparent": true,
+        "center": true
       }
     ],
     "security": {

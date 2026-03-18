@@ -1,83 +1,91 @@
-import { Container, Box, Typography, Tab, Tabs } from '@mui/material';
-import { useState } from 'react';
-import { TimerDisplay } from '@/features/timer/components/TimerDisplay';
-import { TaskList } from '@/features/tasks/components/TaskList';
-import { StatsDisplay } from '@/features/stats/StatsDisplay';
-import { SettingsPanel } from '@/features/settings/SettingsPanel';
-import { motion } from 'motion/react';
+import DurationStepperPanel from "@/features/settings/DurationStepperPanel";
+import { SettingsPanel } from "@/features/settings/SettingsPanel";
+import { TimerDisplay } from "@/features/timer/components/TimerDisplay";
+import { Box } from "@mui/material";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
+
+export type View =
+  | "timer"
+  | "settings"
+  | "focus-duration"
+  | "short-break"
+  | "long-break";
+
+const slide = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -8 },
+  transition: { duration: 0.2 },
+};
 
 export default function MainLayout() {
-  const [activeTab, setActiveTab] = useState(0);
-
+  const [view, setView] = useState<View>("timer");
+  const handleView = (value: View) => {
+    setView(value);
+  };
   return (
-    <Container maxWidth="md">
-      <Box sx={{ py: 6, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-        >
-          <Typography
-            variant="h4"
-            component="h1"
-            sx={{
-              mb: 6,
-              fontWeight: 300,
-              letterSpacing: '0.4em',
-              textTransform: 'uppercase',
-              opacity: 0.9,
-              textAlign: 'center'
-            }}
-          >
-            Cadence
-          </Typography>
-        </motion.div>
+    <Box
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        bgcolor: "#EFEDE9",
+        borderRadius: "24px",
+        overflow: "hidden",
+        border: "1px solid rgba(0,0,0,0.08)",
+      }}
+    >
+      <AnimatePresence mode="wait">
+        {view === "timer" && (
+          <motion.div key="timer" {...slide}>
+            <Box sx={{ px: 4, py: 4 }}>
+              <TimerDisplay onSettingsOpen={() => setView("settings")} />
+            </Box>
+          </motion.div>
+        )}
 
-        <Tabs
-          value={activeTab}
-          onChange={(_, val) => setActiveTab(val)}
-          centered
-          sx={{
-            mb: 4,
-            '& .MuiTabs-indicator': { backgroundColor: 'primary.main' },
-            '& .MuiTab-root': { color: 'rgba(255, 255, 255, 0.4)', '&.Mui-selected': { color: 'primary.main' } }
-          }}
-        >
-          <Tab label="Timer" />
-          <Tab label="Tasks" />
-          <Tab label="Stats" />
-          <Tab label="Settings" />
-        </Tabs>
+        {view === "settings" && (
+          <motion.div key="settings" {...slide}>
+            <SettingsPanel handleView={handleView} />
+          </motion.div>
+        )}
 
-        <Box sx={{ width: '100%', minHeight: '60vh' }}>
-          {activeTab === 0 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <TimerDisplay />
-            </motion.div>
-          )}
-          {activeTab === 1 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <TaskList />
-            </motion.div>
-          )}
-          {activeTab === 2 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <StatsDisplay />
-            </motion.div>
-          )}
-          {activeTab === 3 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <SettingsPanel />
-            </motion.div>
-          )}
-        </Box>
+        {view === "focus-duration" && (
+          <motion.div key="focus-duration" {...slide}>
+            <DurationStepperPanel
+              handleView={handleView}
+              settingsKey="focusDuration"
+              label="Focus Session"
+              min={1}
+              max={60}
+            />
+          </motion.div>
+        )}
 
-        <Box sx={{ mt: 'auto', pt: 8, pb: 4, opacity: 0.2 }}>
-          <Typography variant="caption" sx={{ letterSpacing: '0.1em' }}>
-            Rhythm over urgency.
-          </Typography>
-        </Box>
-      </Box>
-    </Container>
+        {view === "short-break" && (
+          <motion.div key="short-break" {...slide}>
+            <DurationStepperPanel
+              handleView={setView}
+              settingsKey="shortBreakDuration"
+              label="Short Break"
+              min={1}
+              max={30}
+            />
+          </motion.div>
+        )}
+
+        {view === "long-break" && (
+          <motion.div key="long-break" {...slide}>
+            <DurationStepperPanel
+              handleView={setView}
+              settingsKey="longBreakDuration"
+              label="Long Break"
+              min={5}
+              max={60}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </Box>
   );
 }

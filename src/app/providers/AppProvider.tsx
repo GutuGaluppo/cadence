@@ -6,17 +6,28 @@ import { useTimerEngine } from "@/features/timer/hooks/useTimerEngine";
 
 const muiTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
     primary: {
-      main: 'rgba(210, 180, 140, 1)',
+      main: '#2E2566',
     },
     background: {
-      default: 'rgba(13, 13, 13, 1)',
-      paper: 'rgba(33, 33, 33, 0.75)',
+      default: 'transparent',
+      paper: '#FFFFFF',
+    },
+    text: {
+      primary: '#1A1A1A',
+      secondary: 'rgba(0,0,0,0.5)',
     },
   },
   typography: {
-    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+    fontFamily: "'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: { backgroundColor: 'transparent' },
+      },
+    },
   },
 });
 
