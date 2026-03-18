@@ -4,13 +4,16 @@ import { TimerDisplay } from "@/features/timer/components/TimerDisplay";
 import { Box } from "@mui/material";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { MainContainer } from "./styled";
 
 export type View =
   | "timer"
   | "settings"
   | "focus-duration"
   | "short-break"
-  | "long-break";
+  | "long-break"
+  | "cycles-before-long-break"
+  ;
 
 const slide = {
   initial: { opacity: 0, y: 8 },
@@ -25,16 +28,7 @@ export default function MainLayout() {
     setView(value);
   };
   return (
-    <Box
-      sx={{
-        width: "100vw",
-        height: "100vh",
-        bgcolor: "#EFEDE9",
-        borderRadius: "24px",
-        overflow: "hidden",
-        border: "1px solid rgba(0,0,0,0.08)",
-      }}
-    >
+    <MainContainer>
       <AnimatePresence mode="wait">
         {view === "timer" && (
           <motion.div key="timer" {...slide}>
@@ -85,7 +79,20 @@ export default function MainLayout() {
             />
           </motion.div>
         )}
+
+        {view === "cycles-before-long-break" && (
+          <motion.div key="cycles-before-long-break" {...slide}>
+            <DurationStepperPanel
+            handleView={handleView}
+            settingsKey="cyclesBeforeLongBreak"
+            label="Cycles Before Long Break"
+            min={4}
+            max={10}
+            />
+          </motion.div>
+        )}
+        
       </AnimatePresence>
-    </Box>
+    </MainContainer>
   );
 }
