@@ -27,8 +27,4 @@ export class TimerEngine {
     return TimerMode.SHORT_BREAK;
   }
 
-  static calculateProgress(timeLeft: number, totalDuration: number): number {
-    if (totalDuration === 0) return 0;
-    return ((totalDuration - timeLeft) / totalDuration) * 100;
-  }
 }
