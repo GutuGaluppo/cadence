@@ -1,0 +1,302 @@
+/*
+ * ═══════════════════════════════════════════════════════
+ *  SPLASH SCREEN ANIMATIONS
+ *
+ *  Absolute timeline (all from t=0):
+ *   0.00s  blob-3 ignites
+ *   0.05s  blob-1 ignites
+ *   0.10s  blob-2 ignites
+ *   0.18s  blob-4 ignites
+ *   0.40s  ring A appears + starts spinning (tilted)
+ *   0.54s  ring B appears + starts spinning (tilted)
+ *   ~1.72s ring A begins flattening to 2-D plane
+ *   ~1.86s ring B begins flattening to 2-D plane
+ *   1.90s  app name fades in
+ *   2.80s  ring A fully flat, animation end
+ *   2.94s  ring B fully flat, animation end
+ *   2.90s  text fully visible
+ *   3.00s  root fade-out begins
+ *   3.45s  root fully hidden → onComplete fires
+ *
+ *  Only transform + opacity are animated (GPU-only).
+ *  blur / drop-shadow are static — never animated.
+ * ═══════════════════════════════════════════════════════
+ */
+
+/* ── CSS Variables ─────────────────────────────────── */
+:root {
+  /* Easing */
+  --sp-ease-explode: cubic-bezier(0.0, 0.0, 0.2, 1.0);
+  --sp-ease-soft:    cubic-bezier(0.4, 0.0, 0.4, 1.0);
+  --sp-ease-spin:    cubic-bezier(0.10, 0.0, 0.25, 1.0);
+  --sp-ease-text:    cubic-bezier(0.0, 0.0, 0.3, 1.0);
+
+  /* Blob colors */
+  --sp-blob-1: rgba(210, 52, 18, 0.68);
+  --sp-blob-2: rgba(248, 108, 32, 0.52);
+  --sp-blob-3: rgba(182, 32, 14, 0.58);
+  --sp-blob-4: rgba(255, 158, 44, 0.36);
+
+  /* Ring colors — controlled via SVG gradients in the component */
+
+  /* Text */
+  --sp-text-color:    #EDE7DF;
+  --sp-text-tracking: 0.14em;
+}
+
+/* ── Root container ────────────────────────────────── */
+.sp {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at 50% 58%,
+    #1d0f09 0%,
+    #0e0807 55%,
+    #080604 100%
+  );
+  will-change: opacity;
+  /* Fade the entire screen out at t=3.00s, duration 0.45s */
+  animation: sp-exit 0.45s var(--sp-ease-soft) 3.0s both;
+}
+
+@keyframes sp-exit {
+  to { opacity: 0; pointer-events: none; }
+}
+
+/* ── Blob container ────────────────────────────────── */
+.sp__blobs {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Base blob */
+.sp__blob {
+  position: absolute;
+  will-change: transform, opacity;
+}
+
+/* ·· Blob 1 — dominant warm-red core */
+.sp__blob--1 {
+  width: 320px;
+  height: 268px;
+  border-radius: 44% 56% 62% 38% / 48% 43% 57% 52%;
+  background: radial-gradient(ellipse at 44% 50%, var(--sp-blob-1) 0%, transparent 70%);
+  filter: blur(42px);
+  animation: sp-blob-1 1.9s var(--sp-ease-explode) 0.05s both;
+}
+
+/* ·· Blob 2 — orange mid-ring */
+.sp__blob--2 {
+  width: 285px;
+  height: 305px;
+  border-radius: 58% 42% 36% 64% / 53% 62% 38% 47%;
+  background: radial-gradient(ellipse at 60% 45%, var(--sp-blob-2) 0%, transparent 70%);
+  filter: blur(52px);
+  animation: sp-blob-2 2.05s var(--sp-ease-explode) 0.10s both;
+}
+
+/* ·· Blob 3 — deep crimson accent */
+.sp__blob--3 {
+  width: 248px;
+  height: 285px;
+  border-radius: 36% 64% 56% 44% / 58% 36% 64% 42%;
+  background: radial-gradient(ellipse at 40% 55%, var(--sp-blob-3) 0%, transparent 65%);
+  filter: blur(36px);
+  animation: sp-blob-3 1.75s var(--sp-ease-explode) 0.0s both;
+}
+
+/* ·· Blob 4 — amber outer halo */
+.sp__blob--4 {
+  width: 370px;
+  height: 210px;
+  border-radius: 62% 38% 45% 55% / 40% 56% 44% 60%;
+  background: radial-gradient(ellipse at 55% 50%, var(--sp-blob-4) 0%, transparent 62%);
+  filter: blur(62px);
+  animation: sp-blob-4 2.15s var(--sp-ease-explode) 0.18s both;
+}
+
+/* Only transform + opacity — no filter, no border-radius changes */
+@keyframes sp-blob-1 {
+  0%   { transform: scale(0);                        opacity: 0;    }
+  7%   { transform: scale(0.2);                      opacity: 0.92; }
+  28%  { transform: scale(1.22);                     opacity: 0.88; }
+  62%  { transform: scale(1.62);                     opacity: 0.46; }
+  100% { transform: scale(2.35) translateY(-26px);   opacity: 0;    }
+}
+
+@keyframes sp-blob-2 {
+  0%   { transform: scale(0)    rotate(-14deg);                    opacity: 0;    }
+  10%  { transform: scale(0.18) rotate(-12deg);                    opacity: 0.82; }
+  32%  { transform: scale(1.18) rotate(-9deg);                     opacity: 0.72; }
+  68%  { transform: scale(1.55) rotate(-4deg);                     opacity: 0.32; }
+  100% { transform: scale(2.05) rotate(6deg)  translateY(-34px);   opacity: 0;    }
+}
+
+@keyframes sp-blob-3 {
+  0%   { transform: scale(0)    rotate(22deg);                     opacity: 0;    }
+  7%   { transform: scale(0.16) rotate(20deg);                     opacity: 0.88; }
+  26%  { transform: scale(1.28) rotate(15deg);                     opacity: 0.82; }
+  58%  { transform: scale(1.70) rotate(10deg);                     opacity: 0.28; }
+  100% { transform: scale(2.25) rotate(4deg)  translateY(-20px);   opacity: 0;    }
+}
+
+@keyframes sp-blob-4 {
+  0%   { transform: scale(0);                        opacity: 0;    }
+  12%  { transform: scale(0.14);                     opacity: 0.72; }
+  38%  { transform: scale(1.12);                     opacity: 0.56; }
+  72%  { transform: scale(1.62);                     opacity: 0.18; }
+  100% { transform: scale(2.1)  translateY(-40px);   opacity: 0;    }
+}
+
+/* ── Ring stage (3-D context) ──────────────────────── */
+.sp__stage {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Ring tilt wrappers ─────────────────────────────
+   Each .sp__tilt transitions the 3-D orientation
+   from a tilted plane → fully face-on.
+   perspective() must be in the transform string
+   (not a separate property) so it composes correctly
+   when the element itself is positioned absolutely.
+   ──────────────────────────────────────────────── */
+.sp__tilt {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+
+.sp__tilt--a {
+  /* Total: 2.4s, delay: 0.40s → ends 2.80s
+     Hold-tilt phase: 0% → 58% of 2.4s = 1.392s → absolute 1.792s
+     Align phase:    1.792s → 2.80s                              */
+  animation: sp-tilt-a 2.4s var(--sp-ease-soft) 0.40s both;
+}
+
+.sp__tilt--b {
+  animation: sp-tilt-b 2.4s var(--sp-ease-soft) 0.54s both;
+}
+
+@keyframes sp-tilt-a {
+  0%   {
+    opacity: 0;
+    transform: perspective(520px) rotateX(54deg) rotateY(18deg);
+  }
+  5%   { opacity: 1; }
+  58%  { transform: perspective(520px) rotateX(54deg) rotateY(18deg); }
+  100% { transform: perspective(520px) rotateX(0deg)  rotateY(0deg);  }
+}
+
+@keyframes sp-tilt-b {
+  0%   {
+    opacity: 0;
+    transform: perspective(520px) rotateX(-20deg) rotateY(-54deg);
+  }
+  5%   { opacity: 1; }
+  58%  { transform: perspective(520px) rotateX(-20deg) rotateY(-54deg); }
+  100% { transform: perspective(520px) rotateX(0deg)   rotateY(0deg);   }
+}
+
+/* ── Ring spin wrappers ─────────────────────────────
+   Independent Z-axis rotation; composes on top of
+   the parent's tilt via normal transform stacking.
+   ──────────────────────────────────────────────── */
+.sp__spin {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.sp__spin--a {
+  /* ~1.65 full rotations (594°), decelerating hard at end */
+  animation: sp-spin-a 2.4s var(--sp-ease-spin) 0.40s both;
+}
+
+.sp__spin--b {
+  /* ~1.5 full counter-rotations (-540°) */
+  animation: sp-spin-b 2.4s var(--sp-ease-spin) 0.54s both;
+}
+
+@keyframes sp-spin-a {
+  from { transform: rotateZ(0deg);    }
+  to   { transform: rotateZ(594deg);  }
+}
+
+@keyframes sp-spin-b {
+  from { transform: rotateZ(0deg);    }
+  to   { transform: rotateZ(-540deg); }
+}
+
+/* ── Ring SVGs ──────────────────────────────────────── */
+.sp__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.sp__ring--a {
+  width: 184px;
+  height: 184px;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 5px rgba(255, 88, 38, 0.50));
+  overflow: visible;
+}
+
+.sp__ring--b {
+  width: 248px;
+  height: 248px;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 6px rgba(255, 208, 68, 0.38));
+  overflow: visible;
+}
+
+/* ── App name ───────────────────────────────────────── */
+.sp__text {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: sp-text-in 0.85s var(--sp-ease-text) 1.90s both;
+}
+
+.sp__name {
+  margin: 0;
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: var(--sp-text-tracking);
+  color: var(--sp-text-color);
+  text-transform: uppercase;
+  /* Subtle text shadow for legibility over rings */
+  text-shadow: 0 0 24px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes sp-text-in {
+  0%   { opacity: 0; transform: translateY(13px); }
+  100% { opacity: 1; transform: translateY(0px);  }
+}
