@@ -72,8 +72,9 @@ export const TaskCreatePanel: React.FC<TaskCreatePanelProps> = ({ handleView }) 
       await addTask({ title: title.trim(), focusDuration, shortBreakDuration, longBreakDuration, cyclesBeforeLongBreak });
       handleView("tasks");
     } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
       console.error("Failed to create task:", err);
-      setError("Failed to save task. Please try again.");
+      setError(msg);
     }
   };
 

@@ -5,7 +5,6 @@ export const TimerWrapper = styled(Box)({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "24px",
 });
 
 export const RingContainer = styled(Box)({
@@ -79,7 +78,7 @@ export const ControlsRow = styled(Box)({
 export const CircleButton = styled(IconButton)({
   width: 40,
   height: 40,
-  padding:0,
+  padding: 0,
   borderRadius: "20px",
   backgroundColor: "rgba(0,0,0,0.06)",
   border: "none",

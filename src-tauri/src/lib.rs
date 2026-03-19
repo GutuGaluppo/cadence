@@ -33,13 +33,26 @@ pub fn run() {
                         },
                         Migration {
                             version: 2,
-                            description: "add_task_custom_settings",
-                            sql: r#"
-                                ALTER TABLE tasks ADD COLUMN focus_duration INTEGER;
-                                ALTER TABLE tasks ADD COLUMN short_break_duration INTEGER;
-                                ALTER TABLE tasks ADD COLUMN long_break_duration INTEGER;
-                                ALTER TABLE tasks ADD COLUMN cycles_before_long_break INTEGER;
-                            "#,
+                            description: "add_task_focus_duration",
+                            sql: "ALTER TABLE tasks ADD COLUMN focus_duration INTEGER",
+                            kind: MigrationKind::Up,
+                        },
+                        Migration {
+                            version: 3,
+                            description: "add_task_short_break_duration",
+                            sql: "ALTER TABLE tasks ADD COLUMN short_break_duration INTEGER",
+                            kind: MigrationKind::Up,
+                        },
+                        Migration {
+                            version: 4,
+                            description: "add_task_long_break_duration",
+                            sql: "ALTER TABLE tasks ADD COLUMN long_break_duration INTEGER",
+                            kind: MigrationKind::Up,
+                        },
+                        Migration {
+                            version: 5,
+                            description: "add_task_cycles_before_long_break",
+                            sql: "ALTER TABLE tasks ADD COLUMN cycles_before_long_break INTEGER",
                             kind: MigrationKind::Up,
                         },
                     ],

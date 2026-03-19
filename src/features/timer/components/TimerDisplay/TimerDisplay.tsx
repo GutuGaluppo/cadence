@@ -138,6 +138,20 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
 
   return (
     <TimerWrapper>
+      <ControlsRow>
+        <CircleButton onClick={reset}>
+          <RotateCcw size={20} color="rgba(0,0,0,0.45)" />
+        </CircleButton>
+
+
+        <CircleButton onClick={onTasksOpen}>
+          <ListChecks size={20} color="rgba(0,0,0,0.45)" />
+        </CircleButton>
+
+        <CircleButton onClick={onSettingsOpen}>
+          <Settings size={20} color="rgba(0,0,0,0.45)" />
+        </CircleButton>
+      </ControlsRow>
       <RingContainer>
         <svg
           width="240"
@@ -165,7 +179,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
             r={RING_RADIUS}
             fill="none"
             stroke="rgba(0,0,0,0.10)"
-            strokeWidth="6"
+            strokeWidth="2"
           />
           <circle
             cx="100"
@@ -173,7 +187,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
             r={RING_RADIUS}
             fill="none"
             stroke="url(#arcGradient)"
-            strokeWidth="4"
+            strokeWidth="6"
             strokeLinecap="round"
             strokeDasharray={CIRCUMFERENCE}
             strokeDashoffset={strokeDashoffset}
@@ -209,23 +223,10 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
         </CenterContent>
       </RingContainer>
 
-      <ControlsRow>
-        <CircleButton onClick={reset}>
-          <RotateCcw size={20} color="rgba(0,0,0,0.45)" />
-        </CircleButton>
 
         <PlayPauseButton onClick={isRunning ? pause : start}>
           {isRunning ? <PauseIcon size={30} /> : <PlayIcon size={30} />}
         </PlayPauseButton>
-
-        <CircleButton onClick={onTasksOpen}>
-          <ListChecks size={20} color="rgba(0,0,0,0.45)" />
-        </CircleButton>
-
-        <CircleButton onClick={onSettingsOpen}>
-          <Settings size={20} color="rgba(0,0,0,0.45)" />
-        </CircleButton>
-      </ControlsRow>
     </TimerWrapper>
   );
 };

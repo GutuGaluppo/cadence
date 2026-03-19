@@ -20,7 +20,7 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   tasks: [],
   activeTaskId: null,
   isLoading: false,
-
+  
   loadTasks: async () => {
     set({ isLoading: true });
     const tasks = await repository.getAll();
