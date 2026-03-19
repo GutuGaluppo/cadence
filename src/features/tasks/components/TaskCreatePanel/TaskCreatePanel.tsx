@@ -63,11 +63,18 @@ export const TaskCreatePanel: React.FC<TaskCreatePanelProps> = ({ handleView }) 
   const [shortBreakDuration, setShortBreakDuration] = useState(settings.shortBreakDuration);
   const [longBreakDuration, setLongBreakDuration] = useState(settings.longBreakDuration);
   const [cyclesBeforeLongBreak, setCyclesBeforeLongBreak] = useState(settings.cyclesBeforeLongBreak);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSave = async () => {
     if (!title.trim()) return;
-    await addTask({ title: title.trim(), focusDuration, shortBreakDuration, longBreakDuration, cyclesBeforeLongBreak });
-    handleView("tasks");
+    setError(null);
+    try {
+      await addTask({ title: title.trim(), focusDuration, shortBreakDuration, longBreakDuration, cyclesBeforeLongBreak });
+      handleView("tasks");
+    } catch (err) {
+      console.error("Failed to create task:", err);
+      setError("Failed to save task. Please try again.");
+    }
   };
 
   return (
@@ -131,6 +138,10 @@ export const TaskCreatePanel: React.FC<TaskCreatePanelProps> = ({ handleView }) 
           onChange={setCyclesBeforeLongBreak}
         />
       </FieldsContainer>
+
+      {error && (
+        <p style={{ color: "red", fontSize: "0.75rem", margin: "8px 0 0", textAlign: "center" }}>{error}</p>
+      )}
 
       <SaveButton onClick={handleSave} sx={{ opacity: title.trim() ? 1 : 0.4, pointerEvents: title.trim() ? "auto" : "none" }}>
         Create Task

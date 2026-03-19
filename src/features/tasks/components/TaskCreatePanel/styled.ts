@@ -2,15 +2,14 @@ import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const PanelWrapper = styled(Box)({
-  height: "100vh",
+  height: "calc(100vh - 48px)",
   display: "flex",
   flexDirection: "column",
   position: "relative",
-  padding: "0 24px 24px",
 });
 
 export const AbsoluteBox = styled(Box)({
-  position: "absolute",
+  position: "fixed",
   top: 16,
   left: 16,
   width: 40,
@@ -29,7 +28,7 @@ export const PanelTitle = styled(Typography)({
   fontWeight: 500,
   color: "#1A1A1A",
   textAlign: "center",
-  paddingTop: "64px",
+  paddingTop: "18px",
   marginBottom: "24px",
 });
 
@@ -38,6 +37,9 @@ export const FieldsContainer = styled(Box)({
   flexDirection: "column",
   gap: "12px",
   flex: 1,
+  overflowY: "auto",
+  scrollbarWidth: "none",
+  "&::-webkit-scrollbar": { display: "none" },
 });
 
 export const StepperRow = styled(Box)({

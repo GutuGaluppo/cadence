@@ -2,11 +2,11 @@ import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const PageWrapper = styled(Box)({
-  height: "100vh",
+  height: "calc(100vh - 48px)",
   display: "flex",
   flexDirection: "column",
   position: "relative",
-  padding: "0 24px 24px",
+  padding: "0 0 0",
 });
 
 export const AbsoluteBox = styled(Box)({

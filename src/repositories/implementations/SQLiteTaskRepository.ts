@@ -21,13 +21,13 @@ export class SQLiteTaskRepository implements TaskRepository {
 
   async getAll(): Promise<Task[]> {
     const db = await this.dbPromise;
-    const rows = await db.select("SELECT * FROM tasks ORDER BY created_at DESC");
+    const rows = await db.select<any[]>("SELECT * FROM tasks ORDER BY created_at DESC");
     return rows.map(this.mapRowToTask);
   }
 
   async getById(id: string): Promise<Task | null> {
     const db = await this.dbPromise;
-    const rows = await db.select("SELECT * FROM tasks WHERE id = ?", [id]);
+    const rows = await db.select<any[]>("SELECT * FROM tasks WHERE id = ?", [id]);
     return rows.length ? this.mapRowToTask(rows[0]) : null;
   }
 
