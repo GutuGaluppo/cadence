@@ -1,7 +1,66 @@
-# Tauri + React + Typescript
+# Cadence
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+Cadence is a local-first Pomodoro desktop app built with `React`, `Vite`, and
+`Tauri`. It is designed for focused work sessions, task-aware timing, and a
+cleaner desktop flow without browser clutter.
 
-## Recommended IDE Setup
+## Stack
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+- `React 19`
+- `Vite 7`
+- `Tauri 2`
+- `Zustand`
+- `SQLite` via `@tauri-apps/plugin-sql`
+
+## Development
+
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+Run the desktop app in development:
+
+```bash
+pnpm tauri dev
+```
+
+Run only the frontend:
+
+```bash
+pnpm dev
+```
+
+## Quality Commands
+
+Typecheck:
+
+```bash
+pnpm typecheck
+```
+
+Run unit tests:
+
+```bash
+pnpm test
+```
+
+Build the frontend bundle:
+
+```bash
+pnpm build
+```
+
+## Project Notes
+
+- Desktop configuration lives in `src-tauri/`
+- The initial launch landing page lives in `site/`
+- Production planning docs live in:
+  - `GUIA_PRODUCAO.md`
+  - `BACKLOG_PRODUCAO.md`
+  - `GITHUB_MILESTONES_ISSUES.md`
+  - `RELEASE_PLAYBOOK.md`
+  - `CHANGELOG.md`
+  - `PRIVACY.md`
+  - `SUPPORT.md`

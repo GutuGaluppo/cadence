@@ -1,0 +1,25 @@
+changelog:
+  exclude:
+    labels:
+      - skip-changelog
+  categories:
+    - title: Product
+      labels:
+        - feature
+        - enhancement
+        - ux
+        - ui
+    - title: Fixes
+      labels:
+        - bug
+        - fix
+    - title: Quality
+      labels:
+        - test
+        - refactor
+        - performance
+    - title: Docs and Operations
+      labels:
+        - docs
+        - chore
+        - ci

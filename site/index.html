@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadence — Focus in a calmer rhythm</title>
+    <meta
+      name="description"
+      content="Cadence is a local-first Pomodoro desktop app for deep work, task-based sessions, and a calmer daily flow."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Cadence home">
+          <span class="brand-mark">C</span>
+          <span class="brand-text">
+            <strong>Cadence</strong>
+            <span>Desktop Pomodoro</span>
+          </span>
+        </a>
+
+        <nav class="topnav" aria-label="Primary">
+          <a href="#features">Features</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#download">Download</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Local-first focus timer for deep work</p>
+            <h1>Focus in a calmer rhythm.</h1>
+            <p class="hero-text">
+              Cadence is a desktop Pomodoro app built for task-based sessions,
+              lighter transitions between work and breaks, and a cleaner daily
+              flow without browser clutter.
+            </p>
+
+            <div class="hero-actions">
+              <a
+                class="button button-primary"
+                id="download-primary"
+                href="https://github.com/GutuGaluppo/cadence/releases/latest"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Download Latest Release
+              </a>
+              <a
+                class="button button-secondary"
+                href="https://github.com/GutuGaluppo/cadence/releases"
+                target="_blank"
+                rel="noreferrer"
+              >
+                See Release Notes
+              </a>
+            </div>
+
+            <ul class="hero-meta" aria-label="Highlights">
+              <li>No account required</li>
+              <li>Task-aware sessions</li>
+              <li>Local storage by default</li>
+            </ul>
+          </div>
+
+          <div class="hero-stage" aria-hidden="true">
+            <div class="orb orb-indigo"></div>
+            <div class="orb orb-gold"></div>
+            <div class="product-window">
+              <div class="window-top">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <div class="window-body">
+                <div class="timer-preview">
+                  <div class="timer-ring">
+                    <div class="timer-core">
+                      <p class="timer-mode">FOCUS</p>
+                      <p class="timer-value">24:58</p>
+                      <div class="timer-dots">
+                        <span class="active"></span>
+                        <span class="active"></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="task-stack">
+                    <article class="task-card selected">
+                      <div>
+                        <p class="task-title">Finish release checklist</p>
+                        <p class="task-meta">25 min focus · 5 min break</p>
+                      </div>
+                      <span class="task-count">3</span>
+                    </article>
+
+                    <article class="task-card">
+                      <div>
+                        <p class="task-title">Write landing page copy</p>
+                        <p class="task-meta">Custom session</p>
+                      </div>
+                      <span class="task-count task-count-muted">1</span>
+                    </article>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="signal-bar" aria-label="Cadence principles">
+          <div>Task-aware sessions</div>
+          <div>Minimal desktop surface</div>
+          <div>Fast local persistence</div>
+          <div>Built for uninterrupted flow</div>
+        </section>
+
+        <section class="section-grid" id="features">
+          <div class="section-heading">
+            <p class="eyebrow">Why Cadence</p>
+            <h2>A timer that stays out of your way.</h2>
+          </div>
+
+          <div class="card-grid">
+            <article class="feature-card">
+              <h3>Task-aware sessions</h3>
+              <p>
+                Attach focus and break durations directly to the task you are
+                working on instead of forcing one global timing rule for
+                everything.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <h3>Local-first by default</h3>
+              <p>
+                Your settings and tasks stay on your machine. The product is
+                shaped around fast local persistence, not around sign-up funnels.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <h3>Compact desktop flow</h3>
+              <p>
+                Tray access, a small footprint, and a focused single-window
+                layout keep the app available without turning it into a second
+                workspace.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="workflow" id="workflow">
+          <div class="section-heading">
+            <p class="eyebrow">How it works</p>
+            <h2>From intention to rhythm in three steps.</h2>
+          </div>
+
+          <div class="workflow-list">
+            <article class="workflow-step">
+              <span class="step-index">01</span>
+              <h3>Pick the task that matters now</h3>
+              <p>
+                Choose one task and let it define the working session instead of
+                mentally juggling a full backlog while the clock is already
+                running.
+              </p>
+            </article>
+
+            <article class="workflow-step">
+              <span class="step-index">02</span>
+              <h3>Stay with the session</h3>
+              <p>
+                Cadence handles the timer, transitions, and persistent state so
+                you can stay inside the work instead of managing the tool.
+              </p>
+            </article>
+
+            <article class="workflow-step">
+              <span class="step-index">03</span>
+              <h3>Build momentum over the day</h3>
+              <p>
+                Completed cycles stay attached to tasks, giving you a clearer
+                picture of where your attention actually went.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="download-panel" id="download">
+          <div class="section-heading">
+            <p class="eyebrow">Download</p>
+            <h2>Ready for your next release build.</h2>
+            <p class="section-text">
+              The primary download route below points to the latest public
+              release on GitHub. Signed macOS distribution and checksum upload
+              are now prepared in the repository release pipeline, while
+              Windows-specific certificate signing remains pending certificate
+              selection.
+            </p>
+          </div>
+
+          <div class="download-grid">
+            <article class="download-card download-card-primary">
+              <p class="download-label">Primary release channel</p>
+              <h3 id="download-card-title">Download Latest Release</h3>
+              <p>
+                Public release assets, version history, and release notes live
+                on GitHub Releases.
+              </p>
+              <a
+                class="button button-primary"
+                href="https://github.com/GutuGaluppo/cadence/releases/latest"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open Latest Release
+              </a>
+            </article>
+
+            <article class="download-card">
+              <p class="download-label">macOS</p>
+              <h3>Target format</h3>
+              <p>Signed and notarized `.dmg` and `.app.tar.gz` builds.</p>
+            </article>
+
+            <article class="download-card disabled">
+              <p class="download-label">Windows</p>
+              <h3>Planned</h3>
+              <p>Reserved for a future signed installer once the OS matrix is locked.</p>
+            </article>
+
+            <article class="download-card disabled">
+              <p class="download-label">Linux</p>
+              <h3>Planned</h3>
+              <p>Reserved for a future distro strategy after the 1.0 macOS release.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="faq">
+          <div class="section-heading">
+            <p class="eyebrow">FAQ</p>
+            <h2>Short answers before launch.</h2>
+          </div>
+
+          <div class="faq-list">
+            <article class="faq-item">
+              <h3>Does Cadence require an account?</h3>
+              <p>
+                No. The current product direction is local-first and account-free.
+              </p>
+            </article>
+
+            <article class="faq-item">
+              <h3>Where does my data live?</h3>
+              <p>
+                Settings are stored locally and tasks are persisted in a local
+                SQLite database on the device.
+              </p>
+            </article>
+
+            <article class="faq-item">
+              <h3>Can I customize work and break durations?</h3>
+              <p>
+                Yes. Global settings exist, and active tasks can also carry
+                their own timing profile.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div>
+          <strong>Cadence</strong>
+          <p>Focused desktop timing for calmer, deeper work.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="https://github.com/GutuGaluppo/cadence" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://github.com/GutuGaluppo/cadence/releases" target="_blank" rel="noreferrer">Releases</a>
+          <a href="./support.html">Support</a>
+          <a href="./privacy.html">Privacy</a>
+          <a href="./changelog.html">Changelog</a>
+        </div>
+      </footer>
+    </div>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>

@@ -4,11 +4,6 @@ use tauri::{
 };
 use tauri_plugin_sql::{Builder as SqlBuilder, Migration, MigrationKind};
 
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -87,9 +82,7 @@ pub fn run() {
 
             let tray_for_listener = tray.clone();
             app.listen("timer-tick", move |event: tauri::Event| {
-                if let Ok(payload) =
-                    serde_json::from_str::<serde_json::Value>(event.payload())
-                {
+                if let Ok(payload) = serde_json::from_str::<serde_json::Value>(event.payload()) {
                     let time_left = payload["timeLeft"].as_i64().unwrap_or(0);
                     let is_running = payload["isRunning"].as_bool().unwrap_or(false);
 
@@ -109,7 +102,6 @@ pub fn run() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

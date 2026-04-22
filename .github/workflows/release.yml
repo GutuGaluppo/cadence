@@ -1,0 +1,182 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-tauri:
+    concurrency:
+      group: release-${{ github.ref }}
+      cancel-in-progress: false
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+            target_name: macos-aarch64
+            args: --target aarch64-apple-darwin
+            bundle_dir: src-tauri/target/aarch64-apple-darwin/release/bundle
+          - platform: macos-latest
+            target_name: macos-x64
+            args: --target x86_64-apple-darwin
+            bundle_dir: src-tauri/target/x86_64-apple-darwin/release/bundle
+          - platform: ubuntu-22.04
+            target_name: linux
+            args: ""
+            bundle_dir: src-tauri/target/release/bundle
+          - platform: windows-latest
+            target_name: windows
+            args: ""
+            bundle_dir: src-tauri/target/release/bundle
+
+    runs-on: ${{ matrix.platform }}
+    env:
+      APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+      APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+      APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+      TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+      TAURI_SIGNING_RPM_KEY: ${{ secrets.TAURI_SIGNING_RPM_KEY }}
+      TAURI_SIGNING_RPM_KEY_PASSPHRASE: ${{ secrets.TAURI_SIGNING_RPM_KEY_PASSPHRASE }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Activate pnpm
+        run: corepack prepare pnpm@10.6.5 --activate
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup Rust stable
+        shell: bash
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup default stable
+
+          if [[ "${{ matrix.platform }}" == "macos-latest" ]]; then
+            rustup target add aarch64-apple-darwin x86_64-apple-darwin
+          fi
+
+      - name: Install Linux system dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf
+
+      - name: Import Apple signing certificate
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          if [[ -z "$APPLE_CERTIFICATE" ]]; then
+            echo "APPLE_CERTIFICATE not configured; macOS artifacts will be built without Developer ID signing."
+            exit 0
+          fi
+
+          if [[ -z "$KEYCHAIN_PASSWORD" ]]; then
+            echo "KEYCHAIN_PASSWORD is required when APPLE_CERTIFICATE is configured." >&2
+            exit 1
+          fi
+
+          echo "$APPLE_CERTIFICATE" | openssl base64 -d -A -out certificate.p12
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security set-keychain-settings -t 3600 -u build.keychain
+          security import certificate.p12 -k build.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" build.keychain
+
+          if [[ -z "$APPLE_SIGNING_IDENTITY" ]]; then
+            CERT_ID="$(security find-identity -v -p codesigning build.keychain | awk -F'\"' 'NR==1 { print $2 }')"
+
+            if [[ -z "$CERT_ID" ]]; then
+              echo "No macOS signing identity found in build.keychain." >&2
+              exit 1
+            fi
+
+            echo "APPLE_SIGNING_IDENTITY=$CERT_ID" >> "$GITHUB_ENV"
+          fi
+
+          rm -f certificate.p12
+
+      - name: Build and publish Tauri release assets
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: Cadence ${{ github.ref_name }}
+          releaseBody: Download the installer that matches your operating system and verify the checksum attached to this release.
+          releaseDraft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          generateReleaseNotes: true
+          args: ${{ matrix.args }}
+
+      - name: Generate checksums on Unix runners
+        if: runner.os != 'Windows'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          checksum_file="checksums-${{ matrix.target_name }}.txt"
+          find "${{ matrix.bundle_dir }}" -type f \( \
+            -name "*.dmg" -o \
+            -name "*.app.tar.gz" -o \
+            -name "*.AppImage" -o \
+            -name "*.deb" -o \
+            -name "*.rpm" -o \
+            -name "*.msi" -o \
+            -name "*.exe" \
+          \) -print0 | while IFS= read -r -d '' file; do
+            shasum -a 256 "$file" >> "$checksum_file"
+          done
+
+          if [[ -s "$checksum_file" ]]; then
+            gh release upload "${GITHUB_REF_NAME}" "$checksum_file" --clobber
+          fi
+
+      - name: Generate checksums on Windows
+        if: runner.os == 'Windows'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          $checksumFile = "checksums-${{ matrix.target_name }}.txt"
+          $files = Get-ChildItem -Path "${{ matrix.bundle_dir }}" -Recurse -File | Where-Object {
+            $_.Name -match '\.(msi|exe|dmg|AppImage|deb|rpm|gz)$'
+          }
+
+          foreach ($file in $files) {
+            $hash = (Get-FileHash -Path $file.FullName -Algorithm SHA256).Hash.ToLower()
+            "$hash  $($file.Name)" | Out-File -FilePath $checksumFile -Append -Encoding utf8
+          }
+
+          if (Test-Path $checksumFile) {
+            gh release upload $env:GITHUB_REF_NAME $checksumFile --clobber
+          }

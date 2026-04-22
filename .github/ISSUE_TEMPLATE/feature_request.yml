@@ -1,0 +1,32 @@
+name: Feature request
+description: Propose an improvement to the app, website, or release experience.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: Describe the user need or friction clearly.
+      placeholder: It is hard to compare how many focus sessions each task has accumulated over the week.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior, screen, or workflow you want.
+      placeholder: Add a compact weekly stats view grouped by task.
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Expected impact
+      options:
+        - Nice to have
+        - Improves daily usability
+        - Important for release readiness
+    validations:
+      required: true

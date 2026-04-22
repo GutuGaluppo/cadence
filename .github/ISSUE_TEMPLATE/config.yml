@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Support guide
+    url: https://github.com/GutuGaluppo/cadence/blob/main/SUPPORT.md
+    about: Read the support channels and release troubleshooting notes.
+  - name: Release history
+    url: https://github.com/GutuGaluppo/cadence/releases
+    about: Check existing installers, notes, and checksums before opening an issue.
