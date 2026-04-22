@@ -14,18 +14,43 @@ import {
   TaskMeta,
   TaskTitle,
 } from "./styled";
+import { useTimerStore } from "@/features/timer/store/useTimerStore";
+import { Task, TimerState } from "@/types";
 
 interface TasksPageProps {
   handleView: (view: View) => void;
 }
 
 export const TasksPage: React.FC<TasksPageProps> = ({ handleView }) => {
-  const { tasks, loadTasks, updateTask, deleteTask, activeTaskId, setActiveTask } =
-    useTaskStore();
+  const {
+    tasks,
+    loadTasks,
+    updateTask,
+    deleteTask,
+    activeTaskId,
+    setActiveTask,
+  } = useTaskStore();
+
+  const { applyTask, state: timerState } = useTimerStore();
 
   useEffect(() => {
-    loadTasks();
-  }, []);
+    void loadTasks();
+  }, [loadTasks]);
+
+  const handleClick = (task: Task) => {
+    const isDeselecting = activeTaskId === task.id;
+    setActiveTask(isDeselecting ? null : task.id);
+    applyTask(isDeselecting ? null : task);
+    if (!isDeselecting) handleView("timer");
+  };
+
+  const handleDelete = async (task: Task) => {
+    if (activeTaskId === task.id && timerState === TimerState.IDLE) {
+      applyTask(null);
+    }
+
+    await deleteTask(task.id);
+  };
 
   return (
     <PageWrapper>
@@ -45,7 +70,7 @@ export const TasksPage: React.FC<TasksPageProps> = ({ handleView }) => {
           <TaskCard
             key={task.id}
             active={activeTaskId === task.id}
-            onClick={() => setActiveTask(activeTaskId === task.id ? null : task.id)}
+            onClick={() => handleClick(task)}
           >
             <Checkbox
               checked={task.completed}
@@ -65,9 +90,9 @@ export const TasksPage: React.FC<TasksPageProps> = ({ handleView }) => {
             <TaskMeta>{task.pomodoroCount} 🍅</TaskMeta>
             <IconButton
               size="small"
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.stopPropagation();
-                deleteTask(task.id);
+                await handleDelete(task);
               }}
               sx={{ padding: "4px", opacity: 0.3, "&:hover": { opacity: 1 } }}
             >

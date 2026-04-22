@@ -29,7 +29,7 @@ interface CompactStepperProps {
   onChange: (v: number) => void;
 }
 
-const CompactStepper: React.FC<CompactStepperProps> = ({ label, value, unit, min, max, onChange }) => (
+export const CompactStepper: React.FC<CompactStepperProps> = ({ label, value, unit, min, max, onChange }) => (
   <StepperRow>
     <StepperLabel>{label}</StepperLabel>
     <StepperControls>

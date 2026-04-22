@@ -1,22 +1,28 @@
-import { ReactNode } from "react";
-import { ThemeProvider } from "styled-components";
-import { ThemeProvider as MuiThemeProvider, createTheme, CssBaseline } from "@mui/material";
-import { theme } from "../theme/theme";
+import { useSettingsStore } from "@/features/settings/store/store";
 import { useTimerEngine } from "@/features/timer/hooks/useTimerEngine";
+import { isTauriRuntime } from "@/shared/isTauriRuntime";
+import {
+  CssBaseline,
+  ThemeProvider as MuiThemeProvider,
+  createTheme,
+} from "@mui/material";
+import { ReactNode, useEffect } from "react";
+import { ThemeProvider } from "styled-components";
+import { theme } from "../theme/theme";
 
 const muiTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: "light",
     primary: {
-      main: '#2E2566',
+      main: "#2E2566",
     },
     background: {
-      default: 'transparent',
-      paper: '#FFFFFF',
+      default: "transparent",
+      paper: "#FFFFFF",
     },
     text: {
-      primary: '#1A1A1A',
-      secondary: 'rgba(0,0,0,0.5)',
+      primary: "#1A1A1A",
+      secondary: "rgba(0,0,0,0.5)",
     },
   },
   typography: {
@@ -25,7 +31,7 @@ const muiTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        body: { backgroundColor: 'transparent' },
+        body: { backgroundColor: "transparent" },
       },
     },
   },
@@ -33,6 +39,36 @@ const muiTheme = createTheme({
 
 export function AppProviders({ children }: { children: ReactNode }) {
   useTimerEngine();
+  const loadSettings = useSettingsStore((state) => state.loadSettings);
+  const alwaysOnTop = useSettingsStore((state) => state.settings.alwaysOnTop);
+
+  useEffect(() => {
+    void loadSettings();
+  }, [loadSettings]);
+
+  useEffect(() => {
+    let disposed = false;
+
+    if (!isTauriRuntime()) {
+      return;
+    }
+
+    const syncAlwaysOnTop = async () => {
+      const { getCurrentWindow } = await import("@tauri-apps/api/window");
+
+      if (disposed) {
+        return;
+      }
+
+      await getCurrentWindow().setAlwaysOnTop(alwaysOnTop);
+    };
+
+    void syncAlwaysOnTop().catch(() => {});
+
+    return () => {
+      disposed = true;
+    };
+  }, [alwaysOnTop]);
 
   return (
     <MuiThemeProvider theme={muiTheme}>

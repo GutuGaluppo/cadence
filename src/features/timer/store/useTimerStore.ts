@@ -1,8 +1,10 @@
 import { useSettingsStore } from "@/features/settings/store/store";
 import { useTaskStore } from "@/features/tasks/store/store";
-import { TimerMode, TimerState } from "@/types";
+import { Settings, Task, TimerMode, TimerState } from "@/types";
 import { create } from "zustand";
+import { getTimerModeLabel } from "../getTimerModeLabel";
 import { TimerEngine } from "../components/TimerEngine";
+import { resolveTimerSettings } from "./resolveTimerSettings";
 
 interface TimerStore {
   mode: TimerMode;
@@ -10,11 +12,13 @@ interface TimerStore {
   timeLeft: number;
   totalDuration: number;
   completedCycles: number;
+  activeSettings: Settings;
   start: () => void;
   pause: () => void;
   reset: () => void;
   tick: () => void;
   setMode: (mode: TimerMode) => void;
+  applyTask: (task: Task | null) => void;
 }
 
 export const useTimerStore = create<TimerStore>((set, get) => ({
@@ -23,6 +27,7 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
   timeLeft: 25 * 60,
   totalDuration: 25 * 60,
   completedCycles: 0,
+  activeSettings: useSettingsStore.getState().settings,
 
   start: () => {
     if (get().state === TimerState.RUNNING) return;
@@ -34,8 +39,8 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
   },
 
   reset: () => {
-    const settings = useSettingsStore.getState().settings;
-    const initialTime = TimerEngine.calculateInitialTime(get().mode, settings);
+    const activeSettings = get().activeSettings;
+    const initialTime = TimerEngine.calculateInitialTime(get().mode, activeSettings);
     set({
       state: TimerState.IDLE,
       timeLeft: initialTime,
@@ -47,14 +52,14 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
     const { timeLeft, state, mode, completedCycles } = get();
     if (state !== TimerState.RUNNING) return;
 
-    if (timeLeft <= 0) {
-      const settings = useSettingsStore.getState().settings;
+    if (timeLeft <= 1) {
+      const activeSettings = get().activeSettings;
       const nextMode = TimerEngine.getNextMode(
         mode,
         completedCycles,
-        settings.cyclesBeforeLongBreak,
+        activeSettings.cyclesBeforeLongBreak,
       );
-      const nextDuration = TimerEngine.calculateInitialTime(nextMode, settings);
+      const nextDuration = TimerEngine.calculateInitialTime(nextMode, activeSettings);
 
       // Handle completion side effects
       const { soundEnabled } = useSettingsStore.getState().settings;
@@ -68,7 +73,8 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
       } else if (mode === TimerMode.SHORT_BREAK) {
         if (soundEnabled) new Audio("/FocusAlert.mp3").play().catch(() => {});
       } else if (mode === TimerMode.LONG_BREAK) {
-        if (soundEnabled) new Audio("/SessionEndAlert.mp3").play().catch(() => {});
+        if (soundEnabled)
+          new Audio("/SessionEndAlert.mp3").play().catch(() => {});
       }
 
       if (
@@ -76,7 +82,7 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
         Notification.permission === "granted"
       ) {
         new Notification("Cadence", {
-          body: `${mode.replace("_", " ")} finished. Starting ${nextMode.replace("_", " ")}.`,
+          body: `${getTimerModeLabel(mode)} finished. Starting ${getTimerModeLabel(nextMode)}.`,
         });
       }
 
@@ -98,8 +104,7 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
   },
 
   setMode: (mode: TimerMode) => {
-    const settings = useSettingsStore.getState().settings;
-    const duration = TimerEngine.calculateInitialTime(mode, settings);
+    const duration = TimerEngine.calculateInitialTime(mode, get().activeSettings);
     set({
       mode,
       state: TimerState.IDLE,
@@ -107,13 +112,39 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
       totalDuration: duration,
     });
   },
+
+  applyTask: (task) => {
+    const globalSettings = useSettingsStore.getState().settings;
+    const effectiveSettings = resolveTimerSettings(globalSettings, task);
+    const duration = TimerEngine.calculateInitialTime(
+      TimerMode.FOCUS,
+      effectiveSettings,
+    );
+
+    set({
+      mode: TimerMode.FOCUS,
+      state: TimerState.IDLE,
+      timeLeft: duration,
+      totalDuration: duration,
+      completedCycles: 0,
+      activeSettings: effectiveSettings,
+    });
+  },
 }));
 
-// Sync timer duration whenever settings change while the timer is idle
+// Sync timer duration and activeSettings whenever global settings change while the timer is idle
 useSettingsStore.subscribe((newState) => {
   const { state, mode } = useTimerStore.getState();
   if (state === TimerState.IDLE) {
-    const duration = TimerEngine.calculateInitialTime(mode, newState.settings);
-    useTimerStore.setState({ timeLeft: duration, totalDuration: duration });
+    const { activeTaskId, tasks } = useTaskStore.getState();
+    const activeTask = tasks.find((task) => task.id === activeTaskId) ?? null;
+    const activeSettings = resolveTimerSettings(newState.settings, activeTask);
+    const duration = TimerEngine.calculateInitialTime(mode, activeSettings);
+
+    useTimerStore.setState({
+      timeLeft: duration,
+      totalDuration: duration,
+      activeSettings,
+    });
   }
 });

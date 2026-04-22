@@ -5,6 +5,7 @@ export const TimerWrapper = styled(Box)({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  position: 'relative'
 });
 
 export const RingContainer = styled(Box)({
@@ -108,3 +109,20 @@ export const PlayPauseButton = styled(Box)({
     backgroundColor: "#2E2566",
   },
 });
+
+export const ActiveTaskDot = styled(Box)({
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  width: 10,
+  height: 10,
+  borderRadius: "50%",
+  backgroundColor: "#E8B93A",
+  cursor: "pointer",
+  "@keyframes pulse": {
+    "0%, 100%": { transform: "scale(1)",   opacity: 1   },
+    "50%":       { transform: "scale(1.6)", opacity: 0.6 },
+  },
+  animation: "pulse 1.6s ease-in-out infinite",
+});
+

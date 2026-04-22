@@ -2,7 +2,8 @@ import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const PageWrapper = styled(Box)({
-  height: "calc(100vh - 48px)",
+  height: "100%",
+  minHeight: 0,
   display: "flex",
   flexDirection: "column",
   position: "relative",
@@ -35,11 +36,13 @@ export const PageTitle = styled(Typography)({
 
 export const TaskListScroll = styled(Box)({
   flex: 1,
+  minHeight: 0,
   overflowY: "auto",
   display: "flex",
   flexDirection: "column",
   gap: "8px",
-  "&::-webkit-scrollbar": { width: 4 },
+  scrollbarWidth: "none",
+  "&::-webkit-scrollbar": { display: "none" },
   "&::-webkit-scrollbar-thumb": {
     backgroundColor: "rgba(0,0,0,0.15)",
     borderRadius: 4,

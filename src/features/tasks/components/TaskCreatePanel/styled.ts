@@ -2,14 +2,15 @@ import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const PanelWrapper = styled(Box)({
-  height: "calc(100vh - 48px)",
+  height: "100%",
+  minHeight: 0,
   display: "flex",
   flexDirection: "column",
   position: "relative",
 });
 
 export const AbsoluteBox = styled(Box)({
-  position: "fixed",
+  position: "absolute",
   top: 16,
   left: 16,
   width: 40,
@@ -37,6 +38,7 @@ export const FieldsContainer = styled(Box)({
   flexDirection: "column",
   gap: "12px",
   flex: 1,
+  minHeight: 0,
   overflowY: "auto",
   scrollbarWidth: "none",
   "&::-webkit-scrollbar": { display: "none" },

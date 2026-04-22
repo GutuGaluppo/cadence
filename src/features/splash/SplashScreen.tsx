@@ -106,7 +106,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
 
       {/* ── App name ── */}
       <div className="sp__text">
-        <p className="sp__name">Pomodoro Cadence</p>
+        <p className="sp__name">Pomodoro</p>
+        <p className="sp__name">Cadence</p>
       </div>
     </div>
   );

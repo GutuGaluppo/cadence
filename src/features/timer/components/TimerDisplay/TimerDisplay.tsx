@@ -1,4 +1,3 @@
-import { useSettingsStore } from "@/features/settings/store/store";
 import { useTaskStore } from "@/features/tasks/store/store";
 import { TimerMode, TimerState } from "@/types";
 import {
@@ -12,9 +11,11 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import React, { useEffect } from "react";
+import { getTimerModeLabel } from "../../getTimerModeLabel";
 import { formatTime } from "../../formatTime";
 import { useTimerStore } from "../../store/useTimerStore";
 import {
+  ActiveTaskDot,
   CenterContent,
   CircleButton,
   ControlsRow,
@@ -56,6 +57,7 @@ const FlipDigit: React.FC<{ digit: string }> = ({ digit }) => (
 interface TimerDisplayProps {
   onSettingsOpen?: () => void;
   onTasksOpen?: () => void;
+  onActiveTaskOpen?: () => void;
 }
 
 const MODE_COLOR: Record<TimerMode, string> = {
@@ -77,6 +79,7 @@ const MODE_GRADIENT: Record<TimerMode, [string, string]> = {
 export const TimerDisplay: React.FC<TimerDisplayProps> = ({
   onSettingsOpen,
   onTasksOpen,
+  onActiveTaskOpen,
 }) => {
   const {
     state,
@@ -87,47 +90,35 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
     pause,
     reset,
     completedCycles,
+    activeSettings,
   } = useTimerStore();
-  const { activeTaskId, incrementPomodoro } = useTaskStore();
-  const { settings } = useSettingsStore();
+  const activeTaskId = useTaskStore((state) => state.activeTaskId);
 
   const progress =
     totalDuration > 0 ? ((totalDuration - timeLeft) / totalDuration) * 100 : 0;
   const strokeDashoffset = CIRCUMFERENCE * (1 - progress / 100);
 
-  const cyclesInRound = completedCycles % settings.cyclesBeforeLongBreak;
-  const totalDots = settings.cyclesBeforeLongBreak;
+  const cyclesInRound = completedCycles % activeSettings.cyclesBeforeLongBreak;
+  const totalDots = activeSettings.cyclesBeforeLongBreak;
 
   const color = MODE_COLOR[mode];
   const [gradientLight, gradientDark] = MODE_GRADIENT[mode];
   const isRunning = state === TimerState.RUNNING;
   const ModeIcon = mode === TimerMode.FOCUS ? PencilRuler : Coffee;
-
-  const getModeLabel = () => {
-    if (mode === TimerMode.FOCUS) return "FOCUS";
-    if (mode === TimerMode.SHORT_BREAK) return "SHORT BREAK";
-    return "LONG BREAK";
-  };
+  const modeLabel = getTimerModeLabel(mode).toUpperCase();
 
   const getModeColor = () => {
     if (isRunning) {
       return color;
     }
-    return '#333'
+    return "#333";
   };
 
   useEffect(() => {
-    if (state === TimerState.COMPLETED) {
-      if (Notification.permission === "granted") {
-        new Notification("Cadence", { body: `${getModeLabel()} finished.` });
-      }
-      if (mode === TimerMode.FOCUS && activeTaskId) {
-        incrementPomodoro(activeTaskId);
-      }
+    if (typeof Notification === "undefined") {
+      return;
     }
-  }, [state, mode, activeTaskId, incrementPomodoro]);
 
-  useEffect(() => {
     if (
       Notification.permission !== "granted" &&
       Notification.permission !== "denied"
@@ -142,7 +133,6 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
         <CircleButton onClick={reset}>
           <RotateCcw size={20} color="rgba(0,0,0,0.45)" />
         </CircleButton>
-
 
         <CircleButton onClick={onTasksOpen}>
           <ListChecks size={20} color="rgba(0,0,0,0.45)" />
@@ -200,15 +190,32 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
         </svg>
 
         <CenterContent>
-          <ModeIcon size={26} color={getModeColor()} style={{ opacity: 0.85 }} />
+          <ModeIcon
+            size={26}
+            color={getModeColor()}
+            style={{ opacity: 0.85 }}
+          />
           <FlipClockRow>
-            {formatTime(timeLeft).split("").map((char, i) =>
-              char === ":" ? (
-                <span key={i} style={{ fontSize: "3rem", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#1A1A1A" }}>:</span>
-              ) : (
-                <FlipDigit key={i} digit={char} />
-              )
-            )}
+            {formatTime(timeLeft)
+              .split("")
+              .map((char, i) =>
+                char === ":" ? (
+                  <span
+                    key={i}
+                    style={{
+                      fontSize: "3rem",
+                      fontWeight: 700,
+                      letterSpacing: "-0.02em",
+                      lineHeight: 1.1,
+                      color: "#1A1A1A",
+                    }}
+                  >
+                    :
+                  </span>
+                ) : (
+                  <FlipDigit key={i} digit={char} />
+                ),
+              )}
           </FlipClockRow>
           <DotsRow>
             {Array.from({ length: totalDots }).map((_, i) => (
@@ -219,14 +226,15 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
             ))}
           </DotsRow>
 
-          <ModeLabel>{getModeLabel()}</ModeLabel>
+          <ModeLabel>{modeLabel}</ModeLabel>
         </CenterContent>
       </RingContainer>
 
+      <PlayPauseButton onClick={isRunning ? pause : start}>
+        {isRunning ? <PauseIcon size={30} /> : <PlayIcon size={30} />}
+      </PlayPauseButton>
 
-        <PlayPauseButton onClick={isRunning ? pause : start}>
-          {isRunning ? <PauseIcon size={30} /> : <PlayIcon size={30} />}
-        </PlayPauseButton>
+      {activeTaskId && <ActiveTaskDot onClick={onActiveTaskOpen} />}
     </TimerWrapper>
   );
 };

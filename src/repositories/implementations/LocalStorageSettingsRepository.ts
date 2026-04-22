@@ -6,7 +6,17 @@ export class LocalStorageSettingsRepository implements SettingsRepository {
 
   async getSettings(): Promise<Settings> {
     const data = localStorage.getItem(this.STORAGE_KEY);
-    return data ? JSON.parse(data) : DEFAULT_SETTINGS;
+
+    if (!data) {
+      return DEFAULT_SETTINGS;
+    }
+
+    try {
+      const parsed = JSON.parse(data) as Partial<Settings>;
+      return { ...DEFAULT_SETTINGS, ...parsed };
+    } catch {
+      return DEFAULT_SETTINGS;
+    }
   }
 
   async saveSettings(settings: Settings): Promise<void> {

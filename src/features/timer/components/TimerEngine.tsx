@@ -26,5 +26,4 @@ export class TimerEngine {
     }
     return TimerMode.SHORT_BREAK;
   }
-
 }
