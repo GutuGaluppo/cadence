@@ -1,11 +1,15 @@
 {
   "name": "cadence",
   "private": true,
+  "description": "Local-first Pomodoro desktop app for task-based focus sessions.",
   "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "pnpm typecheck && vite build",
     "preview": "vite preview",
     "tauri": "tauri"
   },
@@ -31,6 +35,7 @@
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",
     "typescript": "~5.8.3",
-    "vite": "^7.0.4"
+    "vite": "^7.0.4",
+    "vitest": "^4.1.5"
   }
 }
