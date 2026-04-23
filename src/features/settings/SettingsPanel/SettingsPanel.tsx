@@ -1,4 +1,4 @@
-import { View } from "@/app/layout/MainLayout";
+import { useAppViewStore } from "@/app/store/useAppViewStore";
 import {
   Divider,
   FormControlLabel,
@@ -22,6 +22,8 @@ interface SettingRowProps {
   onEdit: () => void;
 }
 
+type ToggleSettingKey = "alwaysOnTop" | "soundEnabled";
+
 function SettingRow({ label, value, onEdit }: SettingRowProps) {
   return (
     <SettingRowContainer onClick={onEdit}>
@@ -40,21 +42,18 @@ function SettingRow({ label, value, onEdit }: SettingRowProps) {
   );
 }
 
-export const SettingsPanel = ({
-  handleView,
-}: {
-  handleView: (currView: View) => void;
-}) => {
+export const SettingsPanel = () => {
   const { settings, updateSettings } = useSettingsStore();
+  const setView = useAppViewStore((state) => state.setView);
 
-  const handleChange = (key: keyof typeof settings, value: any) => {
+  const handleToggle = (key: ToggleSettingKey, value: boolean) => {
     updateSettings({ ...settings, [key]: value });
   };
 
   return (
     <PanelContainer>
       <AbsoluteBox>
-        <IconButton onClick={() => handleView("timer")}>
+        <IconButton onClick={() => setView("timer")}>
           <ArrowLeft size={20} color="rgba(0,0,0,0.5)" />
         </IconButton>
       </AbsoluteBox>
@@ -76,23 +75,23 @@ export const SettingsPanel = ({
         <SettingRow
           label="Focus Session"
           value={`${settings.focusDuration} min`}
-          onEdit={() => handleView("focus-duration")}
+          onEdit={() => setView("focus-duration")}
         />
         <SettingRow
           label="Short Break"
           value={`${settings.shortBreakDuration} min`}
-          onEdit={() => handleView("short-break")}
+          onEdit={() => setView("short-break")}
         />
         <SettingRow
           label="Long Break"
           value={`${settings.longBreakDuration} min`}
-          onEdit={() => handleView("long-break")}
+          onEdit={() => setView("long-break")}
         />
 
         <SettingRow
           label="Long Break After"
           value={`${settings.cyclesBeforeLongBreak} cycles`}
-          onEdit={() => handleView("cycles-before-long-break")}
+          onEdit={() => setView("cycles-before-long-break")}
         />
 
         <Divider sx={{ opacity: 0.1 }} />
@@ -102,7 +101,9 @@ export const SettingsPanel = ({
             <Switch
               size="small"
               checked={settings.soundEnabled}
-              onChange={(e) => handleChange("soundEnabled", e.target.checked)}
+              onChange={(event) =>
+                handleToggle("soundEnabled", event.target.checked)
+              }
             />
           }
           label={
@@ -117,7 +118,9 @@ export const SettingsPanel = ({
             <Switch
               size="small"
               checked={settings.alwaysOnTop}
-              onChange={(e) => handleChange("alwaysOnTop", e.target.checked)}
+              onChange={(event) =>
+                handleToggle("alwaysOnTop", event.target.checked)
+              }
             />
           }
           label={

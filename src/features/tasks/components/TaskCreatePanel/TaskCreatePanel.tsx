@@ -1,4 +1,4 @@
-import { View } from "@/app/layout/MainLayout";
+import { useAppViewStore } from "@/app/store/useAppViewStore";
 import { useSettingsStore } from "@/features/settings/store/store";
 import { IconButton, TextField } from "@mui/material";
 import { ArrowLeft, Minus, Plus } from "lucide-react";
@@ -16,10 +16,6 @@ import {
   StepperValue,
 } from "./styled";
 
-interface TaskCreatePanelProps {
-  handleView: (view: View) => void;
-}
-
 interface CompactStepperProps {
   label: string;
   value: number;
@@ -29,24 +25,41 @@ interface CompactStepperProps {
   onChange: (v: number) => void;
 }
 
-export const CompactStepper: React.FC<CompactStepperProps> = ({ label, value, unit, min, max, onChange }) => (
+export const CompactStepper: React.FC<CompactStepperProps> = ({
+  label,
+  value,
+  unit,
+  min,
+  max,
+  onChange,
+}) => (
   <StepperRow>
     <StepperLabel>{label}</StepperLabel>
     <StepperControls>
       <IconButton
-        size="small"
-        onClick={() => onChange(Math.max(min, value - 1))}
         disabled={value <= min}
-        sx={{ padding: "4px", backgroundColor: "rgba(0,0,0,0.06)", borderRadius: "8px" }}
+        onClick={() => onChange(Math.max(min, value - 1))}
+        size="small"
+        sx={{
+          backgroundColor: "rgba(0,0,0,0.06)",
+          borderRadius: "8px",
+          padding: "4px",
+        }}
       >
         <Minus size={14} />
       </IconButton>
-      <StepperValue>{value} {unit}</StepperValue>
+      <StepperValue>
+        {value} {unit}
+      </StepperValue>
       <IconButton
-        size="small"
-        onClick={() => onChange(Math.min(max, value + 1))}
         disabled={value >= max}
-        sx={{ padding: "4px", backgroundColor: "rgba(0,0,0,0.06)", borderRadius: "8px" }}
+        onClick={() => onChange(Math.min(max, value + 1))}
+        size="small"
+        sx={{
+          backgroundColor: "rgba(0,0,0,0.06)",
+          borderRadius: "8px",
+          padding: "4px",
+        }}
       >
         <Plus size={14} />
       </IconButton>
@@ -54,23 +67,38 @@ export const CompactStepper: React.FC<CompactStepperProps> = ({ label, value, un
   </StepperRow>
 );
 
-export const TaskCreatePanel: React.FC<TaskCreatePanelProps> = ({ handleView }) => {
+export const TaskCreatePanel: React.FC = () => {
   const { addTask } = useTaskStore();
   const { settings } = useSettingsStore();
+  const setView = useAppViewStore((state) => state.setView);
 
   const [title, setTitle] = useState("");
   const [focusDuration, setFocusDuration] = useState(settings.focusDuration);
-  const [shortBreakDuration, setShortBreakDuration] = useState(settings.shortBreakDuration);
+  const [shortBreakDuration, setShortBreakDuration] = useState(
+    settings.shortBreakDuration,
+  );
   const [longBreakDuration, setLongBreakDuration] = useState(settings.longBreakDuration);
-  const [cyclesBeforeLongBreak, setCyclesBeforeLongBreak] = useState(settings.cyclesBeforeLongBreak);
+  const [cyclesBeforeLongBreak, setCyclesBeforeLongBreak] = useState(
+    settings.cyclesBeforeLongBreak,
+  );
   const [error, setError] = useState<string | null>(null);
 
   const handleSave = async () => {
-    if (!title.trim()) return;
+    if (!title.trim()) {
+      return;
+    }
+
     setError(null);
+
     try {
-      await addTask({ title: title.trim(), focusDuration, shortBreakDuration, longBreakDuration, cyclesBeforeLongBreak });
-      handleView("tasks");
+      await addTask({
+        title: title.trim(),
+        focusDuration,
+        shortBreakDuration,
+        longBreakDuration,
+        cyclesBeforeLongBreak,
+      });
+      setView("tasks");
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error("Failed to create task:", err);
@@ -81,7 +109,7 @@ export const TaskCreatePanel: React.FC<TaskCreatePanelProps> = ({ handleView }) 
   return (
     <PanelWrapper>
       <AbsoluteBox>
-        <IconButton onClick={() => handleView("tasks")}>
+        <IconButton onClick={() => setView("tasks")}>
           <ArrowLeft size={20} color="rgba(0,0,0,0.55)" />
         </IconButton>
       </AbsoluteBox>
@@ -141,10 +169,25 @@ export const TaskCreatePanel: React.FC<TaskCreatePanelProps> = ({ handleView }) 
       </FieldsContainer>
 
       {error && (
-        <p style={{ color: "red", fontSize: "0.75rem", margin: "8px 0 0", textAlign: "center" }}>{error}</p>
+        <p
+          style={{
+            color: "red",
+            fontSize: "0.75rem",
+            margin: "8px 0 0",
+            textAlign: "center",
+          }}
+        >
+          {error}
+        </p>
       )}
 
-      <SaveButton onClick={handleSave} sx={{ opacity: title.trim() ? 1 : 0.4, pointerEvents: title.trim() ? "auto" : "none" }}>
+      <SaveButton
+        onClick={handleSave}
+        sx={{
+          opacity: title.trim() ? 1 : 0.4,
+          pointerEvents: title.trim() ? "auto" : "none",
+        }}
+      >
         Create Task
       </SaveButton>
     </PanelWrapper>

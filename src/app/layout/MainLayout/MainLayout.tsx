@@ -1,7 +1,8 @@
 import { APP_VERSION } from "@/app/version";
+import { useAppViewStore } from "@/app/store/useAppViewStore";
 import { TimerDisplay } from "@/features/timer/components/TimerDisplay";
 import { AnimatePresence, motion } from "motion/react";
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense } from "react";
 import { MainContainer, VersionBadge, ViewFallback } from "./styled";
 
 const DurationStepperPanel = lazy(
@@ -23,17 +24,6 @@ const TasksPage = lazy(async () => {
   return { default: module.TasksPage };
 });
 
-export type View =
-  | "timer"
-  | "settings"
-  | "focus-duration"
-  | "short-break"
-  | "long-break"
-  | "cycles-before-long-break"
-  | "tasks"
-  | "task-create"
-  | "task-detail";
-
 const slide = {
   initial: { opacity: 0, y: 8 },
   animate: { opacity: 1, y: 0 },
@@ -46,26 +36,21 @@ function LazyViewFallback() {
 }
 
 export default function MainLayout() {
-  const [view, setView] = useState<View>("timer");
-  const handleView = (value: View) => setView(value);
+  const view = useAppViewStore((state) => state.view);
 
   return (
     <MainContainer>
       <AnimatePresence mode="wait">
         {view === "timer" && (
           <motion.div key="timer" {...slide}>
-            <TimerDisplay
-              onSettingsOpen={() => setView("settings")}
-              onTasksOpen={() => setView("tasks")}
-              onActiveTaskOpen={() => setView("task-detail")}
-            />
+            <TimerDisplay />
           </motion.div>
         )}
 
         {view === "settings" && (
           <motion.div key="settings" {...slide}>
             <Suspense fallback={<LazyViewFallback />}>
-              <SettingsPanel handleView={handleView} />
+              <SettingsPanel />
             </Suspense>
           </motion.div>
         )}
@@ -74,7 +59,6 @@ export default function MainLayout() {
           <motion.div key="focus-duration" {...slide}>
             <Suspense fallback={<LazyViewFallback />}>
               <DurationStepperPanel
-                handleView={handleView}
                 settingsKey="focusDuration"
                 label="Focus Session"
                 unit="min"
@@ -89,7 +73,6 @@ export default function MainLayout() {
           <motion.div key="short-break" {...slide}>
             <Suspense fallback={<LazyViewFallback />}>
               <DurationStepperPanel
-                handleView={handleView}
                 settingsKey="shortBreakDuration"
                 label="Short Break"
                 unit="min"
@@ -104,7 +87,6 @@ export default function MainLayout() {
           <motion.div key="long-break" {...slide}>
             <Suspense fallback={<LazyViewFallback />}>
               <DurationStepperPanel
-                handleView={handleView}
                 settingsKey="longBreakDuration"
                 label="Long Break"
                 unit="min"
@@ -119,7 +101,6 @@ export default function MainLayout() {
           <motion.div key="cycles-before-long-break" {...slide}>
             <Suspense fallback={<LazyViewFallback />}>
               <DurationStepperPanel
-                handleView={handleView}
                 settingsKey="cyclesBeforeLongBreak"
                 label="Cycles Before Long Break"
                 unit="cycles"
@@ -133,7 +114,7 @@ export default function MainLayout() {
         {view === "tasks" && (
           <motion.div key="tasks" {...slide}>
             <Suspense fallback={<LazyViewFallback />}>
-              <TasksPage handleView={handleView} />
+              <TasksPage />
             </Suspense>
           </motion.div>
         )}
@@ -141,7 +122,7 @@ export default function MainLayout() {
         {view === "task-create" && (
           <motion.div key="task-create" {...slide}>
             <Suspense fallback={<LazyViewFallback />}>
-              <TaskCreatePanel handleView={handleView} />
+              <TaskCreatePanel />
             </Suspense>
           </motion.div>
         )}
@@ -149,7 +130,7 @@ export default function MainLayout() {
         {view === "task-detail" && (
           <motion.div key="task-detail" {...slide}>
             <Suspense fallback={<LazyViewFallback />}>
-              <TaskDetailPanel handleView={handleView} />
+              <TaskDetailPanel />
             </Suspense>
           </motion.div>
         )}

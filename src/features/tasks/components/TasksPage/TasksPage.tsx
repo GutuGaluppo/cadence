@@ -1,4 +1,6 @@
-import { View } from "@/app/layout/MainLayout";
+import { useAppViewStore } from "@/app/store/useAppViewStore";
+import { useTimerStore } from "@/features/timer/store/useTimerStore";
+import { Task, TimerState } from "@/types";
 import { Checkbox, IconButton } from "@mui/material";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import React, { useEffect } from "react";
@@ -14,14 +16,8 @@ import {
   TaskMeta,
   TaskTitle,
 } from "./styled";
-import { useTimerStore } from "@/features/timer/store/useTimerStore";
-import { Task, TimerState } from "@/types";
 
-interface TasksPageProps {
-  handleView: (view: View) => void;
-}
-
-export const TasksPage: React.FC<TasksPageProps> = ({ handleView }) => {
+export const TasksPage: React.FC = () => {
   const {
     tasks,
     loadTasks,
@@ -32,6 +28,7 @@ export const TasksPage: React.FC<TasksPageProps> = ({ handleView }) => {
   } = useTaskStore();
 
   const { applyTask, state: timerState } = useTimerStore();
+  const setView = useAppViewStore((state) => state.setView);
 
   useEffect(() => {
     void loadTasks();
@@ -41,7 +38,9 @@ export const TasksPage: React.FC<TasksPageProps> = ({ handleView }) => {
     const isDeselecting = activeTaskId === task.id;
     setActiveTask(isDeselecting ? null : task.id);
     applyTask(isDeselecting ? null : task);
-    if (!isDeselecting) handleView("timer");
+    if (!isDeselecting) {
+      setView("timer");
+    }
   };
 
   const handleDelete = async (task: Task) => {
@@ -55,7 +54,7 @@ export const TasksPage: React.FC<TasksPageProps> = ({ handleView }) => {
   return (
     <PageWrapper>
       <AbsoluteBox>
-        <IconButton onClick={() => handleView("timer")}>
+        <IconButton onClick={() => setView("timer")}>
           <ArrowLeft size={20} color="rgba(0,0,0,0.55)" />
         </IconButton>
       </AbsoluteBox>
@@ -102,7 +101,7 @@ export const TasksPage: React.FC<TasksPageProps> = ({ handleView }) => {
         ))}
       </TaskListScroll>
 
-      <AddButton onClick={() => handleView("task-create")}>
+      <AddButton onClick={() => setView("task-create")}>
         <Plus size={16} />
         New Task
       </AddButton>

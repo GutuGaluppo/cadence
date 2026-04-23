@@ -31,7 +31,7 @@ const muiTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        body: { backgroundColor: "transparent" },
+        body: { backgroundColor: "#EFEDE9" },
       },
     },
   },

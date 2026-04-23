@@ -1,4 +1,4 @@
-import { View } from "@/app/layout/MainLayout";
+import { useAppViewStore } from "@/app/store/useAppViewStore";
 import { useTaskStore } from "@/features/tasks/store/store";
 import { useTimerStore } from "@/features/timer/store/useTimerStore";
 import { IconButton } from "@mui/material";
@@ -13,37 +13,32 @@ import {
 } from "../TaskCreatePanel/styled";
 import { CompactStepper } from "../TaskCreatePanel/TaskCreatePanel";
 
-// Reutilize o mesmo CompactStepper do TaskCreatePanel
-// (pode extrair para um componente shared se quiser — por ora copie)
-
-interface Props {
-  handleView: (view: View) => void;
-}
-
-const TaskDetailPanel: React.FC<Props> = ({ handleView }) => {
+const TaskDetailPanel: React.FC = () => {
   const { tasks, activeTaskId, updateTask } = useTaskStore();
   const { applyTask, start } = useTimerStore();
+  const setView = useAppViewStore((state) => state.setView);
 
   const task = tasks.find((t) => t.id === activeTaskId);
+  const [focusDuration, setFocusDuration] = useState(25);
+  const [shortBreakDuration, setShortBreakDuration] = useState(5);
+  const [longBreakDuration, setLongBreakDuration] = useState(15);
+  const [cyclesBeforeLongBreak, setCyclesBeforeLongBreak] = useState(4);
 
   useEffect(() => {
     if (!task) {
-      handleView("timer");
+      setView("timer");
+      return;
     }
-  }, [handleView, task]);
 
-  if (!task) return null;
+    setFocusDuration(task.focusDuration ?? 25);
+    setShortBreakDuration(task.shortBreakDuration ?? 5);
+    setLongBreakDuration(task.longBreakDuration ?? 15);
+    setCyclesBeforeLongBreak(task.cyclesBeforeLongBreak ?? 4);
+  }, [setView, task]);
 
-  const [focusDuration, setFocusDuration] = useState(task.focusDuration ?? 25);
-  const [shortBreakDuration, setShortBreakDuration] = useState(
-    task.shortBreakDuration ?? 5,
-  );
-  const [longBreakDuration, setLongBreakDuration] = useState(
-    task.longBreakDuration ?? 15,
-  );
-  const [cyclesBeforeLongBreak, setCyclesBeforeLongBreak] = useState(
-    task.cyclesBeforeLongBreak ?? 4,
-  );
+  if (!task) {
+    return null;
+  }
 
   const handleSave = async () => {
     const updated = {
@@ -55,13 +50,13 @@ const TaskDetailPanel: React.FC<Props> = ({ handleView }) => {
     await updateTask(task.id, updated);
     applyTask({ ...task, ...updated });
     start();
-    handleView("timer");
+    setView("timer");
   };
 
   return (
     <PanelWrapper>
       <AbsoluteBox>
-        <IconButton onClick={() => handleView("timer")}>
+        <IconButton onClick={() => setView("timer")}>
           <ArrowLeft size={20} color="rgba(0,0,0,0.55)" />
         </IconButton>
       </AbsoluteBox>
