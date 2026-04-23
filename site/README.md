@@ -1,46 +1,41 @@
 # Site do Cadence
 
-Landing page estática inicial para o lançamento do app.
+Landing page pública migrada para `React + TypeScript` com build estático via
+`Vite`.
 
-## Arquivos
+## Estrutura
 
 - `index.html`
-- `support.html`
-- `privacy.html`
-- `changelog.html`
-- `styles.css`
-- `app.js`
+- `privacy/index.html`
+- `support/index.html`
+- `changelog/index.html`
+- `src/`
+- `vite.config.ts`
+- `tsconfig.json`
 
 ## Objetivo
 
-Servir como primeira versão da página pública do produto, separada do app desktop.
-
-## Como publicar
-
-Por ser uma página estática, você pode publicar em:
-
-- GitHub Pages
-- Netlify
-- Vercel
-- Cloudflare Pages
-- bucket estático em S3/R2
-
-O repositório agora inclui `.github/workflows/pages.yml` para publicar `site/`
-via GitHub Pages com GitHub Actions.
+Servir como página pública do produto, separada do app desktop em `Tauri`.
 
 ## Como testar localmente
 
-Exemplo com Python:
+Na raiz do repositório:
 
 ```bash
-cd site
-python3 -m http.server 4173
+pnpm site:dev
 ```
 
-Depois abra `http://localhost:4173`.
+## Como gerar build
 
-## Ajustes recomendados antes da publicação
+Na raiz do repositório:
 
-- atualizar os links para artefatos específicos após a primeira release assinada
-- incluir screenshots reais do app quando estiverem prontas
-- configurar o domínio público final em `Settings > Pages` se o projeto usar domínio customizado
+```bash
+pnpm site:build
+```
+
+O artefato final fica em `site/dist/`.
+
+## Publicação
+
+O repositório inclui `.github/workflows/pages.yml`, que agora builda o site
+React e publica `site/dist/` via GitHub Pages.

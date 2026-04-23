@@ -7,6 +7,8 @@ on:
       - master
     paths:
       - "site/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -30,10 +32,31 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Activate pnpm
+        run: corepack prepare pnpm@10.6.5 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build marketing site
+        env:
+          SITE_BASE: /${{ github.event.repository.name }}/
+        run: pnpm site:build
+
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: site
+          path: site/dist
 
   deploy:
     environment:

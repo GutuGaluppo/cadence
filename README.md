@@ -32,6 +32,12 @@ Run only the frontend:
 pnpm dev
 ```
 
+Run the public website in development:
+
+```bash
+pnpm site:dev
+```
+
 ## Quality Commands
 
 Typecheck:
@@ -52,10 +58,17 @@ Build the frontend bundle:
 pnpm build
 ```
 
+Build the public website:
+
+```bash
+pnpm site:build
+```
+
 ## Project Notes
 
 - Desktop configuration lives in `src-tauri/`
 - The initial launch landing page lives in `site/`
+- Timer display refactor notes live in `docs/timer-display-refactor.md`
 - Production planning docs live in:
   - `GUIA_PRODUCAO.md`
   - `BACKLOG_PRODUCAO.md`
