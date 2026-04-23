@@ -1,0 +1,186 @@
+{
+  "brand": {
+    "name": "Cadence",
+    "subtitle": "Desktop Pomodoro",
+    "homeAriaLabel": "Cadence home"
+  },
+  "nav": {
+    "features": "Features",
+    "workflow": "Workflow",
+    "download": "Download",
+    "support": "Support",
+    "privacy": "Privacy",
+    "changelog": "Changelog",
+    "primaryLabel": "Primary",
+    "secondaryLabel": "Secondary"
+  },
+  "footer": {
+    "tagline": "Focused desktop timing for calmer, deeper work.",
+    "github": "GitHub",
+    "releases": "Releases"
+  },
+  "hero": {
+    "eyebrow": "Local-first focus timer for deep work",
+    "title": "Focus in a calmer rhythm.",
+    "description": "Cadence is a desktop Pomodoro app built for task-based sessions, lighter transitions between work and breaks, and a cleaner daily flow without browser clutter.",
+    "downloadLatest": "Download Latest Release",
+    "downloadMac": "Download for macOS",
+    "releaseNotes": "See Release Notes",
+    "highlightsLabel": "Highlights"
+  },
+  "heroHighlights": ["No account required", "Task-aware sessions", "Local storage by default"],
+  "signalBar": {
+    "ariaLabel": "Cadence principles",
+    "items": ["Task-aware sessions", "Minimal desktop surface", "Fast local persistence", "Built for uninterrupted flow"]
+  },
+  "features": {
+    "eyebrow": "Why Cadence",
+    "title": "A timer that stays out of your way.",
+    "items": [
+      {
+        "title": "Task-aware sessions",
+        "description": "Attach focus and break durations directly to the task you are working on instead of forcing one global timing rule for everything."
+      },
+      {
+        "title": "Local-first by default",
+        "description": "Your settings and tasks stay on your machine. The product is shaped around fast local persistence, not around sign-up funnels."
+      },
+      {
+        "title": "Compact desktop flow",
+        "description": "Tray access, a small footprint, and a focused single-window layout keep the app available without turning it into a second workspace."
+      }
+    ]
+  },
+  "workflow": {
+    "eyebrow": "How it works",
+    "title": "From intention to rhythm in three steps.",
+    "items": [
+      {
+        "index": "01",
+        "title": "Pick the task that matters now",
+        "description": "Choose one task and let it define the working session instead of mentally juggling a full backlog while the clock is already running."
+      },
+      {
+        "index": "02",
+        "title": "Stay with the session",
+        "description": "Cadence handles the timer, transitions, and persistent state so you can stay inside the work instead of managing the tool."
+      },
+      {
+        "index": "03",
+        "title": "Build momentum over the day",
+        "description": "Completed cycles stay attached to tasks, giving you a clearer picture of where your attention actually went."
+      }
+    ]
+  },
+  "download": {
+    "eyebrow": "Download",
+    "title": "Ready for your next release build.",
+    "description": "The primary download route below points to the latest public release on GitHub. Signed macOS distribution and checksum upload are now prepared in the repository release pipeline, while Windows-specific certificate signing remains pending certificate selection.",
+    "primaryLabel": "Primary release channel",
+    "primaryText": "Public release assets, version history, and release notes live on GitHub Releases.",
+    "openRelease": "Open Latest Release",
+    "macLabel": "macOS",
+    "macTitle": "Target format",
+    "macText": "Signed and notarized `.dmg` and `.app.tar.gz` builds.",
+    "windowsLabel": "Windows",
+    "windowsTitle": "Planned",
+    "windowsText": "Reserved for a future signed installer once the OS matrix is locked.",
+    "linuxLabel": "Linux",
+    "linuxTitle": "Planned",
+    "linuxText": "Reserved for a future distro strategy after the 1.0 macOS release."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Short answers before launch.",
+    "items": [
+      {
+        "title": "Does Cadence require an account?",
+        "description": "No. The current product direction is local-first and account-free."
+      },
+      {
+        "title": "Where does my data live?",
+        "description": "Settings are stored locally and tasks are persisted in a local SQLite database on the device."
+      },
+      {
+        "title": "Can I customize work and break durations?",
+        "description": "Yes. Global settings exist, and active tasks can also carry their own timing profile."
+      }
+    ]
+  },
+  "privacy": {
+    "eyebrow": "Privacy",
+    "title": "Local-first by product design.",
+    "description": "Cadence is built around local persistence for core functionality and does not require an account for the current product scope.",
+    "sections": [
+      {
+        "title": "What the app stores",
+        "items": [
+          "Task data in a local SQLite database on the device.",
+          "Settings and preferences in local storage used by the desktop shell."
+        ]
+      },
+      {
+        "title": "What the app does not require",
+        "items": [
+          "No account or sign-in.",
+          "No cloud sync in the current release path.",
+          "No bundled analytics or ad tracking scripts in this repository."
+        ]
+      },
+      {
+        "title": "Public website and external links",
+        "description": "The landing page links to GitHub for downloads, release notes, and support. If you use those external services, they may process standard request metadata such as IP address, user agent, and access logs under their own policies."
+      },
+      {
+        "title": "Reporting issues safely",
+        "description": "If you open a public issue, do not include secrets, passwords, private keys, or personal data that should not be publicly visible."
+      }
+    ]
+  },
+  "support": {
+    "eyebrow": "Support",
+    "title": "Public support routes for Cadence.",
+    "description": "Cadence currently uses GitHub as the primary channel for bug reports, release troubleshooting, and product feedback.",
+    "openThread": "Open the right thread",
+    "bugReport": "Include this in a bug report",
+    "beforePosting": "Before posting publicly",
+    "beforePostingText": "Do not include secrets, passwords, tokens, private keys, or personal data in public issues. If the problem is strictly about a release asset, reference the tag and the exact filename that failed.",
+    "tiles": [
+      { "title": "Report a bug", "description": "Use the issue form and include the reproduction path." },
+      { "title": "Check release assets", "description": "Confirm the tag, installer, and checksum before reporting." },
+      { "title": "Browse the repository", "description": "Inspect source, docs, workflows, and current project state." }
+    ],
+    "checklist": [
+      "The app version or release tag you tested.",
+      "Your operating system and architecture.",
+      "What you expected to happen.",
+      "What actually happened.",
+      "Whether the issue reproduces after restarting the app."
+    ]
+  },
+  "changelog": {
+    "eyebrow": "Changelog",
+    "title": "Release-ready changes tracked in public.",
+    "description": "GitHub Releases is the canonical download channel. The repository changelog tracks notable changes before and between public tags.",
+    "currentWork": "Current tracked work",
+    "canonicalSources": "Canonical sources",
+    "githubReleases": "GitHub Releases",
+    "githubReleasesDesc": "Installer assets, generated notes, and per-platform checksums.",
+    "repoChangelog": "Repository changelog",
+    "repoChangelogDesc": "Tracked changes before and between public releases.",
+    "highlights": [
+      "CI, release, and GitHub Pages workflows are now part of the repository.",
+      "Release preparation docs cover signing, notarization, and post-release checks.",
+      "The landing page now exposes public support, privacy, and changelog routes.",
+      "The app shell uses lazy loading for secondary views to reduce the initial payload."
+    ]
+  },
+  "preview": {
+    "mode": "FOCUS",
+    "task1Title": "Finish release checklist",
+    "task1Meta": "25 min focus · 5 min break",
+    "task2Title": "Write landing page copy",
+    "task2Meta": "Custom session"
+  },
+  "lang": { "switcherLabel": "Select language" }
+}

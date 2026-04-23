@@ -1,0 +1,186 @@
+{
+  "brand": {
+    "name": "Cadence",
+    "subtitle": "Pomodoro de Escritorio",
+    "homeAriaLabel": "Inicio de Cadence"
+  },
+  "nav": {
+    "features": "Características",
+    "workflow": "Flujo",
+    "download": "Descargar",
+    "support": "Soporte",
+    "privacy": "Privacidad",
+    "changelog": "Novedades",
+    "primaryLabel": "Principal",
+    "secondaryLabel": "Secundario"
+  },
+  "footer": {
+    "tagline": "Temporización de escritorio enfocada para un trabajo más tranquilo y profundo.",
+    "github": "GitHub",
+    "releases": "Versiones"
+  },
+  "hero": {
+    "eyebrow": "Temporizador de enfoque local para trabajo profundo",
+    "title": "Enfócate en un ritmo más tranquilo.",
+    "description": "Cadence es una app Pomodoro de escritorio diseñada para sesiones basadas en tareas, transiciones más suaves entre trabajo y descansos, y un flujo diario más limpio sin el desorden del navegador.",
+    "downloadLatest": "Descargar Última Versión",
+    "downloadMac": "Descargar para macOS",
+    "releaseNotes": "Ver Notas de Versión",
+    "highlightsLabel": "Destacados"
+  },
+  "heroHighlights": ["Sin cuenta requerida", "Sesiones por tarea", "Almacenamiento local por defecto"],
+  "signalBar": {
+    "ariaLabel": "Principios de Cadence",
+    "items": ["Sesiones por tarea", "Superficie mínima en escritorio", "Persistencia local rápida", "Construido para un flujo ininterrumpido"]
+  },
+  "features": {
+    "eyebrow": "Por qué Cadence",
+    "title": "Un temporizador que se mantiene fuera de tu camino.",
+    "items": [
+      {
+        "title": "Sesiones por tarea",
+        "description": "Asigna duraciones de enfoque y descanso directamente a la tarea en la que estás trabajando, sin imponer una regla de tiempo global para todo."
+      },
+      {
+        "title": "Local-first por defecto",
+        "description": "Tus configuraciones y tareas se quedan en tu máquina. El producto está diseñado en torno a la persistencia local rápida, no a los embudos de registro."
+      },
+      {
+        "title": "Flujo compacto en escritorio",
+        "description": "El acceso desde la bandeja, una huella pequeña y un diseño de ventana única mantienen la app disponible sin convertirla en un segundo espacio de trabajo."
+      }
+    ]
+  },
+  "workflow": {
+    "eyebrow": "Cómo funciona",
+    "title": "De la intención al ritmo en tres pasos.",
+    "items": [
+      {
+        "index": "01",
+        "title": "Elige la tarea que importa ahora",
+        "description": "Selecciona una tarea y deja que defina la sesión de trabajo, en lugar de hacer malabarismos mentales con todo el backlog mientras el reloj ya está corriendo."
+      },
+      {
+        "index": "02",
+        "title": "Permanece en la sesión",
+        "description": "Cadence gestiona el temporizador, las transiciones y el estado persistente para que puedas quedarte dentro del trabajo en lugar de gestionar la herramienta."
+      },
+      {
+        "index": "03",
+        "title": "Construye impulso a lo largo del día",
+        "description": "Los ciclos completados quedan vinculados a las tareas, dándote una imagen más clara de dónde fue realmente tu atención."
+      }
+    ]
+  },
+  "download": {
+    "eyebrow": "Descargar",
+    "title": "Listo para tu próxima versión.",
+    "description": "La ruta de descarga principal apunta a la última versión pública en GitHub. La distribución macOS firmada y la carga del checksum ya están preparadas en el pipeline de versiones del repositorio, mientras que la firma de certificado específica de Windows está pendiente de selección.",
+    "primaryLabel": "Canal de lanzamiento principal",
+    "primaryText": "Los assets de versión públicos, el historial de versiones y las notas de versión viven en GitHub Releases.",
+    "openRelease": "Abrir Última Versión",
+    "macLabel": "macOS",
+    "macTitle": "Formato objetivo",
+    "macText": "Compilaciones `.dmg` y `.app.tar.gz` firmadas y notarizadas.",
+    "windowsLabel": "Windows",
+    "windowsTitle": "Planificado",
+    "windowsText": "Reservado para un futuro instalador firmado una vez que se defina la matriz de sistemas operativos.",
+    "linuxLabel": "Linux",
+    "linuxTitle": "Planificado",
+    "linuxText": "Reservado para una futura estrategia de distribución tras el lanzamiento de macOS 1.0."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Respuestas cortas antes del lanzamiento.",
+    "items": [
+      {
+        "title": "¿Cadence requiere una cuenta?",
+        "description": "No. La dirección actual del producto es local-first y sin necesidad de cuenta."
+      },
+      {
+        "title": "¿Dónde viven mis datos?",
+        "description": "La configuración se almacena localmente y las tareas se guardan en una base de datos SQLite local en el dispositivo."
+      },
+      {
+        "title": "¿Puedo personalizar las duraciones de trabajo y descanso?",
+        "description": "Sí. Existen configuraciones globales y las tareas activas también pueden tener su propio perfil de tiempo."
+      }
+    ]
+  },
+  "privacy": {
+    "eyebrow": "Privacidad",
+    "title": "Local-first por diseño del producto.",
+    "description": "Cadence está construido en torno a la persistencia local para la funcionalidad principal y no requiere una cuenta para el alcance actual del producto.",
+    "sections": [
+      {
+        "title": "Lo que la app almacena",
+        "items": [
+          "Datos de tareas en una base de datos SQLite local en el dispositivo.",
+          "Configuraciones y preferencias en el almacenamiento local utilizado por el shell de escritorio."
+        ]
+      },
+      {
+        "title": "Lo que la app no requiere",
+        "items": [
+          "Sin cuenta ni inicio de sesión.",
+          "Sin sincronización en la nube en la ruta de lanzamiento actual.",
+          "Sin scripts de análisis o seguimiento de anuncios en este repositorio."
+        ]
+      },
+      {
+        "title": "Sitio web público y enlaces externos",
+        "description": "La landing page enlaza a GitHub para descargas, notas de versión y soporte. Si usas esos servicios externos, pueden procesar metadatos de solicitud estándar como dirección IP, agente de usuario y registros de acceso bajo sus propias políticas."
+      },
+      {
+        "title": "Reportar problemas de forma segura",
+        "description": "Si abres un issue público, no incluyas secretos, contraseñas, claves privadas o datos personales que no deban ser visibles públicamente."
+      }
+    ]
+  },
+  "support": {
+    "eyebrow": "Soporte",
+    "title": "Canales de soporte públicos para Cadence.",
+    "description": "Cadence usa actualmente GitHub como canal principal para informes de bugs, solución de problemas de versión y feedback del producto.",
+    "openThread": "Abre el hilo correcto",
+    "bugReport": "Incluye esto en un informe de bug",
+    "beforePosting": "Antes de publicar públicamente",
+    "beforePostingText": "No incluyas secretos, contraseñas, tokens, claves privadas o datos personales en issues públicos. Si el problema es estrictamente sobre un asset de versión, referencia la etiqueta y el nombre exacto del archivo que falló.",
+    "tiles": [
+      { "title": "Reportar un bug", "description": "Usa el formulario de issue e incluye el camino de reproducción." },
+      { "title": "Verificar assets de versión", "description": "Confirma la etiqueta, el instalador y el checksum antes de reportar." },
+      { "title": "Explorar el repositorio", "description": "Inspecciona el código, docs, workflows y el estado actual del proyecto." }
+    ],
+    "checklist": [
+      "La versión de la app o etiqueta de versión que probaste.",
+      "Tu sistema operativo y arquitectura.",
+      "Lo que esperabas que ocurriera.",
+      "Lo que realmente ocurrió.",
+      "Si el problema se reproduce después de reiniciar la app."
+    ]
+  },
+  "changelog": {
+    "eyebrow": "Novedades",
+    "title": "Cambios rastreados públicamente para el lanzamiento.",
+    "description": "GitHub Releases es el canal de descarga canónico. El changelog del repositorio rastrea cambios notables antes y entre las etiquetas públicas.",
+    "currentWork": "Trabajo actual rastreado",
+    "canonicalSources": "Fuentes canónicas",
+    "githubReleases": "GitHub Releases",
+    "githubReleasesDesc": "Assets de instaladores, notas generadas y checksums por plataforma.",
+    "repoChangelog": "Changelog del repositorio",
+    "repoChangelogDesc": "Cambios rastreados antes y entre versiones públicas.",
+    "highlights": [
+      "Los workflows de CI, lanzamiento y GitHub Pages ahora forman parte del repositorio.",
+      "Los docs de preparación de versión cubren firma, notarización y verificaciones post-lanzamiento.",
+      "La landing page ahora expone rutas públicas de soporte, privacidad y novedades.",
+      "El shell de la app usa carga lazy para vistas secundarias para reducir el payload inicial."
+    ]
+  },
+  "preview": {
+    "mode": "ENFOQUE",
+    "task1Title": "Finalizar checklist de versión",
+    "task1Meta": "25 min enfoque · 5 min descanso",
+    "task2Title": "Escribir copy de la landing page",
+    "task2Meta": "Sesión personalizada"
+  },
+  "lang": { "switcherLabel": "Seleccionar idioma" }
+}
