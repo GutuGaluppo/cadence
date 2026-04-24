@@ -1,16 +1,11 @@
 import { useAppViewStore } from "@/app/store/useAppViewStore";
 import { useTaskStore } from "@/features/tasks/store/store";
 import { useTimerStore } from "@/features/timer/store/useTimerStore";
-import { IconButton } from "@mui/material";
-import { ArrowLeft } from "lucide-react";
+import { PanelBackButton } from "@/shared/components/PanelBackButton";
+import { PanelHeader, PanelPage } from "@/shared/components/PanelLayout";
+import { TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import {
-  AbsoluteBox,
-  FieldsContainer,
-  PanelTitle,
-  PanelWrapper,
-  SaveButton,
-} from "../TaskCreatePanel/styled";
+import { FieldsContainer, SaveButton } from "../TaskCreatePanel/styled";
 import { CompactStepper } from "../TaskCreatePanel/TaskCreatePanel";
 
 const TaskDetailPanel: React.FC = () => {
@@ -19,6 +14,7 @@ const TaskDetailPanel: React.FC = () => {
   const setView = useAppViewStore((state) => state.setView);
 
   const task = tasks.find((t) => t.id === activeTaskId);
+  const [title, setTitle] = useState("");
   const [focusDuration, setFocusDuration] = useState(25);
   const [shortBreakDuration, setShortBreakDuration] = useState(5);
   const [longBreakDuration, setLongBreakDuration] = useState(15);
@@ -30,6 +26,7 @@ const TaskDetailPanel: React.FC = () => {
       return;
     }
 
+    setTitle(task.title);
     setFocusDuration(task.focusDuration ?? 25);
     setShortBreakDuration(task.shortBreakDuration ?? 5);
     setLongBreakDuration(task.longBreakDuration ?? 15);
@@ -41,7 +38,12 @@ const TaskDetailPanel: React.FC = () => {
   }
 
   const handleSave = async () => {
+    if (!title.trim()) {
+      return;
+    }
+
     const updated = {
+      title: title.trim(),
       focusDuration,
       shortBreakDuration,
       longBreakDuration,
@@ -54,14 +56,33 @@ const TaskDetailPanel: React.FC = () => {
   };
 
   return (
-    <PanelWrapper>
-      <AbsoluteBox>
-        <IconButton onClick={() => setView("timer")}>
-          <ArrowLeft size={20} color="rgba(0,0,0,0.55)" />
-        </IconButton>
-      </AbsoluteBox>
+    <PanelPage>
+      <PanelBackButton onClick={() => setView("timer")} />
 
-      <PanelTitle>{task.title}</PanelTitle>
+      <PanelHeader>
+        <TextField
+          fullWidth
+          size="small"
+          placeholder="Task title"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+          onKeyDown={(event) => event.key === "Enter" && void handleSave()}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "12px",
+              backgroundColor: "rgba(0,0,0,0.04)",
+              "& fieldset": { border: "none" },
+            },
+            "& .MuiOutlinedInput-input": {
+              padding: "12px 14px",
+              textAlign: "center",
+              fontSize: "1.5rem",
+              fontWeight: 500,
+              color: "#1A1A1A",
+            },
+          }}
+        />
+      </PanelHeader>
 
       <FieldsContainer>
         <CompactStepper
@@ -98,8 +119,16 @@ const TaskDetailPanel: React.FC = () => {
         />
       </FieldsContainer>
 
-      <SaveButton onClick={handleSave}>Apply & Start</SaveButton>
-    </PanelWrapper>
+      <SaveButton
+        onClick={() => void handleSave()}
+        sx={{
+          opacity: title.trim() ? 1 : 0.4,
+          pointerEvents: title.trim() ? "auto" : "none",
+        }}
+      >
+        Apply & Start
+      </SaveButton>
+    </PanelPage>
   );
 };
 

@@ -1,39 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const PageWrapper = styled(Box)({
-  height: "100%",
-  minHeight: 0,
-  display: "flex",
-  flexDirection: "column",
-  position: "relative",
-  padding: "0 0 0",
-});
-
-export const AbsoluteBox = styled(Box)({
-  position: "absolute",
-  top: 16,
-  left: 16,
-  width: 40,
-  height: 40,
-  borderRadius: "50%",
-  backgroundColor: "rgba(0,0,0,0.06)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  transition: "background-color 0.2s ease",
-  "&:hover": { backgroundColor: "rgba(0,0,0,0.1)" },
-});
-
-export const PageTitle = styled(Typography)({
-  fontSize: "1.5rem",
-  fontWeight: 500,
-  color: "#1A1A1A",
-  textAlign: "center",
-  paddingTop: "64px",
-  marginBottom: "20px",
-});
-
 export const TaskListScroll = styled(Box)({
   flex: 1,
   minHeight: 0,

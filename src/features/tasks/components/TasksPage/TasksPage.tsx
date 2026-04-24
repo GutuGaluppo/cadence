@@ -1,16 +1,19 @@
 import { useAppViewStore } from "@/app/store/useAppViewStore";
+import { PanelBackButton } from "@/shared/components/PanelBackButton";
+import {
+  PanelHeader,
+  PanelHeaderTitle,
+  PanelPage,
+} from "@/shared/components/PanelLayout";
 import { useTimerStore } from "@/features/timer/store/useTimerStore";
 import { Task, TimerState } from "@/types";
 import { Checkbox, IconButton } from "@mui/material";
-import { ArrowLeft, Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import React, { useEffect } from "react";
 import { useTaskStore } from "../../store/store";
 import {
-  AbsoluteBox,
   AddButton,
   EmptyState,
-  PageTitle,
-  PageWrapper,
   TaskCard,
   TaskListScroll,
   TaskMeta,
@@ -52,14 +55,12 @@ export const TasksPage: React.FC = () => {
   };
 
   return (
-    <PageWrapper>
-      <AbsoluteBox>
-        <IconButton onClick={() => setView("timer")}>
-          <ArrowLeft size={20} color="rgba(0,0,0,0.55)" />
-        </IconButton>
-      </AbsoluteBox>
+    <PanelPage>
+      <PanelBackButton onClick={() => setView("timer")} />
 
-      <PageTitle>Tasks</PageTitle>
+      <PanelHeader>
+        <PanelHeaderTitle>Tasks</PanelHeaderTitle>
+      </PanelHeader>
 
       <TaskListScroll>
         {tasks.length === 0 && (
@@ -105,6 +106,6 @@ export const TasksPage: React.FC = () => {
         <Plus size={16} />
         New Task
       </AddButton>
-    </PageWrapper>
+    </PanelPage>
   );
 };

@@ -1,14 +1,17 @@
 import { useAppViewStore } from "@/app/store/useAppViewStore";
 import { useSettingsStore } from "@/features/settings/store/store";
+import { PanelBackButton } from "@/shared/components/PanelBackButton";
+import {
+  PanelHeader,
+  PanelHeaderTitle,
+  PanelPage,
+} from "@/shared/components/PanelLayout";
 import { IconButton, TextField } from "@mui/material";
-import { ArrowLeft, Minus, Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
 import { useTaskStore } from "../../store/store";
 import {
-  AbsoluteBox,
   FieldsContainer,
-  PanelTitle,
-  PanelWrapper,
   SaveButton,
   StepperControls,
   StepperLabel,
@@ -107,14 +110,12 @@ export const TaskCreatePanel: React.FC = () => {
   };
 
   return (
-    <PanelWrapper>
-      <AbsoluteBox>
-        <IconButton onClick={() => setView("tasks")}>
-          <ArrowLeft size={20} color="rgba(0,0,0,0.55)" />
-        </IconButton>
-      </AbsoluteBox>
+    <PanelPage>
+      <PanelBackButton onClick={() => setView("tasks")} />
 
-      <PanelTitle>New Task</PanelTitle>
+      <PanelHeader>
+        <PanelHeaderTitle>New Task</PanelHeaderTitle>
+      </PanelHeader>
 
       <FieldsContainer>
         <TextField
@@ -190,6 +191,6 @@ export const TaskCreatePanel: React.FC = () => {
       >
         Create Task
       </SaveButton>
-    </PanelWrapper>
+    </PanelPage>
   );
 };

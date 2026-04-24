@@ -1,30 +1,6 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const PanelContainer = styled(Box)({
-  padding: "24px",
-  position: "relative",
-});
-
-export const AbsoluteBox = styled(Box)({
-  position: "absolute",
-  top: 40,
-  left: 10,
-  width: 40,
-  height: 40,
-  borderRadius: "50%",
-  backgroundColor: "rgba(0,0,0,0.06)",
-  border: "none",
-  cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  transition: "background-color 0.2s ease",
-  "&:hover": {
-    backgroundColor: "rgba(0,0,0,0.1)",
-  },
-});
-
 export const SettingRowContainer = styled(Box)({
   display: "flex",
   justifyContent: "space-between",

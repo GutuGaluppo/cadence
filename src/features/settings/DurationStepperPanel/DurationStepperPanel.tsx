@@ -1,11 +1,11 @@
 import { useAppViewStore } from "@/app/store/useAppViewStore";
+import { PanelBackButton } from "@/shared/components/PanelBackButton";
 import { IconButton, Tooltip } from "@mui/material";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowLeft, Minus, Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { type WheelEventHandler, useState } from "react";
 import { useSettingsStore } from "../store/store";
 import {
-  AbsoluteBox,
   LabelText,
   PanelWrapper,
   StepButton,
@@ -53,11 +53,7 @@ export default function DurationStepperPanel({
 
   return (
     <PanelWrapper>
-      <AbsoluteBox>
-        <IconButton onClick={() => setView("settings")}>
-          <ArrowLeft size={20} color="rgba(0,0,0,0.55)" />
-        </IconButton>
-      </AbsoluteBox>
+      <PanelBackButton onClick={() => setView("settings")} />
 
       <LabelText>{label}</LabelText>
 

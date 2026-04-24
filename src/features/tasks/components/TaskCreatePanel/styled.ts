@@ -1,38 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const PanelWrapper = styled(Box)({
-  height: "100%",
-  minHeight: 0,
-  display: "flex",
-  flexDirection: "column",
-  position: "relative",
-});
-
-export const AbsoluteBox = styled(Box)({
-  position: "absolute",
-  top: 16,
-  left: 16,
-  width: 40,
-  height: 40,
-  borderRadius: "50%",
-  backgroundColor: "rgba(0,0,0,0.06)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  transition: "background-color 0.2s ease",
-  "&:hover": { backgroundColor: "rgba(0,0,0,0.1)" },
-});
-
-export const PanelTitle = styled(Typography)({
-  fontSize: "1.5rem",
-  fontWeight: 500,
-  color: "#1A1A1A",
-  textAlign: "center",
-  paddingTop: "18px",
-  marginBottom: "24px",
-});
-
 export const FieldsContainer = styled(Box)({
   display: "flex",
   flexDirection: "column",

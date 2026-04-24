@@ -12,25 +12,6 @@ export const PanelWrapper = styled(Box)({
   padding: "0 32px",
 });
 
-export const AbsoluteBox = styled(Box)({
-  position: "absolute",
-  top: 16,
-  left: 16,
-  width: 40,
-  height: 40,
-  borderRadius: "50%",
-  backgroundColor: "rgba(0,0,0,0.06)",
-  border: "none",
-  cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  transition: "background-color 0.2s ease",
-  "&:hover": {
-    backgroundColor: "rgba(0,0,0,0.1)",
-  },
-});
-
 export const LabelText = styled(Box)({
   fontSize: "1.5rem",
   fontWeight: 400,

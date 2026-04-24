@@ -1,20 +1,20 @@
 import { useAppViewStore } from "@/app/store/useAppViewStore";
+import { PanelBackButton } from "@/shared/components/PanelBackButton";
+import {
+  PanelHeader,
+  PanelHeaderTitle,
+  PanelPage,
+} from "@/shared/components/PanelLayout";
 import {
   Divider,
   FormControlLabel,
-  IconButton,
   Stack,
   Switch,
   Typography,
 } from "@mui/material";
-import { ArrowLeft, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useSettingsStore } from "../store/store";
-import {
-  AbsoluteBox,
-  PanelContainer,
-  RowValueBox,
-  SettingRowContainer,
-} from "./styled";
+import { RowValueBox, SettingRowContainer } from "./styled";
 
 interface SettingRowProps {
   label: string;
@@ -51,25 +51,15 @@ export const SettingsPanel = () => {
   };
 
   return (
-    <PanelContainer>
-      <AbsoluteBox>
-        <IconButton onClick={() => setView("timer")}>
-          <ArrowLeft size={20} color="rgba(0,0,0,0.5)" />
-        </IconButton>
-      </AbsoluteBox>
+    <PanelPage>
+      <PanelBackButton
+        iconColor="rgba(0,0,0,0.5)"
+        onClick={() => setView("timer")}
+      />
 
-      <Typography
-        variant="h5"
-        sx={{
-          fontSize: "1.5rem",
-          mb: 4,
-          color: "#1A1A1A",
-          fontWeight: 500,
-          textAlign: "center",
-        }}
-      >
-        Settings
-      </Typography>
+      <PanelHeader>
+        <PanelHeaderTitle>Settings</PanelHeaderTitle>
+      </PanelHeader>
 
       <Stack spacing={2}>
         <SettingRow
@@ -87,7 +77,6 @@ export const SettingsPanel = () => {
           value={`${settings.longBreakDuration} min`}
           onEdit={() => setView("long-break")}
         />
-
         <SettingRow
           label="Long Break After"
           value={`${settings.cyclesBeforeLongBreak} cycles`}
@@ -130,6 +119,6 @@ export const SettingsPanel = () => {
           }
         />
       </Stack>
-    </PanelContainer>
+    </PanelPage>
   );
 };
