@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import styled from "@emotion/styled";
+import { styled } from "@mui/material/styles";
 import { motion } from "motion/react";
 
 export const FlipDigitSlot = styled(Box)({
@@ -10,12 +10,12 @@ export const FlipDigitSlot = styled(Box)({
   justifyContent: "center",
 });
 
-export const FlipDigitText = styled(motion.span)({
+export const FlipDigitText = styled(motion.span)(({ theme }) => ({
   display: "inline-block",
   fontSize: "3rem",
   fontWeight: 700,
   letterSpacing: "-0.02em",
   lineHeight: 1.1,
-  color: "#1A1A1A",
+  color: theme.palette.text.primary,
   fontVariantNumeric: "tabular-nums",
-});
+}));

@@ -23,7 +23,7 @@ export default function TasksPanelHeader() {
           </InlineAction>
         )}
         <CircleButton aria-label="Open tasks" onClick={() => setView("tasks")}>
-          <ListChecks color="rgba(0,0,0,0.45)" size={20} />
+          <ListChecks size={20} />
         </CircleButton>
       </TasksPanelActions>
     </TasksPanelHeaderRow>

@@ -11,14 +11,14 @@ export default function ControlPanel() {
   return (
     <ControlsRow>
       <CircleButton aria-label="Reset timer" onClick={reset}>
-        <RotateCcw size={20} color="rgba(0,0,0,0.45)" />
+        <RotateCcw size={20} />
       </CircleButton>
 
       <CircleButton
         aria-label="Open settings"
         onClick={() => setView("settings")}
       >
-        <Settings size={20} color="rgba(0,0,0,0.45)" />
+        <Settings size={20} />
       </CircleButton>
     </ControlsRow>
   );

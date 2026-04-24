@@ -7,6 +7,7 @@ import {
   PanelPage,
 } from "@/shared/components/PanelLayout";
 import { IconButton, TextField } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
 import { useTaskStore } from "../../store/store";
@@ -44,7 +45,8 @@ export const CompactStepper: React.FC<CompactStepperProps> = ({
         onClick={() => onChange(Math.max(min, value - 1))}
         size="small"
         sx={{
-          backgroundColor: "rgba(0,0,0,0.06)",
+          backgroundColor: (theme) =>
+            alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.1 : 0.06),
           borderRadius: "8px",
           padding: "4px",
         }}
@@ -59,7 +61,8 @@ export const CompactStepper: React.FC<CompactStepperProps> = ({
         onClick={() => onChange(Math.min(max, value + 1))}
         size="small"
         sx={{
-          backgroundColor: "rgba(0,0,0,0.06)",
+          backgroundColor: (theme) =>
+            alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.1 : 0.06),
           borderRadius: "8px",
           padding: "4px",
         }}
@@ -126,13 +129,23 @@ export const TaskCreatePanel: React.FC = () => {
           onChange={(e) => setTitle(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSave()}
           autoFocus
-          sx={{
+          sx={(theme) => ({
             "& .MuiOutlinedInput-root": {
               borderRadius: "10px",
-              backgroundColor: "rgba(0,0,0,0.04)",
+              backgroundColor: alpha(
+                theme.palette.text.primary,
+                theme.palette.mode === "dark" ? 0.08 : 0.04,
+              ),
               "& fieldset": { border: "none" },
             },
-          }}
+            "& .MuiOutlinedInput-input": {
+              color: theme.palette.text.primary,
+            },
+            "& .MuiOutlinedInput-input::placeholder": {
+              color: theme.palette.text.secondary,
+              opacity: 1,
+            },
+          })}
         />
 
         <CompactStepper
@@ -172,7 +185,7 @@ export const TaskCreatePanel: React.FC = () => {
       {error && (
         <p
           style={{
-            color: "red",
+            color: "#E75A5A",
             fontSize: "0.75rem",
             margin: "8px 0 0",
             textAlign: "center",

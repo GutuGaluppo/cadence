@@ -4,6 +4,7 @@ import { useTimerStore } from "@/features/timer/store/useTimerStore";
 import { PanelBackButton } from "@/shared/components/PanelBackButton";
 import { PanelHeader, PanelPage } from "@/shared/components/PanelLayout";
 import { TextField } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { FieldsContainer, SaveButton } from "../TaskCreatePanel/styled";
 import { CompactStepper } from "../TaskCreatePanel/TaskCreatePanel";
@@ -67,10 +68,13 @@ const TaskDetailPanel: React.FC = () => {
           value={title}
           onChange={(event) => setTitle(event.target.value)}
           onKeyDown={(event) => event.key === "Enter" && void handleSave()}
-          sx={{
+          sx={(theme) => ({
             "& .MuiOutlinedInput-root": {
               borderRadius: "12px",
-              backgroundColor: "rgba(0,0,0,0.04)",
+              backgroundColor: alpha(
+                theme.palette.text.primary,
+                theme.palette.mode === "dark" ? 0.08 : 0.04,
+              ),
               "& fieldset": { border: "none" },
             },
             "& .MuiOutlinedInput-input": {
@@ -78,9 +82,13 @@ const TaskDetailPanel: React.FC = () => {
               textAlign: "center",
               fontSize: "1.5rem",
               fontWeight: 500,
-              color: "#1A1A1A",
+              color: theme.palette.text.primary,
             },
-          }}
+            "& .MuiOutlinedInput-input::placeholder": {
+              color: theme.palette.text.secondary,
+              opacity: 1,
+            },
+          })}
         />
       </PanelHeader>
 

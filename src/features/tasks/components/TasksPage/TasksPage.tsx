@@ -8,6 +8,7 @@ import {
 import { useTimerStore } from "@/features/timer/store/useTimerStore";
 import { Task, TimerState } from "@/types";
 import { Checkbox, IconButton } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { Plus, Trash2 } from "lucide-react";
 import React, { useEffect } from "react";
 import { useTaskStore } from "../../store/store";
@@ -80,11 +81,11 @@ export const TasksPage: React.FC = () => {
                 updateTask(task.id, { completed: e.target.checked });
               }}
               onClick={(e) => e.stopPropagation()}
-              sx={{
+              sx={(theme) => ({
                 padding: 0,
-                color: "rgba(0,0,0,0.25)",
-                "&.Mui-checked": { color: "#2E2566" },
-              }}
+                color: alpha(theme.palette.text.primary, 0.25),
+                "&.Mui-checked": { color: theme.palette.primary.main },
+              })}
             />
             <TaskTitle completed={task.completed}>{task.title}</TaskTitle>
             <TaskMeta>{task.pomodoroCount} 🍅</TaskMeta>

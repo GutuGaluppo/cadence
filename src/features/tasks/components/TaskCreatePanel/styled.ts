@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
 
 export const FieldsContainer = styled(Box)({
   display: "flex",
@@ -12,20 +12,20 @@ export const FieldsContainer = styled(Box)({
   "&::-webkit-scrollbar": { display: "none" },
 });
 
-export const StepperRow = styled(Box)({
+export const StepperRow = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   padding: "10px 14px",
   borderRadius: "10px",
-  backgroundColor: "rgba(0,0,0,0.04)",
-});
+  backgroundColor: alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.08 : 0.04),
+}));
 
-export const StepperLabel = styled(Typography)({
+export const StepperLabel = styled(Typography)(({ theme }) => ({
   fontSize: "0.875rem",
-  color: "#1A1A1A",
+  color: theme.palette.text.primary,
   fontWeight: 400,
-});
+}));
 
 export const StepperControls = styled(Box)({
   display: "flex",
@@ -33,21 +33,21 @@ export const StepperControls = styled(Box)({
   gap: "12px",
 });
 
-export const StepperValue = styled(Typography)({
+export const StepperValue = styled(Typography)(({ theme }) => ({
   fontSize: "0.875rem",
   fontWeight: 700,
-  color: "#1A1A1A",
+  color: theme.palette.text.primary,
   minWidth: "52px",
   textAlign: "center",
   fontVariantNumeric: "tabular-nums",
-});
+}));
 
-export const SaveButton = styled(Box)({
+export const SaveButton = styled(Box)(({ theme }) => ({
   marginTop: "16px",
   height: 44,
   borderRadius: "12px",
-  backgroundColor: "#1A1A1A",
-  color: "#FFFFFF",
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -55,5 +55,5 @@ export const SaveButton = styled(Box)({
   fontSize: "0.875rem",
   fontWeight: 500,
   transition: "background-color 0.2s ease",
-  "&:hover": { backgroundColor: "#2E2566" },
-});
+  "&:hover": { backgroundColor: theme.palette.primary.main },
+}));

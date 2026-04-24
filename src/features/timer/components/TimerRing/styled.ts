@@ -1,5 +1,5 @@
 import { Box, IconButton, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
 
 export const RingContainer = styled(Box)({
   position: "relative",
@@ -51,14 +51,14 @@ export const FlipClockRow = styled(Box)({
   gap: "1px",
 });
 
-export const ClockSeparator = styled("span")({
+export const ClockSeparator = styled("span")(({ theme }) => ({
   fontSize: "3rem",
   fontWeight: 700,
   letterSpacing: "-0.02em",
   lineHeight: 1.1,
-  color: "#1A1A1A",
+  color: theme.palette.text.primary,
   fontVariantNumeric: "tabular-nums",
-});
+}));
 
 export const DotsRow = styled(Box)({
   display: "flex",
@@ -71,30 +71,30 @@ export const CycleDot = styled(Box, {
 })<{
   accentColor: string;
   isActive: boolean;
-}>(({ accentColor, isActive }) => ({
+}>(({ accentColor, isActive, theme }) => ({
   width: 6,
   height: 6,
   borderRadius: "50%",
-  backgroundColor: isActive ? accentColor : "rgba(0,0,0,0.1)",
+  backgroundColor: isActive ? accentColor : alpha(theme.palette.text.primary, 0.12),
   transition: "background-color 0.3s ease",
 }));
 
-export const ModeLabel = styled(Typography)({
+export const ModeLabel = styled(Typography)(({ theme }) => ({
   fontSize: "0.56rem",
   letterSpacing: "0.2em",
-  color: "rgba(26,26,26,0.72)",
+  color: theme.palette.text.secondary,
   marginTop: "2px",
   textTransform: "uppercase",
-});
+}));
 
-export const PlayPauseButton = styled(IconButton)({
+export const PlayPauseButton = styled(IconButton)(({ theme }) => ({
   position: "absolute",
   inset: 0,
   margin: "auto",
   width: 158,
   height: 158,
-  backgroundColor: "#1A1A1A52",
-  color: "#FFFFFF",
+  backgroundColor: alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.36 : 0.32),
+  color: theme.palette.mode === "dark" ? theme.palette.common.white : theme.palette.common.white,
   borderRadius: "50%",
   opacity: 0,
   transform: "scale(0.92)",
@@ -103,6 +103,6 @@ export const PlayPauseButton = styled(IconButton)({
   transition:
     "opacity 0.22s ease, transform 0.22s ease, background-color 0.2s ease",
   "&:hover": {
-    backgroundColor: "#2E256690",
+    backgroundColor: alpha(theme.palette.primary.main, 0.56),
   },
-});
+}));

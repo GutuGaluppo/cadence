@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
 
 export const PanelWrapper = styled(Box)({
   height: "100%",
@@ -12,13 +12,13 @@ export const PanelWrapper = styled(Box)({
   padding: "0 32px",
 });
 
-export const LabelText = styled(Box)({
+export const LabelText = styled(Box)(({ theme }) => ({
   fontSize: "1.5rem",
   fontWeight: 400,
-  color: "#1A1A1A",
-  textAlign:'center',
+  color: theme.palette.text.primary,
+  textAlign: "center",
   marginBottom: "32px",
-});
+}));
 
 export const StepperRow = styled(Box)({
   display: "flex",
@@ -38,25 +38,25 @@ export const ValueBox = styled(Box)({
   position: "relative",
 });
 
-export const ValueText = styled(Typography)({
+export const ValueText = styled(Typography)(({ theme }) => ({
   fontSize: "3rem",
   fontWeight: 700,
-  color: "#1A1A1A",
+  color: theme.palette.text.primary,
   lineHeight: 1,
   fontVariantNumeric: "tabular-nums",
-});
+}));
 
-export const ValueUnit = styled(Typography)({
+export const ValueUnit = styled(Typography)(({ theme }) => ({
   fontSize: "0.7rem",
-  color: "rgba(0,0,0,0.9)",
+  color: theme.palette.text.secondary,
   letterSpacing: "0.1em",
   textTransform: "uppercase",
-});
+}));
 
-export const StepButton = styled(Box)({
+export const StepButton = styled(Box)(({ theme }) => ({
   width: 40,
   height: 40,
-  backgroundColor: "rgba(0,0,0,0.06)",
+  backgroundColor: alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.1 : 0.06),
   borderRadius: "10px",
   border: "none",
   cursor: "pointer",
@@ -65,10 +65,10 @@ export const StepButton = styled(Box)({
   justifyContent: "center",
   transition: "background-color 0.2s ease",
   "&:hover": {
-    backgroundColor: "rgba(0,0,0,0.1)",
+    backgroundColor: alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.16 : 0.1),
   },
   "&:disabled": {
     opacity: 0.25,
     cursor: "default",
   },
-});
+}));

@@ -1,4 +1,5 @@
 import { Coffee, PauseIcon, PencilRuler, PlayIcon } from "lucide-react";
+import { alpha, useTheme } from "@mui/material/styles";
 import { type PointerEvent, useId } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { TimerMode, TimerState } from "@/types";
@@ -17,22 +18,47 @@ import {
   TimerFace,
 } from "./styled";
 
-const MODE_COLOR: Record<TimerMode, string> = {
-  [TimerMode.FOCUS]: "#2E2566",
-  [TimerMode.SHORT_BREAK]: "#5DBB8A",
-  [TimerMode.LONG_BREAK]: "#E8B93A",
+const LIGHT_MODE_COLORS: Record<
+  TimerMode,
+  { accent: string; gradient: [string, string] }
+> = {
+  [TimerMode.FOCUS]: {
+    accent: "#2E2566",
+    gradient: ["#9B93D8", "#1A1248"],
+  },
+  [TimerMode.SHORT_BREAK]: {
+    accent: "#5DBB8A",
+    gradient: ["#9ADEC0", "#1E6643"],
+  },
+  [TimerMode.LONG_BREAK]: {
+    accent: "#E8B93A",
+    gradient: ["#FFF0A8", "#C8920A"],
+  },
 };
 
-const MODE_GRADIENT: Record<TimerMode, [string, string]> = {
-  [TimerMode.FOCUS]: ["#9B93D8", "#1A1248"],
-  [TimerMode.SHORT_BREAK]: ["#9ADEC0", "#1E6643"],
-  [TimerMode.LONG_BREAK]: ["#FFF0A8", "#C8920A"],
+const DARK_MODE_COLORS: Record<
+  TimerMode,
+  { accent: string; gradient: [string, string] }
+> = {
+  [TimerMode.FOCUS]: {
+    accent: "#A7A1FF",
+    gradient: ["#D0CBFF", "#4C44B8"],
+  },
+  [TimerMode.SHORT_BREAK]: {
+    accent: "#79E3B0",
+    gradient: ["#B6F2D4", "#2B8A5C"],
+  },
+  [TimerMode.LONG_BREAK]: {
+    accent: "#FFD56A",
+    gradient: ["#FFE9A8", "#D39416"],
+  },
 };
 
 const RING_RADIUS = 80;
 const CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
 export default function TimerRing() {
+  const theme = useTheme();
   const { activeSettings, completedCycles, mode, pause, start, state, timeLeft, totalDuration } =
     useTimerStore(
       useShallow((store) => ({
@@ -47,10 +73,12 @@ export default function TimerRing() {
       })),
     );
   const gradientId = useId().replace(/:/g, "");
+  const modeColors =
+    theme.palette.mode === "dark" ? DARK_MODE_COLORS : LIGHT_MODE_COLORS;
 
   const isRunning = state === TimerState.RUNNING;
-  const accentColor = MODE_COLOR[mode];
-  const [gradientLight, gradientDark] = MODE_GRADIENT[mode];
+  const accentColor = modeColors[mode].accent;
+  const [gradientLight, gradientDark] = modeColors[mode].gradient;
   const ModeIcon = mode === TimerMode.FOCUS ? PencilRuler : Coffee;
   const totalDots = Math.max(activeSettings.cyclesBeforeLongBreak, 1);
   const completedDots = completedCycles % totalDots;
@@ -87,7 +115,7 @@ export default function TimerRing() {
             cy="100"
             fill="none"
             r={RING_RADIUS}
-            stroke="rgba(0,0,0,0.10)"
+            stroke={alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.16 : 0.1)}
             strokeWidth="2"
           />
           <circle
@@ -110,7 +138,7 @@ export default function TimerRing() {
 
         <CenterContent>
           <ModeIcon
-            color={isRunning ? accentColor : "rgba(26,26,26,0.72)"}
+            color={isRunning ? accentColor : theme.palette.text.secondary}
             size={26}
             style={{ opacity: 0.85 }}
           />

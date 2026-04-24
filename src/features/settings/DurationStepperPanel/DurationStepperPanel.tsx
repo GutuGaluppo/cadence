@@ -67,7 +67,7 @@ export default function DurationStepperPanel({
         <StepperRow onWheel={handleWheel}>
           <StepButton>
             <IconButton disabled={value <= min} onClick={() => update(-1)}>
-              <Minus size={20} color="rgba(0,0,0,0.6)" />
+              <Minus size={20} />
             </IconButton>
           </StepButton>
 
@@ -98,7 +98,7 @@ export default function DurationStepperPanel({
 
           <StepButton>
             <IconButton disabled={value >= max} onClick={() => update(1)}>
-              <Plus size={20} color="rgba(0,0,0,0.6)" />
+              <Plus size={20} />
             </IconButton>
           </StepButton>
         </StepperRow>
