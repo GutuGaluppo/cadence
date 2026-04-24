@@ -1,5 +1,5 @@
 import { Coffee, PauseIcon, PencilRuler, PlayIcon } from "lucide-react";
-import { useId } from "react";
+import { type PointerEvent, useId } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { TimerMode, TimerState } from "@/types";
 import { formatTime } from "../../formatTime";
@@ -57,6 +57,12 @@ export default function TimerRing() {
   const progress = totalDuration > 0 ? (totalDuration - timeLeft) / totalDuration : 0;
   const strokeDashoffset = CIRCUMFERENCE * (1 - progress);
   const timeLabel = formatTime(timeLeft);
+
+  const handlePointerUp = (event: PointerEvent<HTMLButtonElement>) => {
+    // Prevent pointer clicks from leaving the action focused, which would keep
+    // the hover overlay visible after the cursor leaves the timer.
+    event.currentTarget.blur();
+  };
 
   return (
     <RingContainer>
@@ -126,6 +132,7 @@ export default function TimerRing() {
         aria-label={isRunning ? "Pause timer" : "Start timer"}
         className="timer-action"
         onClick={isRunning ? pause : start}
+        onPointerUp={handlePointerUp}
       >
         {isRunning ? <PauseIcon size={32} /> : <PlayIcon size={32} />}
       </PlayPauseButton>
