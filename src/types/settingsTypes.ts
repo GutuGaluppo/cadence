@@ -1,3 +1,5 @@
+export type ThemeMode = "light" | "dark";
+
 export interface Settings {
   focusDuration: number; // minutes
   shortBreakDuration: number; // minutes
@@ -5,6 +7,7 @@ export interface Settings {
   cyclesBeforeLongBreak: number;
   soundEnabled: boolean;
   alwaysOnTop: boolean;
+  themeMode: ThemeMode;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -14,4 +17,5 @@ export const DEFAULT_SETTINGS: Settings = {
   cyclesBeforeLongBreak: 4,
   soundEnabled: true,
   alwaysOnTop: false,
+  themeMode: "light",
 };

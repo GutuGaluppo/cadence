@@ -12,9 +12,15 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, MoonStar, Sun } from "lucide-react";
+import { ThemeMode } from "@/types";
 import { useSettingsStore } from "../store/store";
-import { RowValueBox, SettingRowContainer } from "./styled";
+import {
+  RowValueBox,
+  SettingRowContainer,
+  ThemeToggleButton,
+  ThemeToggleGroup,
+} from "./styled";
 
 interface SettingRowProps {
   label: string;
@@ -27,16 +33,18 @@ type ToggleSettingKey = "alwaysOnTop" | "soundEnabled";
 function SettingRow({ label, value, onEdit }: SettingRowProps) {
   return (
     <SettingRowContainer onClick={onEdit}>
-      <Typography variant="body2">{label}</Typography>
+      <Typography color="text.primary" variant="body2">
+        {label}
+      </Typography>
       <RowValueBox>
         <Typography
           className="row-value"
           variant="body2"
-          sx={{ opacity: 0.7, fontWeight: 700 }}
+          sx={{ color: "text.secondary", fontWeight: 700 }}
         >
           {value}
         </Typography>
-        <ChevronRight size={14} color="rgba(0,0,0,0.8)" />
+        <ChevronRight size={14} />
       </RowValueBox>
     </SettingRowContainer>
   );
@@ -50,18 +58,49 @@ export const SettingsPanel = () => {
     updateSettings({ ...settings, [key]: value });
   };
 
+  const handleThemeModeChange = (themeMode: ThemeMode) => {
+    if (settings.themeMode === themeMode) {
+      return;
+    }
+
+    updateSettings({ ...settings, themeMode });
+  };
+
   return (
     <PanelPage>
-      <PanelBackButton
-        iconColor="rgba(0,0,0,0.5)"
-        onClick={() => setView("timer")}
-      />
+      <PanelBackButton onClick={() => setView("timer")} />
 
       <PanelHeader>
         <PanelHeaderTitle>Settings</PanelHeaderTitle>
       </PanelHeader>
 
       <Stack spacing={2}>
+        <Stack spacing={1}>
+          <Typography color="text.secondary" variant="body2">
+            Appearance
+          </Typography>
+          <ThemeToggleGroup>
+            <ThemeToggleButton
+              isActive={settings.themeMode === "light"}
+              onClick={() => handleThemeModeChange("light")}
+              type="button"
+            >
+              <Sun size={16} />
+              Light
+            </ThemeToggleButton>
+            <ThemeToggleButton
+              isActive={settings.themeMode === "dark"}
+              onClick={() => handleThemeModeChange("dark")}
+              type="button"
+            >
+              <MoonStar size={16} />
+              Dark
+            </ThemeToggleButton>
+          </ThemeToggleGroup>
+        </Stack>
+
+        <Divider sx={{ opacity: 0.14 }} />
+
         <SettingRow
           label="Focus Session"
           value={`${settings.focusDuration} min`}
@@ -83,7 +122,7 @@ export const SettingsPanel = () => {
           onEdit={() => setView("cycles-before-long-break")}
         />
 
-        <Divider sx={{ opacity: 0.1 }} />
+        <Divider sx={{ opacity: 0.14 }} />
 
         <FormControlLabel
           control={
@@ -96,7 +135,7 @@ export const SettingsPanel = () => {
             />
           }
           label={
-            <Typography variant="body2" sx={{ opacity: 0.7 }}>
+            <Typography color="text.secondary" variant="body2">
               Sound Notifications
             </Typography>
           }
@@ -113,7 +152,7 @@ export const SettingsPanel = () => {
             />
           }
           label={
-            <Typography variant="body2" sx={{ opacity: 0.7 }}>
+            <Typography color="text.secondary" variant="body2">
               Always on Top
             </Typography>
           }

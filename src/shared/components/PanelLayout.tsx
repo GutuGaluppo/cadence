@@ -14,9 +14,9 @@ export const PanelHeader = styled(Box)({
   marginBottom: "20px",
 });
 
-export const PanelHeaderTitle = styled(Typography)({
+export const PanelHeaderTitle = styled(Typography)(({ theme }) => ({
   fontSize: "1.5rem",
   fontWeight: 500,
-  color: "#1A1A1A",
+  color: theme.palette.text.primary,
   textAlign: "center",
-});
+}));

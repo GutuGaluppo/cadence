@@ -1,30 +1,31 @@
 import { Box } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
 
-export const MainContainer = styled(Box)({
+export const MainContainer = styled(Box)(({ theme }) => ({
   width: "100vw",
   height: "100vh",
-  backgroundColor: "#EFEDE9",
+  backgroundColor: theme.palette.background.default,
   padding: "clamp(16px, 4vw, 24px)",
   overflow: "hidden",
   position: "relative",
+  transition: "background-color 0.2s ease",
   "& > div": {
     height: "100%",
   },
-});
+}));
 
-export const ViewFallback = styled(Box)({
+export const ViewFallback = styled(Box)(({ theme }) => ({
   height: "100%",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: "rgba(26,26,26,0.55)",
+  color: theme.palette.text.secondary,
   fontSize: "0.78rem",
   letterSpacing: "0.08em",
   textTransform: "uppercase",
-});
+}));
 
-export const VersionBadge = styled(Box)({
+export const VersionBadge = styled(Box)(({ theme }) => ({
   position: "absolute",
   display: "flex",
   alignItems: "center",
@@ -36,13 +37,13 @@ export const VersionBadge = styled(Box)({
   zIndex: 20,
   padding: "6px 10px",
   borderRadius: 999,
-  backgroundColor: "rgba(255,255,255,0.72)",
-  border: "1px solid rgba(46,37,102,0.12)",
-  color: "rgba(26,26,26,0.62)",
+  backgroundColor: alpha(theme.palette.background.paper, 0.78),
+  border: `1px solid ${alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.24 : 0.12)}`,
+  color: theme.palette.text.secondary,
   fontSize: "0.58rem",
   fontWeight: "700",
   letterSpacing: "0.12em",
   textTransform: "uppercase",
   pointerEvents: "none",
   backdropFilter: "blur(12px)",
-});
+}));
