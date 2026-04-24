@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "Cadence",
-        "width": 340,
-        "height": 420,
+        "width": 350,
+        "height": 520,
         "resizable": true,
         "decorations": true,
         "transparent": false,
