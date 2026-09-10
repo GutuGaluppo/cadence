@@ -66,6 +66,21 @@ Issues:
 - `#12` Gerar screenshots e assets finais
 - `#13` Publicar changelog, suporte e política de privacidade
 
+### Milestone 5 — Hero Video Upgrade
+
+Objetivo:
+
+- substituir a imagem estática do hero da landing page por um vídeo do produto
+
+Issues:
+
+- `#14` Definir roteiro e storyboard do vídeo
+- `#15` Gravar a captura de tela bruta do app
+- `#16` Editar e produzir o vídeo final
+- `#17` Exportar e otimizar o vídeo para a web
+- `#18` Substituir a imagem estática pelo vídeo na landing page
+- `#19` Validar o vídeo em navegadores, dispositivos e performance
+
 ## Issues prontas para copiar
 
 ---
@@ -494,4 +509,217 @@ Complete the public release surface around the app.
 - Support contact is public
 - Privacy policy is available
 - Landing page footer links are functional
+```
+
+---
+
+## Issue `#14`
+
+**Título**
+
+`Define script and storyboard for the landing page hero video`
+
+**Labels**
+
+- `type:frontend`
+- `type:docs`
+- `priority:P1`
+
+**Body**
+
+```md
+## Goal
+
+Plan the hero video before any recording starts, so production has a clear
+target instead of ad-hoc clips.
+
+## Scope
+
+- Define the video's target length and pacing
+- Storyboard the sequence of app moments to show (e.g. starting a session,
+  opening the task list, managing tasks, adjusting settings)
+- Decide whether light mode, dark mode, or both are shown
+- Decide if the video needs on-screen text, captions, or a call to action
+
+## Acceptance criteria
+
+- A written script or shot list exists
+- Storyboard order matches the app's real UI flow
+- Light/dark mode coverage is decided and documented
+```
+
+---
+
+## Issue `#15`
+
+**Título**
+
+`Record raw screen-capture footage for the hero video`
+
+**Labels**
+
+- `type:frontend`
+- `priority:P1`
+
+**Body**
+
+```md
+## Goal
+
+Capture clean, high-resolution source footage to edit from.
+
+## Scope
+
+- Record each flow from the approved storyboard at native/Retina resolution
+- Capture light and/or dark theme footage as decided in the script
+- Clear personal, placeholder, or test data from the app before recording
+- Keep raw clips organized and named by flow
+
+## Acceptance criteria
+
+- Raw footage covers every shot in the storyboard
+- Footage contains no personal or test data
+- Clips are organized and ready to hand off for editing
+```
+
+---
+
+## Issue `#16`
+
+**Título**
+
+`Edit and produce the final hero video`
+
+**Labels**
+
+- `type:frontend`
+- `priority:P1`
+
+**Body**
+
+```md
+## Goal
+
+Turn raw footage into a polished, on-brand video ready for the web.
+
+## Scope
+
+- Cut and sequence clips according to the approved storyboard
+- Add transitions, text overlays, or captions where scripted
+- Keep color and pacing consistent with the site's visual language
+- Add background music or sound only if licensed for commercial/public use
+
+## Acceptance criteria
+
+- Edited video matches the approved script/storyboard
+- Pacing is consistent with no dead time or abrupt cuts
+- Any audio used is properly licensed
+```
+
+---
+
+## Issue `#17`
+
+**Título**
+
+`Export and optimize the hero video for web delivery`
+
+**Labels**
+
+- `type:frontend`
+- `priority:P1`
+
+**Body**
+
+```md
+## Goal
+
+Ship a video that loads fast and plays reliably across browsers.
+
+## Scope
+
+- Export in a broadly supported format (e.g. MP4/H.264)
+- Provide a second format for wider compatibility if needed (e.g. WebM)
+- Generate a poster/fallback image for slow connections or unsupported
+  browsers
+- Keep file size reasonable for a landing page hero asset
+
+## Acceptance criteria
+
+- Exported files play correctly in major browsers
+- A poster/fallback image is available
+- File size is optimized without visibly degrading quality
+```
+
+---
+
+## Issue `#18`
+
+**Título**
+
+`Replace the static hero image with the video on the landing page`
+
+**Labels**
+
+- `type:frontend`
+- `priority:P1`
+
+**Body**
+
+```md
+## Goal
+
+Integrate the finished video into the homepage hero, replacing the current
+static screenshot.
+
+## Scope
+
+- Swap the static image for a video element in the hero section
+- Autoplay muted and loop, matching typical landing-page hero behavior
+- Use the poster image as the fallback/initial frame
+- Respect `prefers-reduced-motion` by falling back to the static image
+- Preserve the existing hero layout, spacing, and entrance animation
+
+## Acceptance criteria
+
+- Video autoplays without requiring user interaction or sound
+- The static image still displays for reduced-motion users and if the video
+  fails to load
+- Hero layout is not visually broken by the change
+```
+
+---
+
+## Issue `#19`
+
+**Título**
+
+`QA the hero video across browsers, devices, and performance budgets`
+
+**Labels**
+
+- `type:qa`
+- `priority:P1`
+
+**Body**
+
+```md
+## Goal
+
+Confirm the new hero video works everywhere and does not hurt page
+performance.
+
+## Scope
+
+- Test playback on major desktop and mobile browsers
+- Verify behavior on slow or throttled connections
+- Re-run a performance check (e.g. Lighthouse) and compare against the
+  previous static-image baseline
+- Confirm accessibility fallback behavior (reduced motion, failed video load)
+
+## Acceptance criteria
+
+- Video plays correctly across tested browsers and devices
+- Page performance stays within an acceptable range of the previous baseline
+- Reduced-motion and failure fallbacks behave as expected
 ```
