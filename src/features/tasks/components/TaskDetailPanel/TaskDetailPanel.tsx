@@ -58,9 +58,8 @@ const TaskDetailPanel: React.FC = () => {
 
   return (
     <PanelPage>
-      <PanelBackButton onClick={() => setView("timer")} />
-
       <PanelHeader>
+        <PanelBackButton inline onClick={() => setView("timer")} />
         <TextField
           fullWidth
           size="small"
@@ -79,7 +78,7 @@ const TaskDetailPanel: React.FC = () => {
             },
             "& .MuiOutlinedInput-input": {
               padding: "12px 14px",
-              textAlign: "center",
+              textAlign: "left",
               fontSize: "1.5rem",
               fontWeight: 500,
               color: theme.palette.text.primary,

@@ -48,6 +48,8 @@ export const TaskPreviewScroll = styled(Box)({
   display: "grid",
   gap: "10px",
   overflowY: "auto",
+  padding: "2px",
+  margin: "-2px",
 });
 
 export const TaskPreviewCard = styled("button", {

@@ -8,8 +8,6 @@ export const FieldsContainer = styled(Box)({
   flex: 1,
   minHeight: 0,
   overflowY: "auto",
-  scrollbarWidth: "none",
-  "&::-webkit-scrollbar": { display: "none" },
 });
 
 export const StepperRow = styled(Box)(({ theme }) => ({

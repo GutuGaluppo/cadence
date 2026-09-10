@@ -114,9 +114,8 @@ export const TaskCreatePanel: React.FC = () => {
 
   return (
     <PanelPage>
-      <PanelBackButton onClick={() => setView("tasks")} />
-
       <PanelHeader>
+        <PanelBackButton inline onClick={() => setView("tasks")} />
         <PanelHeaderTitle>New Task</PanelHeaderTitle>
       </PanelHeader>
 

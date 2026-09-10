@@ -57,9 +57,8 @@ export const TasksPage: React.FC = () => {
 
   return (
     <PanelPage>
-      <PanelBackButton onClick={() => setView("timer")} />
-
       <PanelHeader>
+        <PanelBackButton inline onClick={() => setView("timer")} />
         <PanelHeaderTitle>Tasks</PanelHeaderTitle>
       </PanelHeader>
 
@@ -88,7 +87,7 @@ export const TasksPage: React.FC = () => {
               })}
             />
             <TaskTitle completed={task.completed}>{task.title}</TaskTitle>
-            <TaskMeta>{task.pomodoroCount} 🍅</TaskMeta>
+            <TaskMeta>{task.pomodoroCount}</TaskMeta>
             <IconButton
               size="small"
               onClick={async (e) => {

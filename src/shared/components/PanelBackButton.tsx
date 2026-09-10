@@ -7,6 +7,7 @@ interface PanelBackButtonProps extends Omit<IconButtonProps, "children" | "aria-
   iconColor?: string;
   left?: number;
   top?: number;
+  inline?: boolean;
 }
 
 export function PanelBackButton({
@@ -14,14 +15,16 @@ export function PanelBackButton({
   iconColor,
   left = 16,
   top = 16,
+  inline = false,
   ...buttonProps
 }: PanelBackButtonProps) {
   return (
     <Box
       sx={(theme) => ({
-        position: "absolute",
-        left,
-        top,
+        position: inline ? "relative" : "absolute",
+        left: inline ? undefined : left,
+        top: inline ? undefined : top,
+        flexShrink: 0,
         width: 40,
         height: 40,
         borderRadius: "50%",

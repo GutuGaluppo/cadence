@@ -10,13 +10,21 @@ export const PanelPage = styled(Box)({
 });
 
 export const PanelHeader = styled(Box)({
-  paddingTop: "64px",
+  display: "flex",
+  alignItems: "center",
+  gap: "12px",
+  paddingTop: "16px",
   marginBottom: "20px",
 });
 
 export const PanelHeaderTitle = styled(Typography)(({ theme }) => ({
+  flex: 1,
+  minWidth: 0,
   fontSize: "1.5rem",
   fontWeight: 500,
   color: theme.palette.text.primary,
-  textAlign: "center",
+  textAlign: "left",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
 }));

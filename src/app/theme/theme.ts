@@ -77,6 +77,24 @@ export function createMuiAppTheme(mode: ThemeMode) {
             color: tokens.primaryText,
             transition: "background-color 0.2s ease, color 0.2s ease",
           },
+          "*": {
+            scrollbarWidth: "thin",
+            scrollbarColor: `${alpha(tokens.primaryText, 0.16)} transparent`,
+          },
+          "*::-webkit-scrollbar": {
+            width: 5,
+            height: 5,
+          },
+          "*::-webkit-scrollbar-track": {
+            background: "transparent",
+          },
+          "*::-webkit-scrollbar-thumb": {
+            backgroundColor: alpha(tokens.primaryText, 0.16),
+            borderRadius: 999,
+          },
+          "*::-webkit-scrollbar-thumb:hover": {
+            backgroundColor: alpha(tokens.primaryText, 0.28),
+          },
         },
       },
     },

@@ -70,9 +70,8 @@ export const SettingsPanel = () => {
 
   return (
     <PanelPage>
-      <PanelBackButton onClick={() => setView("timer")} />
-
       <PanelHeader>
+        <PanelBackButton inline onClick={() => setView("timer")} />
         <PanelHeaderTitle>Settings</PanelHeaderTitle>
       </PanelHeader>
 

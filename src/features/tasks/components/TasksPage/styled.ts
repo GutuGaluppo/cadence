@@ -1,20 +1,14 @@
 import { Box, Typography } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
-export const TaskListScroll = styled(Box)(({ theme }) => ({
+export const TaskListScroll = styled(Box)({
   flex: 1,
   minHeight: 0,
   overflowY: "auto",
   display: "flex",
   flexDirection: "column",
   gap: "8px",
-  scrollbarWidth: "none",
-  "&::-webkit-scrollbar": { display: "none" },
-  "&::-webkit-scrollbar-thumb": {
-    backgroundColor: alpha(theme.palette.text.primary, 0.15),
-    borderRadius: 4,
-  },
-}));
+});
 
 export const TaskCard = styled(Box)<{ active?: boolean }>(({ active, theme }) => ({
   display: "flex",
