@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import appIcon from "../../assets/app-icon.png";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { toSitePath } from "../../lib/sitePaths";
 
@@ -34,7 +35,7 @@ export function SiteShell({
 					href={toSitePath("/")}
 					aria-label={t("brand.homeAriaLabel")}
 				>
-					<span className="brand-mark">C</span>
+					<img alt="" className="brand-mark" src={appIcon} />
 					<span className="brand-text">
 						<strong>{t("brand.name")}</strong>
 						<span>{t("brand.subtitle")}</span>

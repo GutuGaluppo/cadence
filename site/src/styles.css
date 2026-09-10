@@ -100,12 +100,8 @@ a {
     width: 44px;
     height: 44px;
     border-radius: 16px;
-    display: grid;
-    place-items: center;
-    font-weight: 700;
-    color: white;
-    background: linear-gradient(150deg, var(--indigo), var(--indigo-deep));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    object-fit: cover;
+    box-shadow: var(--shadow-soft);
 }
 
 .brand-text {
