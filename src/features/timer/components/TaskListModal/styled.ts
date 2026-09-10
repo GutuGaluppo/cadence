@@ -1,19 +1,35 @@
 import { Box, Typography } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
-export const TasksPanelRoot = styled(Box)({
-  display: "grid",
-  gap: "10px",
-});
+export const ModalPanel = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "min(280px, calc(100vw - 48px))",
+  maxHeight: "calc(100vh - 96px)",
+  display: "flex",
+  flexDirection: "column",
+  gap: "12px",
+  padding: "18px",
+  borderRadius: "20px",
+  border: `1px solid ${alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.24 : 0.12)}`,
+  backgroundColor: alpha(theme.palette.background.paper, theme.palette.mode === "dark" ? 0.96 : 0.98),
+  backdropFilter: "blur(16px)",
+  boxShadow: theme.palette.mode === "dark"
+    ? "0 24px 48px rgba(0, 0, 0, 0.45)"
+    : "0 24px 48px rgba(0, 0, 0, 0.16)",
+  outline: "none",
+}));
 
-export const TasksPanelHeaderRow = styled(Box)({
+export const ModalHeaderRow = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   gap: "10px",
 });
 
-export const TasksPanelTitle = styled(Typography)(({ theme }) => ({
+export const ModalTitle = styled(Typography)(({ theme }) => ({
   margin: 0,
   fontSize: "0.68rem",
   fontWeight: 700,
@@ -22,15 +38,16 @@ export const TasksPanelTitle = styled(Typography)(({ theme }) => ({
   textTransform: "uppercase",
 }));
 
-export const TasksPanelActions = styled(Box)({
+export const ModalHeaderActions = styled(Box)({
   display: "flex",
   alignItems: "center",
   gap: "8px",
 });
 
-export const TaskPreviewList = styled(Box)({
+export const TaskPreviewScroll = styled(Box)({
   display: "grid",
   gap: "10px",
+  overflowY: "auto",
 });
 
 export const TaskPreviewCard = styled("button", {

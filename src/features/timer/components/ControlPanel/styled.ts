@@ -9,3 +9,9 @@ export const ControlsRow = styled(Box)({
   alignItems: "center",
   justifyContent: "space-between",
 });
+
+export const ControlsGroup = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+});

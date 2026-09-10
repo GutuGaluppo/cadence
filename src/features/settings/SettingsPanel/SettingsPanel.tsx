@@ -1,3 +1,4 @@
+import { APP_VERSION } from "@/app/version";
 import { useAppViewStore } from "@/app/store/useAppViewStore";
 import { PanelBackButton } from "@/shared/components/PanelBackButton";
 import {
@@ -20,6 +21,7 @@ import {
   SettingRowContainer,
   ThemeToggleButton,
   ThemeToggleGroup,
+  VersionBadge,
 } from "./styled";
 
 interface SettingRowProps {
@@ -158,6 +160,8 @@ export const SettingsPanel = () => {
           }
         />
       </Stack>
+
+      <VersionBadge>v{APP_VERSION}</VersionBadge>
     </PanelPage>
   );
 };

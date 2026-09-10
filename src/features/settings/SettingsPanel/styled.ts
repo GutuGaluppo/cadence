@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
 export const SettingRowContainer = styled(Box)(({ theme }) => ({
@@ -63,4 +63,15 @@ export const ThemeToggleButton = styled("button", {
   "&:active": {
     transform: "scale(0.98)",
   },
+}));
+
+export const VersionBadge = styled(Typography)(({ theme }) => ({
+  marginTop: "auto",
+  paddingTop: "20px",
+  textAlign: "center",
+  color: alpha(theme.palette.text.secondary, 0.7),
+  fontSize: "0.62rem",
+  fontWeight: 700,
+  letterSpacing: "0.12em",
+  textTransform: "uppercase",
 }));

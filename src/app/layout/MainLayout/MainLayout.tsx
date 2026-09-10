@@ -1,9 +1,8 @@
-import { APP_VERSION } from "@/app/version";
 import { useAppViewStore } from "@/app/store/useAppViewStore";
 import { TimerDisplay } from "@/features/timer/components/TimerDisplay";
 import { AnimatePresence, motion } from "motion/react";
 import { lazy, Suspense } from "react";
-import { MainContainer, VersionBadge, ViewFallback } from "./styled";
+import { MainContainer, ViewFallback } from "./styled";
 
 const DurationStepperPanel = lazy(
   () => import("@/features/settings/DurationStepperPanel"),
@@ -135,7 +134,6 @@ export default function MainLayout() {
           </motion.div>
         )}
       </AnimatePresence>
-      <VersionBadge>v{APP_VERSION}</VersionBadge>
     </MainContainer>
   );
 }

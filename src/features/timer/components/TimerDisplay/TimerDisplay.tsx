@@ -1,5 +1,5 @@
+import { TaskListModal } from "../TaskListModal";
 import ControlsPanel from "../ControlPanel";
-import TasksPanel from "../TasksPanel";
 import TimerRing from "../TimerRing";
 import { TimerDashboard, TimerPanel, TimerWrapper } from "./styled";
 import { useInitializeTimerDisplay } from "./useInitializeTimerDisplay";
@@ -15,9 +15,9 @@ export function TimerDisplay() {
         <TimerPanel>
           <TimerRing />
         </TimerPanel>
-
-        <TasksPanel />
       </TimerDashboard>
+
+      <TaskListModal />
     </TimerWrapper>
   );
 }
