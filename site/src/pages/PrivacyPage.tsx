@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Reveal } from "../data/components/Reveal";
 import { SectionHeading } from "../data/components/SectionHeading";
 import { SiteShell } from "../data/components/SiteShell";
 import { toSitePath } from "../lib/sitePaths";
@@ -35,8 +36,8 @@ export function PrivacyPage() {
 					titleClassName="subpage-title"
 				/>
 
-				{sections.map((section) => (
-					<section className="content-card" key={section.title}>
+				{sections.map((section, index) => (
+					<Reveal as="section" className="content-card" delay={index * 0.06} key={section.title}>
 						<h2>{section.title}</h2>
 						{"items" in section ? (
 							<ul className="content-list">
@@ -47,7 +48,7 @@ export function PrivacyPage() {
 						) : (
 							<p>{section.description}</p>
 						)}
-					</section>
+					</Reveal>
 				))}
 			</main>
 		</SiteShell>

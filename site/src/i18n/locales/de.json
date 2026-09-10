@@ -180,7 +180,8 @@
     "task1Title": "Release-Checkliste abschließen",
     "task1Meta": "25 Min Fokus · 5 Min Pause",
     "task2Title": "Landing-Page-Text schreiben",
-    "task2Meta": "Benutzerdefinierte Sitzung"
+    "task2Meta": "Benutzerdefinierte Sitzung",
+    "tasksHint": "Aufgaben sind nur einen Klick entfernt in einem schnellen Modal — der Startbildschirm bleibt so übersichtlich."
   },
   "lang": { "switcherLabel": "Sprache auswählen" }
 }

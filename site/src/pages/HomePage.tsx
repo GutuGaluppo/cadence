@@ -1,16 +1,33 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { ProductPreview } from "../data/components/ProductPreview";
+import { Reveal } from "../data/components/Reveal";
 import { SectionHeading } from "../data/components/SectionHeading";
 import { SiteShell } from "../data/components/SiteShell";
 import { externalLinks } from "../data/siteContent";
 import { toSitePath } from "../lib/sitePaths";
+
+const heroContainer: Variants = {
+	hidden: {},
+	show: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+};
+
+const heroItem: Variants = {
+	hidden: { opacity: 0, y: 18 },
+	show: {
+		opacity: 1,
+		y: 0,
+		transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+	},
+};
 
 type TItem = { title: string; description: string };
 type TWorkflowItem = { index: string; title: string; description: string };
 
 export function HomePage() {
 	const { t } = useTranslation();
+	const shouldReduceMotion = useReducedMotion();
 	const [downloadLabel, setDownloadLabel] = useState(() =>
 		t("hero.downloadLatest"),
 	);
@@ -67,12 +84,21 @@ export function HomePage() {
 		>
 			<main id="top">
 				<section className="hero">
-					<div className="hero-copy">
-						<p className="eyebrow">{t("hero.eyebrow")}</p>
-						<h1>{t("hero.title")}</h1>
-						<p className="hero-text">{t("hero.description")}</p>
+					<motion.div
+						className="hero-copy"
+						variants={heroContainer}
+						initial={shouldReduceMotion ? "show" : "hidden"}
+						animate="show"
+					>
+						<motion.p className="eyebrow" variants={heroItem}>
+							{t("hero.eyebrow")}
+						</motion.p>
+						<motion.h1 variants={heroItem}>{t("hero.title")}</motion.h1>
+						<motion.p className="hero-text" variants={heroItem}>
+							{t("hero.description")}
+						</motion.p>
 
-						<div className="hero-actions">
+						<motion.div className="hero-actions" variants={heroItem}>
 							<a
 								className="button button-primary"
 								href={externalLinks.latestRelease}
@@ -89,66 +115,84 @@ export function HomePage() {
 							>
 								{t("hero.releaseNotes")}
 							</a>
-						</div>
+						</motion.div>
 
-						<ul className="hero-meta" aria-label={t("hero.highlightsLabel")}>
+						<motion.ul
+							className="hero-meta"
+							aria-label={t("hero.highlightsLabel")}
+							variants={heroItem}
+						>
 							{heroHighlights.map((item) => (
 								<li key={item}>{item}</li>
 							))}
-						</ul>
-					</div>
+						</motion.ul>
+					</motion.div>
 
-					<ProductPreview />
+					<motion.div
+						initial={shouldReduceMotion ? "show" : { opacity: 0, scale: 0.96 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+					>
+						<ProductPreview />
+					</motion.div>
 				</section>
 
 				<section className="signal-bar" aria-label={t("signalBar.ariaLabel")}>
-					{signalItems.map((item) => (
-						<div key={item}>{item}</div>
+					{signalItems.map((item, index) => (
+						<Reveal delay={index * 0.06} key={item}>
+							{item}
+						</Reveal>
 					))}
 				</section>
 
 				<section className="section-grid" id="features">
-					<SectionHeading
-						eyebrow={t("features.eyebrow")}
-						title={t("features.title")}
-					/>
+					<Reveal>
+						<SectionHeading
+							eyebrow={t("features.eyebrow")}
+							title={t("features.title")}
+						/>
+					</Reveal>
 
 					<div className="card-grid">
-						{featureItems.map((item) => (
-							<article className="feature-card" key={item.title}>
+						{featureItems.map((item, index) => (
+							<Reveal as="article" className="feature-card" delay={index * 0.08} key={item.title}>
 								<h3>{item.title}</h3>
 								<p>{item.description}</p>
-							</article>
+							</Reveal>
 						))}
 					</div>
 				</section>
 
 				<section className="workflow" id="workflow">
-					<SectionHeading
-						eyebrow={t("workflow.eyebrow")}
-						title={t("workflow.title")}
-					/>
+					<Reveal>
+						<SectionHeading
+							eyebrow={t("workflow.eyebrow")}
+							title={t("workflow.title")}
+						/>
+					</Reveal>
 
 					<div className="workflow-list">
-						{workflowItems.map((item) => (
-							<article className="workflow-step" key={item.index}>
+						{workflowItems.map((item, index) => (
+							<Reveal as="article" className="workflow-step" delay={index * 0.08} key={item.index}>
 								<span className="step-index">{item.index}</span>
 								<h3>{item.title}</h3>
 								<p>{item.description}</p>
-							</article>
+							</Reveal>
 						))}
 					</div>
 				</section>
 
 				<section className="download-panel" id="download">
-					<SectionHeading
-						eyebrow={t("download.eyebrow")}
-						title={t("download.title")}
-						description={t("download.description")}
-					/>
+					<Reveal>
+						<SectionHeading
+							eyebrow={t("download.eyebrow")}
+							title={t("download.title")}
+							description={t("download.description")}
+						/>
+					</Reveal>
 
 					<div className="download-grid">
-						<article className="download-card download-card-primary">
+						<Reveal as="article" className="download-card download-card-primary">
 							<p className="download-label">{t("download.primaryLabel")}</p>
 							<h3>{downloadLabel}</h3>
 							<p>{t("download.primaryText")}</p>
@@ -160,37 +204,39 @@ export function HomePage() {
 							>
 								{t("download.openRelease")}
 							</a>
-						</article>
+						</Reveal>
 
-						<article className="download-card">
+						<Reveal as="article" className="download-card" delay={0.08}>
 							<p className="download-label">{t("download.macLabel")}</p>
 							<h3>{t("download.macTitle")}</h3>
 							<p>{t("download.macText")}</p>
-						</article>
+						</Reveal>
 
-						<article className="download-card disabled">
+						<Reveal as="article" className="download-card disabled" delay={0.16}>
 							<p className="download-label">{t("download.windowsLabel")}</p>
 							<h3>{t("download.windowsTitle")}</h3>
 							<p>{t("download.windowsText")}</p>
-						</article>
+						</Reveal>
 
-						<article className="download-card disabled">
+						<Reveal as="article" className="download-card disabled" delay={0.24}>
 							<p className="download-label">{t("download.linuxLabel")}</p>
 							<h3>{t("download.linuxTitle")}</h3>
 							<p>{t("download.linuxText")}</p>
-						</article>
+						</Reveal>
 					</div>
 				</section>
 
 				<section className="faq">
-					<SectionHeading eyebrow={t("faq.eyebrow")} title={t("faq.title")} />
+					<Reveal>
+						<SectionHeading eyebrow={t("faq.eyebrow")} title={t("faq.title")} />
+					</Reveal>
 
 					<div className="faq-list">
-						{faqItems.map((item) => (
-							<article className="faq-item" key={item.title}>
+						{faqItems.map((item, index) => (
+							<Reveal as="article" className="faq-item" delay={index * 0.08} key={item.title}>
 								<h3>{item.title}</h3>
 								<p>{item.description}</p>
-							</article>
+							</Reveal>
 						))}
 					</div>
 				</section>

@@ -180,7 +180,8 @@
     "task1Title": "Finalizar checklist de versión",
     "task1Meta": "25 min enfoque · 5 min descanso",
     "task2Title": "Escribir copy de la landing page",
-    "task2Meta": "Sesión personalizada"
+    "task2Meta": "Sesión personalizada",
+    "tasksHint": "Las tareas están a un clic en un modal rápido — la pantalla principal se mantiene así de limpia."
   },
   "lang": { "switcherLabel": "Seleccionar idioma" }
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { AnimatePresence, motion } from "motion/react";
 
 const LANGUAGES = [
 	{ code: "en", flag: "gb", label: "English" },
@@ -65,29 +66,35 @@ export default function LanguageSwitcher() {
 				</svg>
 			</button>
 
-			{open && (
-				<ul
-					className="lang-select-dropdown"
-					role="listbox"
-					aria-label={t("lang.switcherLabel")}
-				>
-					{LANGUAGES.map((lang) => (
-						<li
-							key={lang.code}
-							role="option"
-							aria-selected={lang.code === activeCode}
-						>
-							<button
-								className={`lang-option${lang.code === activeCode ? " lang-option--active" : ""}`}
-								onClick={() => select(lang.code)}
-								title={lang.label}
+			<AnimatePresence>
+				{open && (
+					<motion.ul
+						className="lang-select-dropdown"
+						role="listbox"
+						aria-label={t("lang.switcherLabel")}
+						initial={{ opacity: 0, scale: 0.92, y: -6 }}
+						animate={{ opacity: 1, scale: 1, y: 0 }}
+						exit={{ opacity: 0, scale: 0.92, y: -6 }}
+						transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
+					>
+						{LANGUAGES.map((lang) => (
+							<li
+								key={lang.code}
+								role="option"
+								aria-selected={lang.code === activeCode}
 							>
-								<span className={`fi fi-${lang.flag} fis lang-flag`} />
-							</button>
-						</li>
-					))}
-				</ul>
-			)}
+								<button
+									className={`lang-option${lang.code === activeCode ? " lang-option--active" : ""}`}
+									onClick={() => select(lang.code)}
+									title={lang.label}
+								>
+									<span className={`fi fi-${lang.flag} fis lang-flag`} />
+								</button>
+							</li>
+						))}
+					</motion.ul>
+				)}
+			</AnimatePresence>
 		</div>
 	);
 }

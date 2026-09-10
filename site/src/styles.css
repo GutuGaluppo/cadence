@@ -1,4 +1,9 @@
+@view-transition {
+    navigation: auto;
+}
+
 :root {
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --bg: #efede9;
     --bg-strong: #e3ddd2;
     --surface: rgba(255, 255, 255, 0.72);
@@ -84,6 +89,7 @@ a {
     display: inline-flex;
     align-items: center;
     gap: 14px;
+    view-transition-name: site-brand;
 }
 
 .brand-mark {
@@ -202,14 +208,18 @@ a {
     border-radius: 999px;
     font-weight: 700;
     transition:
-        transform 180ms ease,
-        box-shadow 180ms ease,
-        background-color 180ms ease,
-        color 180ms ease;
+        transform 180ms var(--ease-out),
+        box-shadow 180ms var(--ease-out),
+        background-color 180ms var(--ease-out),
+        color 180ms var(--ease-out);
 }
 
 .button:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+}
+
+.button:active {
+    transform: translateY(0) scale(0.97);
 }
 
 .button-primary {
@@ -512,6 +522,20 @@ a {
     background: var(--surface);
     box-shadow: var(--shadow-soft);
     backdrop-filter: blur(18px);
+    transition:
+        transform 220ms var(--ease-out),
+        border-color 220ms var(--ease-out),
+        box-shadow 220ms var(--ease-out);
+}
+
+.feature-card:hover,
+.workflow-step:hover,
+.download-card:not(.disabled):hover,
+.faq-item:hover,
+.content-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(46, 37, 102, 0.2);
+    box-shadow: var(--shadow-strong);
 }
 
 .feature-card {
@@ -709,6 +733,7 @@ a {
     position: absolute;
     top: calc(100% + 6px);
     right: 0;
+    transform-origin: top right;
     background: var(--surface-strong);
     border: 1px solid var(--surface-border);
     border-radius: var(--radius-md);
@@ -757,6 +782,72 @@ a {
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes floatOrb {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-10px, -18px);
+    }
+}
+
+.orb {
+    animation: floatOrb 7s ease-in-out infinite alternate;
+}
+
+.orb-gold {
+    animation-delay: -3.2s;
+}
+
+.preview-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-self: start;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(46, 37, 102, 0.14);
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.preview-note-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--gold);
+    flex-shrink: 0;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.42s;
+    animation-timing-function: var(--ease-out);
+}
+
+::view-transition-group(site-brand) {
+    animation-duration: 0.5s;
+    animation-timing-function: var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .orb {
+        animation: none;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
     }
 }
 

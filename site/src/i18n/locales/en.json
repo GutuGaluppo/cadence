@@ -180,7 +180,8 @@
     "task1Title": "Finish release checklist",
     "task1Meta": "25 min focus · 5 min break",
     "task2Title": "Write landing page copy",
-    "task2Meta": "Custom session"
+    "task2Meta": "Custom session",
+    "tasksHint": "Tasks are one click away in a quick modal — the home screen stays this clean."
   },
   "lang": { "switcherLabel": "Select language" }
 }

@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Reveal } from "../data/components/Reveal";
 import { SectionHeading } from "../data/components/SectionHeading";
 import { SiteShell } from "../data/components/SiteShell";
 import { externalLinks } from "../data/siteContent";
@@ -32,16 +33,16 @@ export function ChangelogPage() {
 					titleClassName="subpage-title"
 				/>
 
-				<section className="content-card">
+				<Reveal as="section" className="content-card">
 					<h2>{t("changelog.currentWork")}</h2>
 					<ul className="content-list">
 						{highlights.map((item) => (
 							<li key={item}>{item}</li>
 						))}
 					</ul>
-				</section>
+				</Reveal>
 
-				<section className="content-card">
+				<Reveal as="section" className="content-card" delay={0.08}>
 					<h2>{t("changelog.canonicalSources")}</h2>
 					<div className="link-grid">
 						<a
@@ -63,7 +64,7 @@ export function ChangelogPage() {
 							<span>{t("changelog.repoChangelogDesc")}</span>
 						</a>
 					</div>
-				</section>
+				</Reveal>
 			</main>
 		</SiteShell>
 	);

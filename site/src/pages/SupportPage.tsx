@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Reveal } from "../data/components/Reveal";
 import { SectionHeading } from "../data/components/SectionHeading";
 import { SiteShell } from "../data/components/SiteShell";
 import { externalLinks } from "../data/siteContent";
@@ -39,7 +40,7 @@ export function SupportPage() {
 					titleClassName="subpage-title"
 				/>
 
-				<section className="content-card">
+				<Reveal as="section" className="content-card">
 					<h2>{t("support.openThread")}</h2>
 					<div className="link-grid">
 						{tiles.map((tile, index) => (
@@ -55,21 +56,21 @@ export function SupportPage() {
 							</a>
 						))}
 					</div>
-				</section>
+				</Reveal>
 
-				<section className="content-card">
+				<Reveal as="section" className="content-card" delay={0.08}>
 					<h2>{t("support.bugReport")}</h2>
 					<ul className="content-list">
 						{checklist.map((item) => (
 							<li key={item}>{item}</li>
 						))}
 					</ul>
-				</section>
+				</Reveal>
 
-				<section className="content-card">
+				<Reveal as="section" className="content-card" delay={0.16}>
 					<h2>{t("support.beforePosting")}</h2>
 					<p>{t("support.beforePostingText")}</p>
-				</section>
+				</Reveal>
 			</main>
 		</SiteShell>
 	);
