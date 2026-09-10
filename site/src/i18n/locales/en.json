@@ -8,6 +8,8 @@
     "features": "Features",
     "workflow": "Workflow",
     "download": "Download",
+    "docs": "Docs",
+    "roadmap": "Roadmap",
     "support": "Support",
     "privacy": "Privacy",
     "changelog": "Changelog",
@@ -47,7 +49,7 @@
       },
       {
         "title": "Compact desktop flow",
-        "description": "Tray access, a small footprint, and a focused single-window layout keep the app available without turning it into a second workspace."
+        "description": "Tray access and a single, focused window keep the app out of your way. Tasks live one click away in a quick modal, and full task management sits in its own panel — so the home screen never grows beyond a timer and a few buttons."
       }
     ]
   },
@@ -175,12 +177,66 @@
       "The app shell uses lazy loading for secondary views to reduce the initial payload."
     ]
   },
+  "docs": {
+    "eyebrow": "Docs",
+    "title": "Getting started with Cadence.",
+    "description": "A short walkthrough of the pieces you will actually use day to day.",
+    "sections": [
+      {
+        "title": "Your first session",
+        "items": [
+          "Open Cadence and the timer is ready to go — no setup or account required.",
+          "The reset icon restarts the current interval at any time.",
+          "The ring shows your progress, and the label under the clock tells you focus, short break, or long break."
+        ]
+      },
+      {
+        "title": "Task-aware sessions",
+        "items": [
+          "The checklist icon opens a quick modal with your tasks — tap one to make it the active session.",
+          "The clipboard icon opens the full task panel, where you create tasks and give them their own focus and break durations.",
+          "Completed focus cycles stay attached to the task, so pomodoro counts build up over time."
+        ]
+      },
+      {
+        "title": "Customize your rhythm",
+        "items": [
+          "The gear icon opens Settings: focus duration, short break, long break, and cycles before a long break.",
+          "Switch between light and dark themes, toggle sound notifications, and pin the window with Always on Top.",
+          "The app version is shown at the bottom of Settings."
+        ]
+      }
+    ]
+  },
+  "roadmap": {
+    "eyebrow": "Roadmap",
+    "title": "Where Cadence is headed next.",
+    "description": "These are directions we are exploring, not commitments or dates. Shipped changes are tracked in the Changelog.",
+    "sections": [
+      {
+        "title": "More platforms",
+        "items": [
+          "Windows: a signed installer once certificate signing is in place.",
+          "Linux: a distribution strategy after the macOS 1.0 release."
+        ]
+      },
+      {
+        "title": "Under consideration",
+        "items": [
+          "A lightweight update mechanism, so new releases reach you without a manual download.",
+          "An easier way to send feedback without leaving the app.",
+          "Continued hardening of runtime permissions and content security policy."
+        ]
+      }
+    ],
+    "linksTitle": "Have a request?",
+    "changelogLink": "See what has already shipped",
+    "changelogLinkDesc": "Notable changes tracked before and between public releases.",
+    "issueLink": "Open a feature request",
+    "issueLinkDesc": "Suggest a direction or vote on an existing idea on GitHub."
+  },
   "preview": {
-    "mode": "FOCUS",
-    "task1Title": "Finish release checklist",
-    "task1Meta": "25 min focus · 5 min break",
-    "task2Title": "Write landing page copy",
-    "task2Meta": "Custom session",
+    "screenshotAlt": "Cadence desktop app showing a 25 minute focus timer and a clean, single-view home screen",
     "tasksHint": "Tasks are one click away in a quick modal — the home screen stays this clean."
   },
   "lang": { "switcherLabel": "Select language" }

@@ -45,7 +45,7 @@ export function SupportPage() {
 					<div className="link-grid">
 						{tiles.map((tile, index) => (
 							<a
-								className="link-tile"
+								className={`link-tile${index === 1 ? " cta-release" : ""}`}
 								href={tileLinks[index]}
 								key={tile.title}
 								target="_blank"

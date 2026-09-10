@@ -75,6 +75,8 @@ export function HomePage() {
 						<a href={externalLinks.releases} target="_blank" rel="noreferrer">
 							{t("footer.releases")}
 						</a>
+						<a href={toSitePath("/docs/")}>{t("nav.docs")}</a>
+						<a href={toSitePath("/roadmap/")}>{t("nav.roadmap")}</a>
 						<a href={toSitePath("/support/")}>{t("nav.support")}</a>
 						<a href={toSitePath("/privacy/")}>{t("nav.privacy")}</a>
 						<a href={toSitePath("/changelog/")}>{t("nav.changelog")}</a>
@@ -197,7 +199,7 @@ export function HomePage() {
 							<h3>{downloadLabel}</h3>
 							<p>{t("download.primaryText")}</p>
 							<a
-								className="button button-primary"
+								className="button button-primary cta-release"
 								href={externalLinks.latestRelease}
 								target="_blank"
 								rel="noreferrer"

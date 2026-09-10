@@ -8,6 +8,8 @@
     "features": "Recursos",
     "workflow": "Como funciona",
     "download": "Baixar",
+    "docs": "Documentação",
+    "roadmap": "Roadmap",
     "support": "Suporte",
     "privacy": "Privacidade",
     "changelog": "Novidades",
@@ -47,7 +49,7 @@
       },
       {
         "title": "Fluxo compacto no desktop",
-        "description": "Acesso pela bandeja do sistema, pegada pequena e layout de janela única mantêm o app disponível sem transformá-lo em um segundo espaço de trabalho."
+        "description": "Acesso pela bandeja do sistema e uma janela única e focada mantêm o app fora do seu caminho. As tarefas ficam a um clique, num modal rápido, e o gerenciamento completo mora em seu próprio painel — a tela inicial nunca cresce além de um timer e alguns botões."
       }
     ]
   },
@@ -175,12 +177,66 @@
       "O shell do app usa carregamento lazy para views secundárias para reduzir o payload inicial."
     ]
   },
+  "docs": {
+    "eyebrow": "Documentação",
+    "title": "Primeiros passos com o Cadence.",
+    "description": "Um resumo rápido das partes que você realmente vai usar no dia a dia.",
+    "sections": [
+      {
+        "title": "Sua primeira sessão",
+        "items": [
+          "Abra o Cadence e o timer já está pronto — sem configuração ou conta necessária.",
+          "O ícone de reset reinicia o intervalo atual a qualquer momento.",
+          "O anel mostra seu progresso, e o texto abaixo do relógio indica foco, pausa curta ou pausa longa."
+        ]
+      },
+      {
+        "title": "Sessões por tarefa",
+        "items": [
+          "O ícone de checklist abre um modal rápido com suas tarefas — toque numa delas para torná-la a sessão ativa.",
+          "O ícone de prancheta abre o painel completo de tarefas, onde você cria tarefas e define durações próprias de foco e pausa.",
+          "Os ciclos de foco concluídos ficam anexados à tarefa, então a contagem de pomodoros vai se acumulando com o tempo."
+        ]
+      },
+      {
+        "title": "Personalize seu ritmo",
+        "items": [
+          "O ícone de engrenagem abre as Configurações: duração de foco, pausa curta, pausa longa e ciclos antes de uma pausa longa.",
+          "Alterne entre os temas claro e escuro, ative notificações sonoras e fixe a janela com Sempre no topo.",
+          "A versão do app aparece na parte inferior das Configurações."
+        ]
+      }
+    ]
+  },
+  "roadmap": {
+    "eyebrow": "Roadmap",
+    "title": "Para onde o Cadence está indo.",
+    "description": "Estas são direções que estamos explorando, não compromissos ou datas. Mudanças já lançadas ficam registradas no Changelog.",
+    "sections": [
+      {
+        "title": "Mais plataformas",
+        "items": [
+          "Windows: um instalador assinado assim que a assinatura de certificado estiver pronta.",
+          "Linux: uma estratégia de distribuição após o lançamento macOS 1.0."
+        ]
+      },
+      {
+        "title": "Em avaliação",
+        "items": [
+          "Um mecanismo leve de atualização, para que novas versões cheguem sem download manual.",
+          "Uma forma mais fácil de enviar feedback sem sair do app.",
+          "Continuidade no reforço de permissões de runtime e da política de segurança de conteúdo."
+        ]
+      }
+    ],
+    "linksTitle": "Tem uma sugestão?",
+    "changelogLink": "Veja o que já foi lançado",
+    "changelogLinkDesc": "Mudanças notáveis rastreadas antes e entre versões públicas.",
+    "issueLink": "Abra um pedido de funcionalidade",
+    "issueLinkDesc": "Sugira uma direção ou vote numa ideia existente no GitHub."
+  },
   "preview": {
-    "mode": "FOCO",
-    "task1Title": "Finalizar checklist de versão",
-    "task1Meta": "25 min foco · 5 min pausa",
-    "task2Title": "Escrever copy da landing page",
-    "task2Meta": "Sessão personalizada",
+    "screenshotAlt": "App Cadence mostrando um timer de foco de 25 minutos numa tela inicial limpa e única",
     "tasksHint": "As tarefas ficam a um clique, num modal rápido — a tela inicial continua assim, limpa."
   },
   "lang": { "switcherLabel": "Selecionar idioma" }

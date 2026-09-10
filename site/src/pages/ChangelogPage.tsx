@@ -10,8 +10,8 @@ export function ChangelogPage() {
 
 	const navItems = [
 		{ label: t("nav.download"), href: toSitePath("/#download") },
-		{ label: t("nav.support"), href: toSitePath("/support/") },
-		{ label: t("nav.privacy"), href: toSitePath("/privacy/") },
+		{ label: t("nav.docs"), href: toSitePath("/docs/") },
+		{ label: t("nav.roadmap"), href: toSitePath("/roadmap/") },
 	];
 
 	const highlights = t("changelog.highlights", {
@@ -46,7 +46,7 @@ export function ChangelogPage() {
 					<h2>{t("changelog.canonicalSources")}</h2>
 					<div className="link-grid">
 						<a
-							className="link-tile"
+							className="link-tile cta-release"
 							href={externalLinks.releases}
 							target="_blank"
 							rel="noreferrer"

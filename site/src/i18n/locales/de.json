@@ -8,6 +8,8 @@
     "features": "Funktionen",
     "workflow": "Workflow",
     "download": "Herunterladen",
+    "docs": "Dokumentation",
+    "roadmap": "Roadmap",
     "support": "Support",
     "privacy": "Datenschutz",
     "changelog": "Neuigkeiten",
@@ -47,7 +49,7 @@
       },
       {
         "title": "Kompakter Desktop-Fluss",
-        "description": "Systemfach-Zugriff, ein kleiner Footprint und ein fokussiertes Einzelfenster-Layout halten die App verfügbar, ohne sie zu einem zweiten Arbeitsbereich zu machen."
+        "description": "Der Zugriff über das Tray-Symbol und ein einziges, fokussiertes Fenster halten die App aus dem Weg. Aufgaben sind nur einen Klick entfernt in einem schnellen Modal, und die vollständige Aufgabenverwaltung lebt in einem eigenen Panel — der Startbildschirm wächst nie über einen Timer und ein paar Schaltflächen hinaus."
       }
     ]
   },
@@ -175,12 +177,66 @@
       "Die App-Shell verwendet Lazy Loading für sekundäre Ansichten, um den initialen Payload zu reduzieren."
     ]
   },
+  "docs": {
+    "eyebrow": "Dokumentation",
+    "title": "Erste Schritte mit Cadence.",
+    "description": "Ein kurzer Rundgang durch die Teile, die du wirklich täglich nutzt.",
+    "sections": [
+      {
+        "title": "Deine erste Sitzung",
+        "items": [
+          "Öffne Cadence — der Timer ist sofort einsatzbereit, ohne Einrichtung oder Konto.",
+          "Das Reset-Symbol startet das aktuelle Intervall jederzeit neu.",
+          "Der Ring zeigt deinen Fortschritt, und die Beschriftung unter der Uhr zeigt Fokus, kurze Pause oder lange Pause an."
+        ]
+      },
+      {
+        "title": "Aufgabenbasierte Sitzungen",
+        "items": [
+          "Das Checklisten-Symbol öffnet ein schnelles Modal mit deinen Aufgaben — tippe eine an, um sie zur aktiven Sitzung zu machen.",
+          "Das Klemmbrett-Symbol öffnet das vollständige Aufgabenpanel, in dem du Aufgaben erstellst und ihnen eigene Fokus- und Pausenzeiten gibst.",
+          "Abgeschlossene Fokuszyklen bleiben mit der Aufgabe verknüpft, sodass sich die Pomodoro-Zählung über die Zeit aufbaut."
+        ]
+      },
+      {
+        "title": "Passe deinen Rhythmus an",
+        "items": [
+          "Das Zahnrad-Symbol öffnet die Einstellungen: Fokusdauer, kurze Pause, lange Pause und Zyklen vor einer langen Pause.",
+          "Wechsle zwischen hellem und dunklem Thema, aktiviere Ton-Benachrichtigungen und fixiere das Fenster mit Immer im Vordergrund.",
+          "Die App-Version wird unten in den Einstellungen angezeigt."
+        ]
+      }
+    ]
+  },
+  "roadmap": {
+    "eyebrow": "Roadmap",
+    "title": "Wohin sich Cadence als Nächstes entwickelt.",
+    "description": "Dies sind Richtungen, die wir erkunden — keine Zusagen oder Termine. Veröffentlichte Änderungen werden im Changelog nachverfolgt.",
+    "sections": [
+      {
+        "title": "Weitere Plattformen",
+        "items": [
+          "Windows: ein signierter Installer, sobald die Zertifikatssignierung eingerichtet ist.",
+          "Linux: eine Distributionsstrategie nach dem macOS-1.0-Release."
+        ]
+      },
+      {
+        "title": "In Prüfung",
+        "items": [
+          "Ein leichtgewichtiger Update-Mechanismus, damit neue Releases ohne manuellen Download ankommen.",
+          "Ein einfacherer Weg, Feedback zu senden, ohne die App zu verlassen.",
+          "Weitere Härtung der Laufzeitberechtigungen und der Content Security Policy."
+        ]
+      }
+    ],
+    "linksTitle": "Hast du einen Vorschlag?",
+    "changelogLink": "Sieh, was bereits veröffentlicht wurde",
+    "changelogLinkDesc": "Wichtige Änderungen, die vor und zwischen öffentlichen Releases nachverfolgt werden.",
+    "issueLink": "Eine Funktionsanfrage öffnen",
+    "issueLinkDesc": "Schlage eine Richtung vor oder stimme für eine bestehende Idee auf GitHub ab."
+  },
   "preview": {
-    "mode": "FOKUS",
-    "task1Title": "Release-Checkliste abschließen",
-    "task1Meta": "25 Min Fokus · 5 Min Pause",
-    "task2Title": "Landing-Page-Text schreiben",
-    "task2Meta": "Benutzerdefinierte Sitzung",
+    "screenshotAlt": "Cadence Desktop-App mit einem 25-Minuten-Fokus-Timer auf einem aufgeräumten, einheitlichen Startbildschirm",
     "tasksHint": "Aufgaben sind nur einen Klick entfernt in einem schnellen Modal — der Startbildschirm bleibt so übersichtlich."
   },
   "lang": { "switcherLabel": "Sprache auswählen" }

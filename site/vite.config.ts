@@ -19,6 +19,8 @@ export default defineConfig({
         privacy: resolve(siteRoot, "privacy/index.html"),
         support: resolve(siteRoot, "support/index.html"),
         changelog: resolve(siteRoot, "changelog/index.html"),
+        docs: resolve(siteRoot, "docs/index.html"),
+        roadmap: resolve(siteRoot, "roadmap/index.html"),
       },
     },
   },

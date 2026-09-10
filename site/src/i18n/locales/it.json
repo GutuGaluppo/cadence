@@ -8,6 +8,8 @@
     "features": "Funzionalità",
     "workflow": "Flusso",
     "download": "Scarica",
+    "docs": "Documentazione",
+    "roadmap": "Roadmap",
     "support": "Supporto",
     "privacy": "Privacy",
     "changelog": "Novità",
@@ -47,7 +49,7 @@
       },
       {
         "title": "Flusso compatto sul desktop",
-        "description": "L'accesso dalla barra delle applicazioni, un'impronta ridotta e un layout a finestra singola mantengono l'app disponibile senza trasformarla in un secondo spazio di lavoro."
+        "description": "L'accesso dalla tray di sistema e un'unica finestra focalizzata tengono l'app fuori dai piedi. Le attività sono a un clic in una finestra modale rapida, e la gestione completa vive nel proprio pannello — la schermata principale non cresce mai oltre un timer e pochi pulsanti."
       }
     ]
   },
@@ -175,12 +177,66 @@
       "La shell dell'app usa il caricamento lazy per le view secondarie per ridurre il payload iniziale."
     ]
   },
+  "docs": {
+    "eyebrow": "Documentazione",
+    "title": "Iniziare con Cadence.",
+    "description": "Una breve panoramica delle parti che userai davvero ogni giorno.",
+    "sections": [
+      {
+        "title": "La tua prima sessione",
+        "items": [
+          "Apri Cadence e il timer è già pronto — nessuna configurazione o account richiesti.",
+          "L'icona di reset riavvia l'intervallo corrente in qualsiasi momento.",
+          "L'anello mostra il tuo progresso, e l'etichetta sotto l'orologio indica focus, pausa breve o pausa lunga."
+        ]
+      },
+      {
+        "title": "Sessioni per attività",
+        "items": [
+          "L'icona della checklist apre una finestra modale rapida con le tue attività — toccane una per renderla la sessione attiva.",
+          "L'icona degli appunti apre il pannello completo delle attività, dove crei attività e assegni loro durate proprie di focus e pausa.",
+          "I cicli di focus completati restano collegati all'attività, così il conteggio dei pomodori cresce nel tempo."
+        ]
+      },
+      {
+        "title": "Personalizza il tuo ritmo",
+        "items": [
+          "L'icona dell'ingranaggio apre le Impostazioni: durata del focus, pausa breve, pausa lunga e cicli prima di una pausa lunga.",
+          "Passa dal tema chiaro a quello scuro, attiva le notifiche sonore e blocca la finestra con Sempre in primo piano.",
+          "La versione dell'app è mostrata in fondo alle Impostazioni."
+        ]
+      }
+    ]
+  },
+  "roadmap": {
+    "eyebrow": "Roadmap",
+    "title": "Verso dove sta andando Cadence.",
+    "description": "Queste sono direzioni che stiamo esplorando, non impegni o date. Le modifiche già rilasciate sono tracciate nel Changelog.",
+    "sections": [
+      {
+        "title": "Più piattaforme",
+        "items": [
+          "Windows: un installer firmato una volta pronta la firma del certificato.",
+          "Linux: una strategia di distribuzione dopo il rilascio macOS 1.0."
+        ]
+      },
+      {
+        "title": "In valutazione",
+        "items": [
+          "Un meccanismo di aggiornamento leggero, così le nuove versioni arrivano senza download manuale.",
+          "Un modo più semplice per inviare feedback senza uscire dall'app.",
+          "Un rafforzamento continuo dei permessi di runtime e della content security policy."
+        ]
+      }
+    ],
+    "linksTitle": "Hai un suggerimento?",
+    "changelogLink": "Guarda cosa è già stato rilasciato",
+    "changelogLinkDesc": "Modifiche rilevanti tracciate prima e tra le versioni pubbliche.",
+    "issueLink": "Apri una richiesta di funzionalità",
+    "issueLinkDesc": "Suggerisci una direzione o vota un'idea esistente su GitHub."
+  },
   "preview": {
-    "mode": "FOCUS",
-    "task1Title": "Completare la checklist di versione",
-    "task1Meta": "25 min focus · 5 min pausa",
-    "task2Title": "Scrivere il copy della landing page",
-    "task2Meta": "Sessione personalizzata",
+    "screenshotAlt": "App desktop Cadence che mostra un timer di focus da 25 minuti su una schermata principale pulita e unica",
     "tasksHint": "Le attività sono a un clic in una finestra modale rapida — la schermata principale resta così pulita."
   },
   "lang": { "switcherLabel": "Seleziona lingua" }

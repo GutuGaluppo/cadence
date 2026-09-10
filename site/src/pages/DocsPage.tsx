@@ -4,22 +4,20 @@ import { SectionHeading } from "../data/components/SectionHeading";
 import { SiteShell } from "../data/components/SiteShell";
 import { toSitePath } from "../lib/sitePaths";
 
-type PrivacySection =
-	| { title: string; items: string[] }
-	| { title: string; description: string };
+type DocsSection = { title: string; items: string[] };
 
-export function PrivacyPage() {
+export function DocsPage() {
 	const { t } = useTranslation();
 
 	const navItems = [
 		{ label: t("nav.features"), href: toSitePath("/#features") },
-		{ label: t("nav.changelog"), href: toSitePath("/changelog/") },
-		{ label: t("nav.docs"), href: toSitePath("/docs/") },
+		{ label: t("nav.roadmap"), href: toSitePath("/roadmap/") },
+		{ label: t("nav.support"), href: toSitePath("/support/") },
 	];
 
-	const sections = t("privacy.sections", {
+	const sections = t("docs.sections", {
 		returnObjects: true,
-	}) as PrivacySection[];
+	}) as DocsSection[];
 
 	return (
 		<SiteShell
@@ -29,9 +27,9 @@ export function PrivacyPage() {
 		>
 			<main className="content-stack">
 				<SectionHeading
-					eyebrow={t("privacy.eyebrow")}
-					title={t("privacy.title")}
-					description={t("privacy.description")}
+					eyebrow={t("docs.eyebrow")}
+					title={t("docs.title")}
+					description={t("docs.description")}
 					titleTag="h1"
 					titleClassName="subpage-title"
 				/>
@@ -39,15 +37,11 @@ export function PrivacyPage() {
 				{sections.map((section, index) => (
 					<Reveal as="section" className="content-card" delay={index * 0.06} key={section.title}>
 						<h2>{section.title}</h2>
-						{"items" in section ? (
-							<ul className="content-list">
-								{section.items.map((item) => (
-									<li key={item}>{item}</li>
-								))}
-							</ul>
-						) : (
-							<p>{section.description}</p>
-						)}
+						<ul className="content-list">
+							{section.items.map((item) => (
+								<li key={item}>{item}</li>
+							))}
+						</ul>
 					</Reveal>
 				))}
 			</main>

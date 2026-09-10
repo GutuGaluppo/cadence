@@ -8,6 +8,8 @@
     "features": "Características",
     "workflow": "Flujo",
     "download": "Descargar",
+    "docs": "Documentación",
+    "roadmap": "Roadmap",
     "support": "Soporte",
     "privacy": "Privacidad",
     "changelog": "Novedades",
@@ -47,7 +49,7 @@
       },
       {
         "title": "Flujo compacto en escritorio",
-        "description": "El acceso desde la bandeja, una huella pequeña y un diseño de ventana única mantienen la app disponible sin convertirla en un segundo espacio de trabajo."
+        "description": "El acceso desde la bandeja y una única ventana enfocada mantienen la app fuera de tu camino. Las tareas están a un clic en un modal rápido, y la gestión completa vive en su propio panel — la pantalla principal nunca crece más allá de un temporizador y unos pocos botones."
       }
     ]
   },
@@ -175,12 +177,66 @@
       "El shell de la app usa carga lazy para vistas secundarias para reducir el payload inicial."
     ]
   },
+  "docs": {
+    "eyebrow": "Documentación",
+    "title": "Primeros pasos con Cadence.",
+    "description": "Un recorrido breve por las partes que realmente usarás día a día.",
+    "sections": [
+      {
+        "title": "Tu primera sesión",
+        "items": [
+          "Abre Cadence y el temporizador ya está listo — sin configuración ni cuenta necesaria.",
+          "El ícono de reinicio reinicia el intervalo actual en cualquier momento.",
+          "El anillo muestra tu progreso, y la etiqueta bajo el reloj indica enfoque, descanso corto o descanso largo."
+        ]
+      },
+      {
+        "title": "Sesiones por tarea",
+        "items": [
+          "El ícono de checklist abre un modal rápido con tus tareas — toca una para convertirla en la sesión activa.",
+          "El ícono de portapapeles abre el panel completo de tareas, donde creas tareas y les das sus propias duraciones de enfoque y descanso.",
+          "Los ciclos de enfoque completados quedan vinculados a la tarea, así que el conteo de pomodoros se acumula con el tiempo."
+        ]
+      },
+      {
+        "title": "Personaliza tu ritmo",
+        "items": [
+          "El ícono de engranaje abre Ajustes: duración de enfoque, descanso corto, descanso largo y ciclos antes de un descanso largo.",
+          "Cambia entre temas claro y oscuro, activa notificaciones de sonido y fija la ventana con Siempre visible.",
+          "La versión de la app se muestra en la parte inferior de Ajustes."
+        ]
+      }
+    ]
+  },
+  "roadmap": {
+    "eyebrow": "Roadmap",
+    "title": "Hacia dónde va Cadence.",
+    "description": "Estas son direcciones que estamos explorando, no compromisos ni fechas. Los cambios ya publicados se registran en el Changelog.",
+    "sections": [
+      {
+        "title": "Más plataformas",
+        "items": [
+          "Windows: un instalador firmado una vez que la firma de certificado esté lista.",
+          "Linux: una estrategia de distribución después del lanzamiento macOS 1.0."
+        ]
+      },
+      {
+        "title": "En evaluación",
+        "items": [
+          "Un mecanismo ligero de actualización, para que las nuevas versiones lleguen sin descarga manual.",
+          "Una forma más fácil de enviar comentarios sin salir de la app.",
+          "Continuar reforzando los permisos de runtime y la política de seguridad de contenido."
+        ]
+      }
+    ],
+    "linksTitle": "¿Tienes una sugerencia?",
+    "changelogLink": "Mira lo que ya se lanzó",
+    "changelogLinkDesc": "Cambios notables registrados antes y entre versiones públicas.",
+    "issueLink": "Abrir una solicitud de función",
+    "issueLinkDesc": "Sugiere una dirección o vota una idea existente en GitHub."
+  },
   "preview": {
-    "mode": "ENFOQUE",
-    "task1Title": "Finalizar checklist de versión",
-    "task1Meta": "25 min enfoque · 5 min descanso",
-    "task2Title": "Escribir copy de la landing page",
-    "task2Meta": "Sesión personalizada",
+    "screenshotAlt": "App de escritorio Cadence mostrando un temporizador de enfoque de 25 minutos en una pantalla principal limpia y única",
     "tasksHint": "Las tareas están a un clic en un modal rápido — la pantalla principal se mantiene así de limpia."
   },
   "lang": { "switcherLabel": "Seleccionar idioma" }
