@@ -455,6 +455,54 @@ a {
     font-size: 1.32rem;
 }
 
+.content-card-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.content-card-heading h2 {
+    margin: 0;
+}
+
+.content-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    box-shadow: var(--shadow-soft);
+    flex-shrink: 0;
+}
+
+.doc-shot-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.doc-shot {
+    display: grid;
+    gap: 8px;
+    flex: 1 1 200px;
+    max-width: 240px;
+}
+
+.doc-shot img {
+    display: block;
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid rgba(46, 37, 102, 0.1);
+    box-shadow: var(--shadow-soft);
+}
+
+.doc-shot-caption {
+    margin: 0;
+    text-align: center;
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+}
+
 .content-card p,
 .content-card li {
     color: var(--ink-soft);

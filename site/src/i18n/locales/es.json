@@ -197,7 +197,30 @@
         "Solo necesitas hacerlo una vez — las siguientes aperturas funcionan con normalidad."
       ],
       "homebrewTitle": "¿Prefieres Homebrew?",
-      "homebrewText": "`brew install --cask cadence` (después de agregar el tap una vez con `brew tap gutugaluppo/cadence`) instala Cadence sin activar el aviso de Gatekeeper de arriba, ya que Homebrew elimina la marca de cuarentena automáticamente."
+      "homebrewText": "`brew install --cask cadence` (después de agregar el tap una vez con `brew tap gutugaluppo/cadence`) instala Cadence sin activar el aviso de Gatekeeper de arriba, ya que Homebrew elimina la marca de cuarentena automáticamente. ¿Nunca usaste una terminal antes? Mira la guía completa más abajo."
+    },
+    "homebrewGuide": {
+      "title": "Instalar con Homebrew — sin experiencia en la línea de comandos",
+      "intro": "Homebrew es una pequeña herramienta que muchos Mac ya tienen — instala apps como Cadence por ti y evita por completo el aviso de Gatekeeper de arriba. Si nunca usaste Terminal antes, sigue estos pasos exactamente; todo el proceso toma unos dos minutos.",
+      "steps": [
+        "Abre Finder, ve a Aplicaciones → Utilidades y haz doble clic en Terminal.",
+        "Se abrirá una ventana como esta — esto es Terminal. Nada de lo que escribas aquí puede romper algo, siempre que solo pegues lo que se indica abajo.",
+        "Escribe `brew --version` y presiona Return. Si ves un número de versión como el de abajo, Homebrew ya está instalado — pasa directamente al paso 5.",
+        "Si en cambio aparece algo como \"command not found\", visita `brew.sh`, copia el único comando de instalación que se muestra ahí, pégalo en Terminal y presiona Return. Puede pedirte la contraseña de tu Mac — eso es normal.",
+        "Haz clic una vez dentro de la ventana de Terminal, pega esta línea con Cmd+V y presiona Return: `brew tap gutugaluppo/cadence`. Espera hasta que aparezca una nueva línea vacía — eso significa que terminó.",
+        "Pega esta línea de la misma forma y presiona Return: `brew install --cask cadence`. Esta tarda un poco más porque descarga la app. Cuando termine, Cadence estará en tu carpeta Aplicaciones, listo para abrir."
+      ],
+      "pasteTip": "Consejo: pegar en Terminal siempre se hace con Cmd+V. Haz clic una vez dentro de la ventana primero, para asegurarte de que lo que pegues vaya a Terminal y no a otro lugar."
+    },
+    "shots": {
+      "home": "La pantalla principal: un temporizador y cuatro botones para reiniciar, lista de tareas, gestión de tareas y ajustes.",
+      "taskModal": "El modal rápido de lista de tareas, abierto con un clic.",
+      "tasksPage": "El panel completo de gestión de tareas, con el conteo de ciclos completados de cada una.",
+      "taskCreate": "Creando una tarea con sus propias duraciones de enfoque y descanso.",
+      "settings": "Ajustes: duraciones, tema, sonido y Siempre visible.",
+      "terminalFinder": "Terminal está en Aplicaciones → Utilidades.",
+      "terminalEmpty": "Una ventana nueva de Terminal — es totalmente normal ver esto.",
+      "terminalBrew": "Escribiendo `brew --version` y presionando Return. Esta salida significa que Homebrew ya está instalado."
     },
     "sections": [
       {
