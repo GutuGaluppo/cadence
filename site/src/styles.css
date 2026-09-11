@@ -416,7 +416,7 @@ a {
 }
 
 .download-grid {
-    grid-template-columns: 1.35fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     align-items: stretch;
 }
 
@@ -425,6 +425,7 @@ a {
 }
 
 .download-card-primary {
+    grid-column: 1 / -1;
     background:
         linear-gradient(
             135deg,
@@ -501,6 +502,53 @@ a {
     text-align: center;
     font-size: 0.76rem;
     color: var(--ink-soft);
+}
+
+/* From the first session onward, each screenshot is paired with its explanation. */
+.doc-shot-row--guide {
+    display: grid;
+    gap: 28px;
+    min-width: 0;
+}
+
+.doc-shot-row--guide .doc-shot {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(22px, 4vw, 56px);
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+}
+
+.doc-shot-row--guide .doc-shot:nth-child(even) {
+    grid-template-columns: minmax(0, 1fr) 240px;
+}
+
+.doc-shot-row--guide .doc-shot img {
+    width: 240px;
+    max-width: 100%;
+}
+
+.doc-shot-row--guide .doc-shot:nth-child(even) img {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.doc-shot-row--guide .doc-shot-caption {
+    min-width: 0;
+    text-align: left;
+    font-size: clamp(1rem, 1.3vw, 1.18rem);
+    line-height: 1.6;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.doc-shot-row--guide .doc-shot:nth-child(even) .doc-shot-caption {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: right;
 }
 
 .content-card p,
@@ -803,10 +851,6 @@ a {
     .link-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
-    .download-card-primary {
-        grid-column: 1 / -1;
-    }
 }
 
 @media (max-width: 720px) {
@@ -848,5 +892,22 @@ a {
 
     .product-window {
         width: 100%;
+    }
+
+    .doc-shot-row--guide .doc-shot,
+    .doc-shot-row--guide .doc-shot:nth-child(even) {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .doc-shot-row--guide .doc-shot:nth-child(even) img,
+    .doc-shot-row--guide .doc-shot:nth-child(even) .doc-shot-caption {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .doc-shot-row--guide .doc-shot-caption,
+    .doc-shot-row--guide .doc-shot:nth-child(even) .doc-shot-caption {
+        text-align: left;
     }
 }

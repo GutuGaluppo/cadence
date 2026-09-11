@@ -8,6 +8,7 @@ type RevealProps = {
 	delay?: number;
 	className?: string;
 	as?: RevealTag;
+	id?: string;
 };
 
 const tagMap = {
@@ -16,18 +17,23 @@ const tagMap = {
 	article: motion.article,
 } as const;
 
-export function Reveal({ children, delay = 0, className, as = "div" }: RevealProps) {
+export function Reveal({ children, delay = 0, className, as = "div", id }: RevealProps) {
 	const shouldReduceMotion = useReducedMotion();
 	const MotionTag = tagMap[as];
 
 	if (shouldReduceMotion) {
 		const Tag = as;
-		return <Tag className={className}>{children}</Tag>;
+		return (
+			<Tag className={className} id={id}>
+				{children}
+			</Tag>
+		);
 	}
 
 	return (
 		<MotionTag
 			className={className}
+			id={id}
 			initial={{ opacity: 0, y: 26 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true, margin: "-80px" }}

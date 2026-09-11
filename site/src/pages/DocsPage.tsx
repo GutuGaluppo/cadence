@@ -108,7 +108,7 @@ export function DocsPage() {
 					</p>
 				</Reveal>
 
-				<Reveal as="section" className="content-card" delay={0.06}>
+				<Reveal as="section" className="content-card" delay={0.06} id="homebrew">
 					<h2>{t("docs.homebrewGuide.title")}</h2>
 					<p>{t("docs.homebrewGuide.intro")}</p>
 
@@ -142,7 +142,7 @@ export function DocsPage() {
 						</ul>
 
 						{SECTION_SHOTS[index] && (
-							<div className="doc-shot-row">
+							<div className="doc-shot-row doc-shot-row--guide">
 								{SECTION_SHOTS[index].map((shot) => (
 									<figure className="doc-shot" key={shot.src}>
 										<img alt={t(shot.captionKey)} src={shot.src} />

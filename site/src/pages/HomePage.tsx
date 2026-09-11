@@ -45,6 +45,7 @@ export function HomePage() {
 		{ label: t("nav.features"), href: toSitePath("/#features") },
 		{ label: t("nav.workflow"), href: toSitePath("/#workflow") },
 		{ label: t("nav.download"), href: toSitePath("/#download") },
+		{ label: t("nav.docs"), href: toSitePath("/docs/") },
 	];
 
 	const heroHighlights = t("heroHighlights", {
@@ -212,6 +213,15 @@ export function HomePage() {
 							<p className="download-label">{t("download.macLabel")}</p>
 							<h3>{t("download.macTitle")}</h3>
 							<p>{t("download.macText")}</p>
+						</Reveal>
+
+						<Reveal as="article" className="download-card" delay={0.12}>
+							<p className="download-label">{t("download.homebrewLabel")}</p>
+							<h3>{t("download.homebrewTitle")}</h3>
+							<p>{t("download.homebrewText")}</p>
+							<a className="button button-secondary" href={toSitePath("/docs/#homebrew")}>
+								{t("download.homebrewLink")}
+							</a>
 						</Reveal>
 
 						<Reveal as="article" className="download-card disabled" delay={0.16}>
