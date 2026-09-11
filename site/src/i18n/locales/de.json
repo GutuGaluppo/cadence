@@ -181,6 +181,24 @@
     "eyebrow": "Dokumentation",
     "title": "Erste Schritte mit Cadence.",
     "description": "Ein kurzer Rundgang durch die Teile, die du wirklich täglich nutzt.",
+    "install": {
+      "title": "Cadence installieren",
+      "steps": [
+        "Lade die neueste `.dmg` für macOS von GitHub Releases herunter.",
+        "Öffne die `.dmg` und ziehe Cadence in deinen Programme-Ordner.",
+        "Öffne Cadence über Programme oder das Launchpad."
+      ],
+      "gatekeeperTitle": "\"Apple konnte diese App nicht überprüfen\" oder \"Cadence ist beschädigt\"?",
+      "gatekeeperExplanation": "Das ist der macOS-Gatekeeper, kein Problem mit deinem Download. Cadence ist (noch) nicht mit einem kostenpflichtigen Apple-Developer-Zertifikat signiert, daher kann Gatekeeper nicht bestätigen, wer die App erstellt hat, und zeigt diese Warnung für jede unsignierte App — das bedeutet nicht, dass etwas wirklich kaputt ist.",
+      "gatekeeperReassurance": "Der Download ist sicher zu öffnen. So geht's:",
+      "gatekeeperSteps": [
+        "Klicke mit der rechten Maustaste (oder Control-Klick) auf Cadence in Programme, wähle \"Öffnen\" und bestätige im erscheinenden Dialog.",
+        "Falls diese Option nicht angezeigt wird, öffne Systemeinstellungen → Datenschutz & Sicherheit, scrolle zum Abschnitt Sicherheit und klicke neben der Meldung zu Cadence auf \"Dennoch öffnen\".",
+        "Das musst du nur einmal tun — künftige Starts funktionieren danach normal."
+      ],
+      "homebrewTitle": "Lieber mit Homebrew?",
+      "homebrewText": "`brew install --cask cadence` (nachdem du einmalig den Tap mit `brew tap gutugaluppo/cadence` hinzugefügt hast) installiert Cadence, ohne die obige Gatekeeper-Warnung auszulösen, da Homebrew das Quarantäne-Flag automatisch entfernt."
+    },
     "sections": [
       {
         "title": "Deine erste Sitzung",

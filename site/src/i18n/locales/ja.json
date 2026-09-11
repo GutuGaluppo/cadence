@@ -181,6 +181,24 @@
     "eyebrow": "ドキュメント",
     "title": "Cadenceを使い始める。",
     "description": "日々実際に使う部分を短くまとめました。",
+    "install": {
+      "title": "Cadenceのインストール",
+      "steps": [
+        "GitHub Releasesから最新のmacOS用`.dmg`をダウンロードします。",
+        "`.dmg`を開き、CadenceをアプリケーションフォルダにドラッグしCadenceをインストールします。",
+        "アプリケーションフォルダまたはLaunchpadからCadenceを開きます。"
+      ],
+      "gatekeeperTitle": "「Appleはこのアプリを確認できません」や「Cadenceは破損しています」と表示される場合",
+      "gatekeeperExplanation": "これはダウンロードの問題ではなく、macOSのGatekeeperによる表示です。CadenceはまだApple Developerの有料証明書で署名されていないため、Gatekeeperは作成者を確認できず、署名されていないすべてのアプリに対してこの警告を表示します。実際に何かが壊れているわけではありません。",
+      "gatekeeperReassurance": "ダウンロードしたファイルは安全に開けます。手順は次のとおりです。",
+      "gatekeeperSteps": [
+        "アプリケーションフォルダのCadenceを右クリック(またはControlキーを押しながらクリック)し、「開く」を選択して、表示されるダイアログで確認します。",
+        "この選択肢が表示されない場合は、システム設定 → プライバシーとセキュリティを開き、セキュリティのセクションまでスクロールして、Cadenceに関するメッセージの横にある「このまま開く」をクリックします。",
+        "この操作が必要なのは最初の一回だけです。次回以降は通常どおり開きます。"
+      ],
+      "homebrewTitle": "Homebrewを使いたい場合",
+      "homebrewText": "先に`brew tap gutugaluppo/cadence`でtapを追加してから`brew install --cask cadence`を実行すると、Homebrewが検疫フラグを自動的に取り除くため、上記のGatekeeperの警告が表示されずにCadenceをインストールできます。"
+    },
     "sections": [
       {
         "title": "最初のセッション",

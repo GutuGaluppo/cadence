@@ -117,7 +117,22 @@ Check the following immediately after the workflow succeeds:
 4. The GitHub Pages deployment for `site/` is green.
 5. macOS assets are signed and notarized if Apple secrets were configured.
 
-## 6. Public links to keep stable
+## 6. Update the Homebrew tap
+
+macOS builds are unsigned (no paid Apple Developer certificate), so
+Gatekeeper warns on first launch — see `homebrew/README.md` and the
+"Installing Cadence" section on the docs site for the user-facing
+explanation. Homebrew avoids that warning entirely because it strips the
+quarantine flag on install, so it's worth keeping current:
+
+1. Follow `homebrew/README.md` to download the new `.dmg` assets, compute
+   their `sha256`, and bump `version` in `homebrew/Casks/cadence.rb`.
+2. Copy the updated file into the separate `GutuGaluppo/homebrew-cadence`
+   tap repository, commit, and push.
+3. Sanity check: `brew update && brew upgrade --cask cadence` picks up the
+   new version.
+
+## 7. Public links to keep stable
 
 Use these as canonical public entry points:
 
@@ -125,3 +140,4 @@ Use these as canonical public entry points:
 - downloads: `https://github.com/GutuGaluppo/cadence/releases/latest`
 - release history: `https://github.com/GutuGaluppo/cadence/releases`
 - support: `https://github.com/GutuGaluppo/cadence/issues/new/choose`
+- Homebrew tap: `https://github.com/GutuGaluppo/homebrew-cadence`

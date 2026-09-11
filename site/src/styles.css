@@ -468,6 +468,42 @@ a {
     gap: 10px;
 }
 
+.content-card code,
+.gatekeeper-note code {
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(46, 37, 102, 0.08);
+    font-family: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.88em;
+}
+
+.gatekeeper-note {
+    margin-top: 20px;
+    padding: 18px 20px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(232, 185, 58, 0.35);
+    background: rgba(232, 185, 58, 0.08);
+}
+
+.gatekeeper-note h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+}
+
+.gatekeeper-note p {
+    margin: 0 0 10px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+}
+
+.gatekeeper-note .content-list {
+    margin-top: 10px;
+}
+
+.gatekeeper-note :last-child {
+    margin-bottom: 0;
+}
+
 .link-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
