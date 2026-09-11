@@ -53,18 +53,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Activate pnpm
+        run: corepack prepare pnpm@10.6.5 --activate
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
-
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Activate pnpm
-        run: corepack prepare pnpm@10.6.5 --activate
 
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
