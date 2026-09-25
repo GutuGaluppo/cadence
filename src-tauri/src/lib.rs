@@ -1,6 +1,8 @@
+#[cfg(target_os = "macos")]
+use tauri::Listener;
 use tauri::{
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-    Listener, Manager,
+    Manager,
 };
 use tauri_plugin_sql::{Builder as SqlBuilder, Migration, MigrationKind};
 
@@ -56,6 +58,7 @@ pub fn run() {
         )
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
+            #[cfg_attr(not(target_os = "macos"), allow(unused_variables))]
             let tray = TrayIconBuilder::new()
                 .icon(tauri::include_image!("icons/tray-icon.png"))
                 .icon_as_template(true)
@@ -80,14 +83,16 @@ pub fn run() {
                 })
                 .build(app)?;
 
-            let tray_for_listener = tray.clone();
-            app.listen("timer-tick", move |event: tauri::Event| {
-                if let Ok(payload) = serde_json::from_str::<serde_json::Value>(event.payload()) {
-                    let time_left = payload["timeLeft"].as_i64().unwrap_or(0);
-                    let is_running = payload["isRunning"].as_bool().unwrap_or(false);
-
-                    #[cfg(target_os = "macos")]
+            // Only the macOS menu bar can show the countdown next to the tray icon.
+            #[cfg(target_os = "macos")]
+            {
+                let tray_for_listener = tray.clone();
+                app.listen("timer-tick", move |event: tauri::Event| {
+                    if let Ok(payload) = serde_json::from_str::<serde_json::Value>(event.payload())
                     {
+                        let time_left = payload["timeLeft"].as_i64().unwrap_or(0);
+                        let is_running = payload["isRunning"].as_bool().unwrap_or(false);
+
                         let title = if is_running {
                             let mins = time_left / 60;
                             let secs = time_left % 60;
@@ -97,8 +102,8 @@ pub fn run() {
                         };
                         let _ = tray_for_listener.set_title(title.as_deref());
                     }
-                }
-            });
+                });
+            }
 
             Ok(())
         })
