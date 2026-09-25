@@ -14,7 +14,8 @@
     "privacy": "Privacidade",
     "changelog": "Novidades",
     "primaryLabel": "Principal",
-    "secondaryLabel": "Secundário"
+    "secondaryLabel": "Secundário",
+    "tour": "Tour"
   },
   "footer": {
     "tagline": "Cronometragem focada para um trabalho mais tranquilo e profundo.",
@@ -30,10 +31,19 @@
     "releaseNotes": "Ver Notas de Versão",
     "highlightsLabel": "Destaques"
   },
-  "heroHighlights": ["Sem conta necessária", "Sessões por tarefa", "Armazenamento local por padrão"],
+  "heroHighlights": [
+    "Sem conta necessária",
+    "Sessões por tarefa",
+    "Armazenamento local por padrão"
+  ],
   "signalBar": {
     "ariaLabel": "Princípios do Cadence",
-    "items": ["Sessões por tarefa", "Interface mínima no desktop", "Persistência local rápida", "Feito para fluxo ininterrupto"]
+    "items": [
+      "Sessões por tarefa",
+      "Interface mínima no desktop",
+      "Persistência local rápida",
+      "Feito para fluxo ininterrupto"
+    ]
   },
   "features": {
     "eyebrow": "Por que Cadence",
@@ -41,17 +51,54 @@
     "items": [
       {
         "title": "Sessões por tarefa",
-        "description": "Defina a duração de foco e pausa diretamente para a tarefa em que você está trabalhando, sem forçar uma regra de tempo global para tudo."
+        "description": "Defina a duração de foco e pausa diretamente para a tarefa em que você está trabalhando, sem forçar uma regra de tempo global para tudo.",
+        "caption": "Duração de foco e pausa própria para cada tarefa"
       },
       {
         "title": "Local-first por padrão",
-        "description": "Suas configurações e tarefas ficam na sua máquina. O produto é moldado em torno de persistência local rápida, não de funis de cadastro."
+        "description": "Suas configurações e tarefas ficam na sua máquina. O produto é moldado em torno de persistência local rápida, não de funis de cadastro.",
+        "caption": "Tudo fica numa lista local, na sua máquina"
       },
       {
         "title": "Fluxo compacto no desktop",
-        "description": "Acesso pela bandeja do sistema e uma janela única e focada mantêm o app fora do seu caminho. As tarefas ficam a um clique, num modal rápido, e o gerenciamento completo mora em seu próprio painel — a tela inicial nunca cresce além de um timer e alguns botões."
+        "description": "Acesso pela bandeja do sistema e uma janela única e focada mantêm o app fora do seu caminho. As tarefas ficam a um clique, num modal rápido, e o gerenciamento completo mora em seu próprio painel — a tela inicial nunca cresce além de um timer e alguns botões.",
+        "caption": "Escolha a tarefa sem sair do timer"
       }
     ]
+  },
+  "gallery": {
+    "eyebrow": "Por dentro do app",
+    "title": "Cada tela, exatamente como é.",
+    "description": "Capturas reais do Cadence 0.1 — a mesma janela que você recebe ao instalar. Alterne entre claro e escuro para ver os dois temas.",
+    "themeLabel": "Tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "items": {
+      "home": {
+        "title": "Timer inicial",
+        "description": "Um timer, quatro botões. Nada disputa sua atenção."
+      },
+      "taskModal": {
+        "title": "Seletor rápido de tarefas",
+        "description": "Escolha no que vai trabalhar sem sair da tela inicial."
+      },
+      "running": {
+        "title": "Foco em andamento",
+        "description": "O anel avança durante a sessão; os pontos marcam o seu ciclo."
+      },
+      "tasks": {
+        "title": "Gerenciamento de tarefas",
+        "description": "Conclua, conte e organize tarefas num painel dedicado."
+      },
+      "taskCreate": {
+        "title": "Nova tarefa",
+        "description": "Dê a cada tarefa sua própria duração de foco, pausa e ciclos."
+      },
+      "settings": {
+        "title": "Configurações",
+        "description": "Tema, durações padrão, som e sempre no topo."
+      }
+    }
   },
   "workflow": {
     "eyebrow": "Como funciona",
@@ -152,9 +199,18 @@
     "beforePosting": "Antes de postar publicamente",
     "beforePostingText": "Não inclua segredos, senhas, tokens, chaves privadas ou dados pessoais em problemas públicos. Se o problema for estritamente sobre um asset de versão, referencie a tag e o nome exato do arquivo que falhou.",
     "tiles": [
-      { "title": "Reportar um bug", "description": "Use o formulário de issue e inclua o caminho de reprodução." },
-      { "title": "Verificar assets de versão", "description": "Confirme a tag, o instalador e o checksum antes de reportar." },
-      { "title": "Navegar no repositório", "description": "Inspecione o código, docs, workflows e o estado atual do projeto." }
+      {
+        "title": "Reportar um bug",
+        "description": "Use o formulário de issue e inclua o caminho de reprodução."
+      },
+      {
+        "title": "Verificar assets de versão",
+        "description": "Confirme a tag, o instalador e o checksum antes de reportar."
+      },
+      {
+        "title": "Navegar no repositório",
+        "description": "Inspecione o código, docs, workflows e o estado atual do projeto."
+      }
     ],
     "checklist": [
       "A versão do app ou tag de versão que você testou.",
@@ -282,7 +338,10 @@
   },
   "preview": {
     "screenshotAlt": "App Cadence mostrando um timer de foco de 25 minutos numa tela inicial limpa e única",
-    "tasksHint": "As tarefas ficam a um clique, num modal rápido — a tela inicial continua assim, limpa."
+    "tourAlt": "Gravação de tela do Cadence: escolhendo uma tarefa no modal rápido, iniciando uma sessão de foco, abrindo o gerenciamento de tarefas e mudando para o modo escuro",
+    "tourHint": "Gravação real do app — sem mockups."
   },
-  "lang": { "switcherLabel": "Selecionar idioma" }
+  "lang": {
+    "switcherLabel": "Selecionar idioma"
+  }
 }

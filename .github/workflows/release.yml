@@ -11,9 +11,6 @@ permissions:
 
 jobs:
   publish-tauri:
-    concurrency:
-      group: release-${{ github.ref }}
-      cancel-in-progress: false
     strategy:
       fail-fast: false
       matrix:
