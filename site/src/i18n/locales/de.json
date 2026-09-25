@@ -14,7 +14,8 @@
     "privacy": "Datenschutz",
     "changelog": "Neuigkeiten",
     "primaryLabel": "Primär",
-    "secondaryLabel": "Sekundär"
+    "secondaryLabel": "Sekundär",
+    "tour": "Rundgang"
   },
   "footer": {
     "tagline": "Fokussierte Desktop-Zeiterfassung für ruhigere, tiefere Arbeit.",
@@ -30,10 +31,19 @@
     "releaseNotes": "Versionshinweise ansehen",
     "highlightsLabel": "Highlights"
   },
-  "heroHighlights": ["Kein Konto erforderlich", "Aufgabenbasierte Sitzungen", "Lokale Speicherung als Standard"],
+  "heroHighlights": [
+    "Kein Konto erforderlich",
+    "Aufgabenbasierte Sitzungen",
+    "Lokale Speicherung als Standard"
+  ],
   "signalBar": {
     "ariaLabel": "Cadence-Prinzipien",
-    "items": ["Aufgabenbasierte Sitzungen", "Minimale Desktop-Oberfläche", "Schnelle lokale Persistenz", "Für ununterbrochenen Fluss entwickelt"]
+    "items": [
+      "Aufgabenbasierte Sitzungen",
+      "Minimale Desktop-Oberfläche",
+      "Schnelle lokale Persistenz",
+      "Für ununterbrochenen Fluss entwickelt"
+    ]
   },
   "features": {
     "eyebrow": "Warum Cadence",
@@ -41,17 +51,54 @@
     "items": [
       {
         "title": "Aufgabenbasierte Sitzungen",
-        "description": "Weise Fokus- und Pausendauern direkt der Aufgabe zu, an der du arbeitest, anstatt eine globale Zeitregel für alles zu erzwingen."
+        "description": "Weise Fokus- und Pausendauern direkt der Aufgabe zu, an der du arbeitest, anstatt eine globale Zeitregel für alles zu erzwingen.",
+        "caption": "Eigene Fokus- und Pausenlängen pro Aufgabe"
       },
       {
         "title": "Standardmäßig lokal-zuerst",
-        "description": "Deine Einstellungen und Aufgaben bleiben auf deinem Gerät. Das Produkt ist auf schnelle lokale Persistenz ausgerichtet, nicht auf Anmelde-Funnels."
+        "description": "Deine Einstellungen und Aufgaben bleiben auf deinem Gerät. Das Produkt ist auf schnelle lokale Persistenz ausgerichtet, nicht auf Anmelde-Funnels.",
+        "caption": "Alles bleibt in einer lokalen Liste auf deinem Rechner"
       },
       {
         "title": "Kompakter Desktop-Fluss",
-        "description": "Der Zugriff über das Tray-Symbol und ein einziges, fokussiertes Fenster halten die App aus dem Weg. Aufgaben sind nur einen Klick entfernt in einem schnellen Modal, und die vollständige Aufgabenverwaltung lebt in einem eigenen Panel — der Startbildschirm wächst nie über einen Timer und ein paar Schaltflächen hinaus."
+        "description": "Der Zugriff über das Tray-Symbol und ein einziges, fokussiertes Fenster halten die App aus dem Weg. Aufgaben sind nur einen Klick entfernt in einem schnellen Modal, und die vollständige Aufgabenverwaltung lebt in einem eigenen Panel — der Startbildschirm wächst nie über einen Timer und ein paar Schaltflächen hinaus.",
+        "caption": "Aufgabe wählen, ohne den Timer zu verlassen"
       }
     ]
+  },
+  "gallery": {
+    "eyebrow": "In der App",
+    "title": "Jeder Screen, genau so, wie er ausgeliefert wird.",
+    "description": "Echte Aufnahmen von Cadence 0.1 — dasselbe Fenster, das du nach der Installation bekommst. Wechsle zwischen hell und dunkel, um beide Themes zu sehen.",
+    "themeLabel": "Theme",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "items": {
+      "home": {
+        "title": "Timer-Startseite",
+        "description": "Ein Timer, vier Buttons. Nichts lenkt ab."
+      },
+      "taskModal": {
+        "title": "Schnelle Aufgabenwahl",
+        "description": "Wähle deine Aufgabe, ohne die Startseite zu verlassen."
+      },
+      "running": {
+        "title": "Fokus läuft",
+        "description": "Der Ring füllt sich während der Session; Punkte zeigen deinen Zyklus."
+      },
+      "tasks": {
+        "title": "Aufgabenverwaltung",
+        "description": "Aufgaben abhaken, zählen und aufräumen — in einem eigenen Panel."
+      },
+      "taskCreate": {
+        "title": "Neue Aufgabe",
+        "description": "Gib jeder Aufgabe eigene Fokus-, Pausen- und Zykluslängen."
+      },
+      "settings": {
+        "title": "Einstellungen",
+        "description": "Theme, Standarddauern, Ton und Immer im Vordergrund."
+      }
+    }
   },
   "workflow": {
     "eyebrow": "So funktioniert es",
@@ -152,9 +199,18 @@
     "beforePosting": "Vor dem öffentlichen Posten",
     "beforePostingText": "Füge keine Geheimnisse, Passwörter, Tokens, privaten Schlüssel oder persönliche Daten in öffentliche Issues ein. Wenn das Problem ausschließlich ein Release-Asset betrifft, referenziere den Tag und den genauen Dateinamen, der fehlgeschlagen ist.",
     "tiles": [
-      { "title": "Einen Fehler melden", "description": "Verwende das Issue-Formular und gib den Reproduktionspfad an." },
-      { "title": "Release-Assets prüfen", "description": "Bestätige den Tag, den Installer und die Prüfsumme vor dem Melden." },
-      { "title": "Repository durchsuchen", "description": "Inspiziere Quellcode, Docs, Workflows und den aktuellen Projektstatus." }
+      {
+        "title": "Einen Fehler melden",
+        "description": "Verwende das Issue-Formular und gib den Reproduktionspfad an."
+      },
+      {
+        "title": "Release-Assets prüfen",
+        "description": "Bestätige den Tag, den Installer und die Prüfsumme vor dem Melden."
+      },
+      {
+        "title": "Repository durchsuchen",
+        "description": "Inspiziere Quellcode, Docs, Workflows und den aktuellen Projektstatus."
+      }
     ],
     "checklist": [
       "Die App-Version oder den Release-Tag, den du getestet hast.",
@@ -282,7 +338,10 @@
   },
   "preview": {
     "screenshotAlt": "Cadence Desktop-App mit einem 25-Minuten-Fokus-Timer auf einem aufgeräumten, einheitlichen Startbildschirm",
-    "tasksHint": "Aufgaben sind nur einen Klick entfernt in einem schnellen Modal — der Startbildschirm bleibt so übersichtlich."
+    "tourAlt": "Bildschirmaufnahme von Cadence: Aufgabe im Schnellauswahl-Dialog wählen, Fokus-Session starten, Aufgabenverwaltung öffnen und in den Dunkelmodus wechseln",
+    "tourHint": "Echte Aufnahme der App — keine Mockups."
   },
-  "lang": { "switcherLabel": "Sprache auswählen" }
+  "lang": {
+    "switcherLabel": "Sprache auswählen"
+  }
 }

@@ -14,7 +14,8 @@
     "privacy": "Privacy",
     "changelog": "Novità",
     "primaryLabel": "Principale",
-    "secondaryLabel": "Secondario"
+    "secondaryLabel": "Secondario",
+    "tour": "Tour"
   },
   "footer": {
     "tagline": "Temporizzazione desktop mirata per un lavoro più calmo e profondo.",
@@ -30,10 +31,19 @@
     "releaseNotes": "Vedi Note di Versione",
     "highlightsLabel": "Punti salienti"
   },
-  "heroHighlights": ["Nessun account richiesto", "Sessioni per attività", "Archiviazione locale per impostazione predefinita"],
+  "heroHighlights": [
+    "Nessun account richiesto",
+    "Sessioni per attività",
+    "Archiviazione locale per impostazione predefinita"
+  ],
   "signalBar": {
     "ariaLabel": "Principi di Cadence",
-    "items": ["Sessioni per attività", "Superficie desktop minimale", "Persistenza locale veloce", "Costruito per un flusso ininterrotto"]
+    "items": [
+      "Sessioni per attività",
+      "Superficie desktop minimale",
+      "Persistenza locale veloce",
+      "Costruito per un flusso ininterrotto"
+    ]
   },
   "features": {
     "eyebrow": "Perché Cadence",
@@ -41,17 +51,54 @@
     "items": [
       {
         "title": "Sessioni per attività",
-        "description": "Assegna le durate di concentrazione e pausa direttamente all'attività su cui stai lavorando, senza imporre una regola di temporizzazione globale per tutto."
+        "description": "Assegna le durate di concentrazione e pausa direttamente all'attività su cui stai lavorando, senza imporre una regola di temporizzazione globale per tutto.",
+        "caption": "Durate di focus e pausa diverse per ogni attività"
       },
       {
         "title": "Local-first per impostazione predefinita",
-        "description": "Le tue impostazioni e attività rimangono sul tuo dispositivo. Il prodotto è progettato attorno alla persistenza locale veloce, non ai funnel di registrazione."
+        "description": "Le tue impostazioni e attività rimangono sul tuo dispositivo. Il prodotto è progettato attorno alla persistenza locale veloce, non ai funnel di registrazione.",
+        "caption": "Tutto resta in una lista locale sul tuo computer"
       },
       {
         "title": "Flusso compatto sul desktop",
-        "description": "L'accesso dalla tray di sistema e un'unica finestra focalizzata tengono l'app fuori dai piedi. Le attività sono a un clic in una finestra modale rapida, e la gestione completa vive nel proprio pannello — la schermata principale non cresce mai oltre un timer e pochi pulsanti."
+        "description": "L'accesso dalla tray di sistema e un'unica finestra focalizzata tengono l'app fuori dai piedi. Le attività sono a un clic in una finestra modale rapida, e la gestione completa vive nel proprio pannello — la schermata principale non cresce mai oltre un timer e pochi pulsanti.",
+        "caption": "Scegli l'attività senza lasciare il timer"
       }
     ]
+  },
+  "gallery": {
+    "eyebrow": "Dentro l'app",
+    "title": "Ogni schermata, esattamente com'è.",
+    "description": "Catture reali di Cadence 0.1 — la stessa finestra che ottieni dopo l'installazione. Passa da chiaro a scuro per vedere entrambi i temi.",
+    "themeLabel": "Tema",
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "items": {
+      "home": {
+        "title": "Timer principale",
+        "description": "Un timer, quattro pulsanti. Niente ti distrae."
+      },
+      "taskModal": {
+        "title": "Selezione rapida",
+        "description": "Scegli su cosa lavorare senza lasciare la schermata principale."
+      },
+      "running": {
+        "title": "Focus in corso",
+        "description": "L'anello avanza durante la sessione; i punti seguono il tuo ciclo."
+      },
+      "tasks": {
+        "title": "Gestione attività",
+        "description": "Completa, conta e riordina le attività in un pannello dedicato."
+      },
+      "taskCreate": {
+        "title": "Nuova attività",
+        "description": "Dai a ogni attività le sue durate di focus, pausa e cicli."
+      },
+      "settings": {
+        "title": "Impostazioni",
+        "description": "Tema, durate predefinite, suono e sempre in primo piano."
+      }
+    }
   },
   "workflow": {
     "eyebrow": "Come funziona",
@@ -152,9 +199,18 @@
     "beforePosting": "Prima di pubblicare pubblicamente",
     "beforePostingText": "Non includere segreti, password, token, chiavi private o dati personali negli issue pubblici. Se il problema riguarda strettamente un asset di versione, fai riferimento al tag e al nome esatto del file che ha fallito.",
     "tiles": [
-      { "title": "Segnala un bug", "description": "Usa il modulo di issue e includi il percorso di riproduzione." },
-      { "title": "Controlla gli asset di versione", "description": "Conferma il tag, l'installer e il checksum prima di segnalare." },
-      { "title": "Esplora il repository", "description": "Ispeziona il codice sorgente, i docs, i workflow e lo stato attuale del progetto." }
+      {
+        "title": "Segnala un bug",
+        "description": "Usa il modulo di issue e includi il percorso di riproduzione."
+      },
+      {
+        "title": "Controlla gli asset di versione",
+        "description": "Conferma il tag, l'installer e il checksum prima di segnalare."
+      },
+      {
+        "title": "Esplora il repository",
+        "description": "Ispeziona il codice sorgente, i docs, i workflow e lo stato attuale del progetto."
+      }
     ],
     "checklist": [
       "La versione dell'app o il tag di versione testato.",
@@ -282,7 +338,10 @@
   },
   "preview": {
     "screenshotAlt": "App desktop Cadence che mostra un timer di focus da 25 minuti su una schermata principale pulita e unica",
-    "tasksHint": "Le attività sono a un clic in una finestra modale rapida — la schermata principale resta così pulita."
+    "tourAlt": "Registrazione dello schermo di Cadence: scelta di un'attività dal modale rapido, avvio di una sessione di focus, apertura della gestione attività e passaggio alla modalità scura",
+    "tourHint": "Registrazione reale dell'app — niente mockup."
   },
-  "lang": { "switcherLabel": "Seleziona lingua" }
+  "lang": {
+    "switcherLabel": "Seleziona lingua"
+  }
 }

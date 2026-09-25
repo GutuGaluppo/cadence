@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, useReducedMotion, type Variants } from "motion/react";
+import {
+	APP_SCREEN_HEIGHT,
+	APP_SCREEN_WIDTH,
+	appScreens,
+	type AppScreenKey,
+} from "../data/appScreens";
 import { ProductPreview } from "../data/components/ProductPreview";
 import { Reveal } from "../data/components/Reveal";
+import { ScreenGallery } from "../data/components/ScreenGallery";
 import { SectionHeading } from "../data/components/SectionHeading";
 import { SiteShell } from "../data/components/SiteShell";
 import { externalLinks } from "../data/siteContent";
@@ -23,6 +30,10 @@ const heroItem: Variants = {
 };
 
 type TItem = { title: string; description: string };
+type TFeatureItem = TItem & { caption: string };
+
+// Which real capture illustrates each feature, in the order of features.items.
+const featureScreens: AppScreenKey[] = ["taskCreate", "tasks", "taskModal"];
 type TWorkflowItem = { index: string; title: string; description: string };
 
 export function HomePage() {
@@ -43,6 +54,7 @@ export function HomePage() {
 
 	const navItems = [
 		{ label: t("nav.features"), href: toSitePath("/#features") },
+		{ label: t("nav.tour"), href: toSitePath("/#tour") },
 		{ label: t("nav.workflow"), href: toSitePath("/#workflow") },
 		{ label: t("nav.download"), href: toSitePath("/#download") },
 		{ label: t("nav.docs"), href: toSitePath("/docs/") },
@@ -52,7 +64,9 @@ export function HomePage() {
 		returnObjects: true,
 	}) as string[];
 	const signalItems = t("signalBar.items", { returnObjects: true }) as string[];
-	const featureItems = t("features.items", { returnObjects: true }) as TItem[];
+	const featureItems = t("features.items", {
+		returnObjects: true,
+	}) as TFeatureItem[];
 	const workflowItems = t("workflow.items", {
 		returnObjects: true,
 	}) as TWorkflowItem[];
@@ -156,14 +170,42 @@ export function HomePage() {
 						/>
 					</Reveal>
 
-					<div className="card-grid">
+					<div className="feature-showcase">
 						{featureItems.map((item, index) => (
-							<Reveal as="article" className="feature-card" delay={index * 0.08} key={item.title}>
-								<h3>{item.title}</h3>
-								<p>{item.description}</p>
+							<Reveal as="article" className="feature-row" key={item.title}>
+								<div className="feature-row-copy">
+									<span className="step-index">0{index + 1}</span>
+									<h3>{item.title}</h3>
+									<p>{item.description}</p>
+								</div>
+								<figure className="feature-row-media">
+									<div className="screen-frame">
+										<img
+											alt={item.caption}
+											className="screen-shot"
+											height={APP_SCREEN_HEIGHT}
+											loading="lazy"
+											src={appScreens[featureScreens[index]].light}
+											width={APP_SCREEN_WIDTH}
+										/>
+									</div>
+									<figcaption>{item.caption}</figcaption>
+								</figure>
 							</Reveal>
 						))}
 					</div>
+				</section>
+
+				<section className="gallery" id="tour">
+					<Reveal>
+						<SectionHeading
+							eyebrow={t("gallery.eyebrow")}
+							title={t("gallery.title")}
+							description={t("gallery.description")}
+						/>
+					</Reveal>
+
+					<ScreenGallery />
 				</section>
 
 				<section className="workflow" id="workflow">

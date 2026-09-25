@@ -14,7 +14,8 @@
     "privacy": "Privacy",
     "changelog": "Changelog",
     "primaryLabel": "Primary",
-    "secondaryLabel": "Secondary"
+    "secondaryLabel": "Secondary",
+    "tour": "Tour"
   },
   "footer": {
     "tagline": "Focused desktop timing for calmer, deeper work.",
@@ -30,10 +31,19 @@
     "releaseNotes": "See Release Notes",
     "highlightsLabel": "Highlights"
   },
-  "heroHighlights": ["No account required", "Task-aware sessions", "Local storage by default"],
+  "heroHighlights": [
+    "No account required",
+    "Task-aware sessions",
+    "Local storage by default"
+  ],
   "signalBar": {
     "ariaLabel": "Cadence principles",
-    "items": ["Task-aware sessions", "Minimal desktop surface", "Fast local persistence", "Built for uninterrupted flow"]
+    "items": [
+      "Task-aware sessions",
+      "Minimal desktop surface",
+      "Fast local persistence",
+      "Built for uninterrupted flow"
+    ]
   },
   "features": {
     "eyebrow": "Why Cadence",
@@ -41,17 +51,54 @@
     "items": [
       {
         "title": "Task-aware sessions",
-        "description": "Attach focus and break durations directly to the task you are working on instead of forcing one global timing rule for everything."
+        "description": "Attach focus and break durations directly to the task you are working on instead of forcing one global timing rule for everything.",
+        "caption": "Custom focus and break lengths per task"
       },
       {
         "title": "Local-first by default",
-        "description": "Your settings and tasks stay on your machine. The product is shaped around fast local persistence, not around sign-up funnels."
+        "description": "Your settings and tasks stay on your machine. The product is shaped around fast local persistence, not around sign-up funnels.",
+        "caption": "Everything stays in a local list on your machine"
       },
       {
         "title": "Compact desktop flow",
-        "description": "Tray access and a single, focused window keep the app out of your way. Tasks live one click away in a quick modal, and full task management sits in its own panel — so the home screen never grows beyond a timer and a few buttons."
+        "description": "Tray access and a single, focused window keep the app out of your way. Tasks live one click away in a quick modal, and full task management sits in its own panel — so the home screen never grows beyond a timer and a few buttons.",
+        "caption": "Pick a task without leaving the timer"
       }
     ]
+  },
+  "gallery": {
+    "eyebrow": "Inside the app",
+    "title": "Every screen, exactly as it ships.",
+    "description": "Real captures of Cadence 0.1 — the same window you get after installing. Switch between light and dark to see both themes.",
+    "themeLabel": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "items": {
+      "home": {
+        "title": "Home timer",
+        "description": "One timer, four buttons. Nothing else competes for attention."
+      },
+      "taskModal": {
+        "title": "Quick task picker",
+        "description": "Choose what you are working on without leaving the home screen."
+      },
+      "running": {
+        "title": "Focus in progress",
+        "description": "The ring fills as the session runs; cycle dots track your rhythm."
+      },
+      "tasks": {
+        "title": "Task management",
+        "description": "Complete, count, and clean up tasks in a dedicated panel."
+      },
+      "taskCreate": {
+        "title": "New task",
+        "description": "Give a task its own focus, break, and cycle lengths."
+      },
+      "settings": {
+        "title": "Settings",
+        "description": "Theme, default durations, sound, and always-on-top."
+      }
+    }
   },
   "workflow": {
     "eyebrow": "How it works",
@@ -152,9 +199,18 @@
     "beforePosting": "Before posting publicly",
     "beforePostingText": "Do not include secrets, passwords, tokens, private keys, or personal data in public issues. If the problem is strictly about a release asset, reference the tag and the exact filename that failed.",
     "tiles": [
-      { "title": "Report a bug", "description": "Use the issue form and include the reproduction path." },
-      { "title": "Check release assets", "description": "Confirm the tag, installer, and checksum before reporting." },
-      { "title": "Browse the repository", "description": "Inspect source, docs, workflows, and current project state." }
+      {
+        "title": "Report a bug",
+        "description": "Use the issue form and include the reproduction path."
+      },
+      {
+        "title": "Check release assets",
+        "description": "Confirm the tag, installer, and checksum before reporting."
+      },
+      {
+        "title": "Browse the repository",
+        "description": "Inspect source, docs, workflows, and current project state."
+      }
     ],
     "checklist": [
       "The app version or release tag you tested.",
@@ -282,7 +338,10 @@
   },
   "preview": {
     "screenshotAlt": "Cadence desktop app showing a 25 minute focus timer and a clean, single-view home screen",
-    "tasksHint": "Tasks are one click away in a quick modal — the home screen stays this clean."
+    "tourAlt": "Screen recording of Cadence: picking a task from the quick modal, starting a focus session, opening task management, and switching to dark mode",
+    "tourHint": "Real recording of the app — no mockups."
   },
-  "lang": { "switcherLabel": "Select language" }
+  "lang": {
+    "switcherLabel": "Select language"
+  }
 }
