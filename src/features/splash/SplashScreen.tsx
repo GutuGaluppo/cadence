@@ -2,113 +2,101 @@ import React, { useEffect } from "react";
 import "./SplashScreen.css";
 
 /**
- * TIMING (ms from mount):
- *   0       blobs ignite
- *   400     rings appear (tilted) + start spinning
- *   1900    app name fades in
- *   3000    screen begins fading out
- *   3450    onComplete fires (screen fully hidden)
+ * "The drop" — the splash reenacts the app icon being drawn: a drop of light
+ * falls onto the indigo surface and its impact leaves the icon's four
+ * concentric rings behind, like ripples in water. A single wave of light then
+ * crosses the rings (the same motion as the menu bar ripple while a timer
+ * runs), the wordmark settles underneath and the icon takes one slow breath
+ * before handing over — the app should open calmly, never in a hurry.
  *
- * Adjust COMPLETE_MS to control when the parent unmounts this component.
+ * TIMING (ms from mount):
+ *   0       indigo surface fades in
+ *   150     drop falls towards the center
+ *   500     impact: rings are born from the center, inner → outer
+ *   1300    wave of light travels outwards across the rings
+ *   1450    wordmark fades in
+ *   2100    the settled icon breathes once (swell and release)
+ *   4400    onReveal fires: the app mounts underneath while the rings drift
+ *           outwards and the screen slowly fades out over it
+ *   5400    onComplete fires (screen fully hidden)
  */
-const COMPLETE_MS = 3450;
+const REVEAL_MS = 4400;
+const COMPLETE_MS = 5400;
+const REDUCED_MOTION_REVEAL_MS = 1600;
+const REDUCED_MOTION_COMPLETE_MS = 2400;
+
+/** Radii relative to the outer ring, measured from the app icon. */
+const RINGS = [
+  { r: 42.5, stroke: 1.2, opacity: 0.5 },
+  { r: 57.5, stroke: 1.5, opacity: 0.75 },
+  { r: 73, stroke: 1.8, opacity: 0.92 },
+  { r: 90, stroke: 2.2, opacity: 1 },
+] as const;
 
 interface SplashScreenProps {
+  /** The exit has started: mount the app underneath so the fade reveals it. */
+  onReveal: () => void;
   onComplete: () => void;
 }
 
-export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
+export const SplashScreen: React.FC<SplashScreenProps> = ({ onReveal, onComplete }) => {
   useEffect(() => {
-    const t = setTimeout(onComplete, COMPLETE_MS);
-    return () => clearTimeout(t);
-  }, [onComplete]);
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const reveal = setTimeout(onReveal, reducedMotion ? REDUCED_MOTION_REVEAL_MS : REVEAL_MS);
+    const complete = setTimeout(
+      onComplete,
+      reducedMotion ? REDUCED_MOTION_COMPLETE_MS : COMPLETE_MS,
+    );
+    return () => {
+      clearTimeout(reveal);
+      clearTimeout(complete);
+    };
+  }, [onReveal, onComplete]);
 
   return (
-    <div className="sp">
-      {/* ── Organic smoke blobs ── */}
-      <div className="sp__blobs">
-        <div className="sp__blob sp__blob--3" />
-        <div className="sp__blob sp__blob--1" />
-        <div className="sp__blob sp__blob--2" />
-        <div className="sp__blob sp__blob--4" />
-      </div>
+    <div className="sp" aria-hidden="true">
+      <div className="sp__glow" />
 
-      {/* ── 3-D rings ── */}
       <div className="sp__stage">
-        {/* Ring A — smaller, tilts on X/Y then flattens */}
-        <div className="sp__tilt sp__tilt--a">
-          <div className="sp__spin sp__spin--a">
-            <svg
-              className="sp__ring sp__ring--a"
-              viewBox="0 0 184 184"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <linearGradient
-                  id="sp-grad-ring-a"
-                  x1="0%"
-                  y1="0%"
-                  x2="100%"
-                  y2="100%"
-                >
-                  <stop offset="0%"   stopColor="rgba(255, 88, 38, 0)"   />
-                  <stop offset="22%"  stopColor="rgba(255, 88, 38, 0.95)" />
-                  <stop offset="65%"  stopColor="rgba(255, 172, 56, 0.75)" />
-                  <stop offset="100%" stopColor="rgba(255, 88, 38, 0)"   />
-                </linearGradient>
-              </defs>
-              <circle
-                cx="92"
-                cy="92"
-                r="80"
-                fill="none"
-                stroke="url(#sp-grad-ring-a)"
-                strokeWidth="1.5"
-              />
-            </svg>
-          </div>
-        </div>
+        <div className="sp__drop" />
+        <div className="sp__splash" />
 
-        {/* Ring B — larger, tilts on opposite axis */}
-        <div className="sp__tilt sp__tilt--b">
-          <div className="sp__spin sp__spin--b">
-            <svg
-              className="sp__ring sp__ring--b"
-              viewBox="0 0 248 248"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <linearGradient
-                  id="sp-grad-ring-b"
-                  x1="100%"
-                  y1="0%"
-                  x2="0%"
-                  y2="100%"
-                >
-                  <stop offset="0%"   stopColor="rgba(255, 212, 64, 0)"   />
-                  <stop offset="28%"  stopColor="rgba(255, 212, 64, 0.82)" />
-                  <stop offset="72%"  stopColor="rgba(255, 72, 28, 0.55)"  />
-                  <stop offset="100%" stopColor="rgba(255, 212, 64, 0)"   />
-                </linearGradient>
-              </defs>
-              <circle
-                cx="124"
-                cy="124"
-                r="112"
-                fill="none"
-                stroke="url(#sp-grad-ring-b)"
-                strokeWidth="1"
-              />
-            </svg>
-          </div>
-        </div>
+        {RINGS.map((ring, index) => (
+          <svg
+            key={ring.r}
+            className="sp__ring"
+            style={
+              {
+                "--sp-ring-index": index,
+                "--sp-ring-opacity": ring.opacity,
+              } as React.CSSProperties
+            }
+            viewBox="0 0 200 200"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="100"
+              cy="100"
+              r={ring.r}
+              fill="none"
+              stroke="url(#sp-ring-sheen)"
+              strokeWidth={ring.stroke}
+            />
+          </svg>
+        ))}
+
+        {/* Shared gradient: the rings catch light from the top-left, as in the icon. */}
+        <svg className="sp__defs" width="0" height="0">
+          <defs>
+            <linearGradient id="sp-ring-sheen" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#FFFFFF" />
+              <stop offset="100%" stopColor="#D9D7FF" />
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
 
-      {/* ── App name ── */}
-      <div className="sp__text">
-        <p className="sp__name">Pomodoro</p>
-        <p className="sp__name">Cadence</p>
-      </div>
+      <p className="sp__name">Cadence</p>
     </div>
   );
 };
