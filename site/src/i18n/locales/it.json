@@ -338,7 +338,7 @@
   },
   "preview": {
     "screenshotAlt": "App desktop Cadence che mostra un timer di focus da 25 minuti su una schermata principale pulita e unica",
-    "tourAlt": "Registrazione dello schermo di Cadence: scelta di un'attività dal modale rapido, avvio di una sessione di focus, apertura della gestione attività e passaggio alla modalità scura",
+    "tourAlt": "Registrazione dello schermo del timer ridotto di Cadence: passaggio sui pulsanti di azione, avvio di una sessione di focus, pausa e reset",
     "tourHint": "Registrazione reale dell'app — niente mockup."
   },
   "lang": {

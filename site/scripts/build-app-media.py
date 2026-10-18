@@ -2,8 +2,7 @@
 
 Rounds the corners of the full-window shots (the app draws its own window
 controls now), keeps the reduced timer's shots as transparent PNGs, and encodes
-the tour as GIF + animated WebP. Reduced frames are centred on a full-window
-canvas so the animation keeps one size.
+the tour as GIF + animated WebP. The tour only shows the reduced timer, on a transparent background.
 
 Usage: python3 site/scripts/build-app-media.py [captureDir]   (needs Pillow)
 """
@@ -24,6 +23,7 @@ WINDOW_SIZE = (700, 1040)
 COMPACT_WIDTH = 520
 CORNER_RADIUS = 24
 
+TOUR_PADDING = 80  # px at 2x
 TOUR_FPS = 15
 TOUR_END_HOLD_MS = 1200
 GIF_WIDTH = 480
@@ -34,22 +34,18 @@ def is_compact(image):
     return image.width == COMPACT_WIDTH
 
 
-def fit_to_window(image):
-    """Centres a reduced capture on a full-window canvas, filled with the page colour."""
-    image = image.convert("RGB")
-    if image.size == WINDOW_SIZE:
-        return image
-    canvas = Image.new("RGB", WINDOW_SIZE, image.getpixel((4, 4)))
-    canvas.paste(
-        image,
-        ((WINDOW_SIZE[0] - image.width) // 2, (WINDOW_SIZE[1] - image.height) // 2),
+def is_clipped(image):
+    """A reduced capture taken mid-resize has the circle running off its right edge."""
+    if not is_compact(image):
+        return False
+    edge = image.convert("RGBA").crop(
+        (image.width - 6, 40, image.width - 2, image.height - 40)
     )
-    return canvas
+    return any(pixel[3] > 24 for pixel in edge.getdata())
 
 
 def round_corners(image):
     # Supersampled mask for smooth corners.
-    image = image.convert("RGB")
     scale = 4
     mask = Image.new("L", (image.width * scale, image.height * scale), 0)
     ImageDraw.Draw(mask).rounded_rectangle(
@@ -58,6 +54,22 @@ def round_corners(image):
     image = image.convert("RGBA")
     image.putalpha(mask.resize(image.size, Image.LANCZOS))
     return image
+
+
+def flatten(image):
+    """GIF has no soft alpha; it is only the fallback, so flatten it on white."""
+    base = Image.new("RGB", image.size, (255, 255, 255))
+    base.paste(image, mask=image.getchannel("A"))
+    return base
+
+
+def pad(image):
+    """Transparent margin so the site's drop shadow is never cut at the image edge."""
+    canvas = Image.new(
+        "RGBA", (image.width + 2 * TOUR_PADDING, image.height + 2 * TOUR_PADDING), (0, 0, 0, 0)
+    )
+    canvas.paste(image, (TOUR_PADDING, TOUR_PADDING))
+    return canvas
 
 
 def resize_to_width(image, width):
@@ -87,14 +99,20 @@ def build_tour():
         if source == previous:
             durations[-1] += 1000 / TOUR_FPS
             continue
+        shot = Image.open(files[source])
+        if is_clipped(shot) and frames:
+            # Hold the last clean frame instead of showing the cropped one.
+            durations[-1] += 1000 / TOUR_FPS
+            previous = source
+            continue
         previous = source
-        frames.append(fit_to_window(Image.open(files[source])))
+        frames.append(pad(shot.convert("RGBA")))
         durations.append(1000 / TOUR_FPS)
     durations[-1] += TOUR_END_HOLD_MS
     durations = [round(d) for d in durations]
 
     gif_frames = [
-        resize_to_width(f, GIF_WIDTH).quantize(
+        flatten(resize_to_width(f, GIF_WIDTH)).quantize(
             colors=128, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE
         )
         for f in frames
@@ -117,7 +135,11 @@ def build_tour():
         duration=durations,
         loop=0,
         quality=82,
-        method=6,
+        method=4,
+        # Every frame a keyframe: delta-coded frames left ghost copies of the
+        # previous view when the window changes size.
+        kmin=1,
+        kmax=1,
     )
     print(f"Tour: {len(frames)} frames, {sum(durations) / 1000:.1f}s")
 

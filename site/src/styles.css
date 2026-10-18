@@ -290,16 +290,10 @@ a {
 
 .product-window {
     position: relative;
-    width: min(100%, 380px);
-    border-radius: 34px;
-    background: rgba(255, 255, 255, 0.52);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: var(--shadow-strong);
-    overflow: hidden;
-}
-
-.product-window-shot {
-    animation: windowGlow 5s ease-in-out infinite alternate;
+    width: min(100%, 440px);
+    /* The frames are transparent: the shadow follows the window's own corners. */
+    filter: drop-shadow(0 18px 36px rgba(26, 20, 60, 0.16))
+        drop-shadow(0 2px 6px rgba(26, 20, 60, 0.08));
 }
 
 .product-shot {
@@ -892,15 +886,6 @@ a {
     outline-offset: 2px;
 }
 
-@keyframes windowGlow {
-    from {
-        box-shadow: var(--shadow-strong);
-    }
-    to {
-        box-shadow: 0 34px 90px rgba(46, 37, 102, 0.26);
-    }
-}
-
 @keyframes floatOrb {
     from {
         transform: translate(0, 0);
@@ -967,8 +952,7 @@ a {
         scroll-behavior: auto;
     }
 
-    .orb,
-    .product-window-shot {
+    .orb {
         animation: none;
     }
 

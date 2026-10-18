@@ -1,7 +1,11 @@
 import { useTranslation } from "react-i18next";
 import tourGif from "../../assets/cadence-tour.gif";
 import tourWebp from "../../assets/cadence-tour.webp";
-import { APP_SCREEN_HEIGHT, APP_SCREEN_WIDTH, appScreens } from "../appScreens";
+import { appScreens } from "../appScreens";
+
+// The tour only shows the reduced timer (see build-app-media.py).
+const TOUR_WIDTH = 680;
+const TOUR_HEIGHT = 856;
 import { Reveal } from "./Reveal";
 
 export function ProductPreview() {
@@ -23,9 +27,9 @@ export function ProductPreview() {
           <img
             alt={t("preview.tourAlt")}
             className="product-shot"
-            height={APP_SCREEN_HEIGHT}
+            height={TOUR_HEIGHT}
             src={tourGif}
-            width={APP_SCREEN_WIDTH}
+            width={TOUR_WIDTH}
           />
         </picture>
       </div>

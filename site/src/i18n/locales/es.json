@@ -338,7 +338,7 @@
   },
   "preview": {
     "screenshotAlt": "App de escritorio Cadence mostrando un temporizador de enfoque de 25 minutos en una pantalla principal limpia y única",
-    "tourAlt": "Grabación de pantalla de Cadence: eligiendo una tarea en el modal rápido, iniciando una sesión de enfoque, abriendo la gestión de tareas y cambiando al modo oscuro",
+    "tourAlt": "Grabación de pantalla del temporizador reducido de Cadence: pasando el cursor por los botones de acción, iniciando una sesión de enfoque, pausando y reiniciando",
     "tourHint": "Grabación real de la app — sin mockups."
   },
   "lang": {

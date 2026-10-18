@@ -338,7 +338,7 @@
   },
   "preview": {
     "screenshotAlt": "App Cadence mostrando um timer de foco de 25 minutos numa tela inicial limpa e única",
-    "tourAlt": "Gravação de tela do Cadence: escolhendo uma tarefa no modal rápido, iniciando uma sessão de foco, abrindo o gerenciamento de tarefas e mudando para o modo escuro",
+    "tourAlt": "Gravação de tela do timer reduzido do Cadence: passando o mouse pelos botões de ação, iniciando uma sessão de foco, pausando e reiniciando",
     "tourHint": "Gravação real do app — sem mockups."
   },
   "lang": {

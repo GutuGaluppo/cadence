@@ -338,7 +338,7 @@
   },
   "preview": {
     "screenshotAlt": "Cadence desktop app showing a 25 minute focus timer and a clean, single-view home screen",
-    "tourAlt": "Screen recording of Cadence: picking a task from the quick modal, starting a focus session, opening task management, and switching to dark mode",
+    "tourAlt": "Screen recording of Cadence's reduced timer: hovering the action buttons, starting a focus session, pausing and resetting",
     "tourHint": "Real recording of the app — no mockups."
   },
   "lang": {

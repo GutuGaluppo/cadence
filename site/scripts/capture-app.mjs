@@ -150,10 +150,22 @@ async function recordTour(browser) {
 	// The clip follows the window size, which changes with the view: the timer
 	// is the reduced circle, every panel and the task list is the full window.
 	let current = COMPACT;
+	// While the viewport changes the layout lags behind the clip and frames come
+	// out cropped, so the recorder holds the last good frame until it settles.
+	let resizing = false;
 	const resize = async (next) => {
-		current = next;
+		resizing = true;
 		await setSize(page, next);
+		current = next;
+		resizing = false;
 	};
+
+	// Tooltips pop in and out without the fade, so no frame catches one half
+	// transparent (it would also show the page through it on the transparent GIF).
+	await page.addStyleTag({
+		content:
+			".MuiTooltip-popper,.MuiTooltip-tooltip{transition:none!important;animation:none!important}",
+	});
 
 	// Visit every lazy view once so no "Loading..." fallback lands in the GIF.
 	for (const label of ["Open task management", "Open settings"]) {
@@ -192,10 +204,18 @@ async function recordTour(browser) {
 	// Raw CDP captures: page.screenshot() re-applies device metrics per call,
 	// which throws off concurrent mouse coordinates.
 	const cdp = await page.createCDPSession();
+	// Transparent page background: the circle floats on the site, no white card.
+	await cdp.send("Emulation.setDefaultBackgroundColorOverride", {
+		color: { r: 0, g: 0, b: 0, a: 0 },
+	});
 	const frames = [];
 	let recording = true;
 	const recorder = (async () => {
 		while (recording) {
+			if (resizing) {
+				await sleep(15);
+				continue;
+			}
 			const t = Date.now() / 1000;
 			const { data } = await cdp.send("Page.captureScreenshot", {
 				format: "png",
@@ -218,33 +238,24 @@ async function recordTour(browser) {
 		await sleep(hold);
 	};
 
+	// The tour stays on the reduced timer: hover the actions, run a few seconds
+	// of a session, pause and reset. No panel or full window is opened.
 	await sleep(1300);
-	await tap('[aria-label="Open task list"]', 300);
-	await resize(WINDOW);
-	await sleep(800);
-	await tap("Write the Q4", 700);
-	await tap('[aria-label="Close"]', 300);
-	await resize(COMPACT);
-	await sleep(500);
+	for (const label of ["Open task list", "Open settings", "Open task management"]) {
+		await glide(await locate(page, `[aria-label="${label}"]`));
+		await sleep(1800); // long enough for the tooltip to finish fading in
+	}
+	await glide([130, 125]);
 	await tap('[aria-label="Start timer"]', 250);
 	await glide([130, 125]);
 	await page.mouse.move(-1, -1, { steps: 8 }); // leave the window: no hover controls
 	cursor = [-1, -1];
-	await sleep(3000);
+	await sleep(3200);
 	await glide([130, 125]);
-	await tap('[aria-label="Open task management"]', 300);
-	await resize(WINDOW);
-	await sleep(1000);
-	await tap('[aria-label="Go back"]', 700);
-	await resize(COMPACT);
-	await tap('[aria-label="Open settings"]', 300);
-	await resize(WINDOW);
-	await sleep(700);
-	await tap("Dark", 1200);
-	await tap('[aria-label="Go back"]', 300);
-	await resize(COMPACT);
+	await tap('[aria-label="Pause timer"]', 900);
+	await tap('[aria-label="Reset timer"]', 1400);
 	await glide([130, 125]);
-	await sleep(2400);
+	await sleep(1200);
 
 	recording = false;
 	await recorder;
