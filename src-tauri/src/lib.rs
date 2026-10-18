@@ -102,12 +102,10 @@ pub fn run() {
                 .tooltip("Cadence")
                 .menu(&menu)
                 .show_menu_on_left_click(true)
-                .on_menu_event(|app, event| {
-                    match event.id().as_ref() {
-                        "open" => show_main_window(app),
-                        "quit" => app.exit(0),
-                        _ => {}
-                    }
+                .on_menu_event(|app, event| match event.id().as_ref() {
+                    "open" => show_main_window(app),
+                    "quit" => app.exit(0),
+                    _ => {}
                 })
                 .build(app)?;
 
