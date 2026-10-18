@@ -61,7 +61,7 @@
       },
       {
         "title": "Fluxo compacto no desktop",
-        "description": "Acesso pela bandeja do sistema e uma janela única e focada mantêm o app fora do seu caminho. As tarefas ficam a um clique, num modal rápido, e o gerenciamento completo mora em seu próprio painel — a tela inicial nunca cresce além de um timer e alguns botões.",
+        "description": "O timer abre como um círculo compacto na sua área de trabalho, com as quatro ações em arco logo abaixo. Fechar a janela mantém o Cadence na barra de menus, e Sair o encerra. Configurações, tarefas e a lista de tarefas abrem em janela completa, então a tela inicial continua sendo um timer com alguns botões.",
         "caption": "Escolha a tarefa sem sair do timer"
       }
     ]

@@ -61,7 +61,7 @@
       },
       {
         "title": "Flusso compatto sul desktop",
-        "description": "L'accesso dalla tray di sistema e un'unica finestra focalizzata tengono l'app fuori dai piedi. Le attività sono a un clic in una finestra modale rapida, e la gestione completa vive nel proprio pannello — la schermata principale non cresce mai oltre un timer e pochi pulsanti.",
+        "description": "Il timer si apre come un cerchio compatto sul desktop, con le quattro azioni disposte ad arco sotto di esso. Chiudere la finestra lascia Cadence nella barra dei menu, mentre Esci lo chiude. Impostazioni, attività ed elenco attività si aprono in una finestra completa, così la schermata principale resta un timer con pochi pulsanti.",
         "caption": "Scegli l'attività senza lasciare il timer"
       }
     ]

@@ -40,6 +40,8 @@ export const appScreenOrder: AppScreenKey[] = [
 	"settings",
 ];
 
-// Width/height of every capture, so the browser reserves space before load.
+// Width/height of the full-window captures, so the browser reserves space before
+// load. The reduced timer shots (home, running) are narrower; their own PNG size
+// takes over once loaded.
 export const APP_SCREEN_WIDTH = 700;
-export const APP_SCREEN_HEIGHT = 1096;
+export const APP_SCREEN_HEIGHT = 1040;

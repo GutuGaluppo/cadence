@@ -1,7 +1,9 @@
 """Turns the raw captures from capture-app.mjs into the site's app assets.
 
-Adds the macOS title bar (traffic lights) the Tauri window draws natively,
-rounds the static shots' corners, and encodes the tour as GIF + animated WebP.
+Rounds the corners of the full-window shots (the app draws its own window
+controls now), keeps the reduced timer's shots as transparent PNGs, and encodes
+the tour as GIF + animated WebP. Reduced frames are centred on a full-window
+canvas so the animation keeps one size.
 
 Usage: python3 site/scripts/build-app-media.py [captureDir]   (needs Pillow)
 """
@@ -16,10 +18,10 @@ from PIL import Image, ImageDraw
 CAPTURES = sys.argv[1] if len(sys.argv) > 1 else ".app-captures"
 ASSETS = os.path.join(os.path.dirname(__file__), "..", "src", "assets")
 
-# Measured at 2x from a real macOS window of the app.
-TITLE_BAR = 56
-LIGHTS = ((32, (255, 95, 87)), (78, (254, 188, 46)), (124, (40, 200, 64)))
-LIGHT_Y, LIGHT_R = 26, 12
+# Captures are 2x. The full window is 350x520 and the reduced timer 260x348
+# (see WINDOW and COMPACT in capture-app.mjs).
+WINDOW_SIZE = (700, 1040)
+COMPACT_WIDTH = 520
 CORNER_RADIUS = 24
 
 TOUR_FPS = 15
@@ -28,27 +30,34 @@ GIF_WIDTH = 480
 WEBP_WIDTH = 600
 
 
-def add_window_chrome(image, rounded=True):
-    image = image.convert("RGB")
-    width, height = image.size
-    background = image.getpixel((4, 4))
-    window = Image.new("RGB", (width, height + TITLE_BAR), background)
-    window.paste(image, (0, TITLE_BAR))
-    draw = ImageDraw.Draw(window)
-    for x, color in LIGHTS:
-        draw.ellipse((x - LIGHT_R, LIGHT_Y - LIGHT_R, x + LIGHT_R, LIGHT_Y + LIGHT_R), fill=color)
-    if not rounded:
-        return window
+def is_compact(image):
+    return image.width == COMPACT_WIDTH
 
+
+def fit_to_window(image):
+    """Centres a reduced capture on a full-window canvas, filled with the page colour."""
+    image = image.convert("RGB")
+    if image.size == WINDOW_SIZE:
+        return image
+    canvas = Image.new("RGB", WINDOW_SIZE, image.getpixel((4, 4)))
+    canvas.paste(
+        image,
+        ((WINDOW_SIZE[0] - image.width) // 2, (WINDOW_SIZE[1] - image.height) // 2),
+    )
+    return canvas
+
+
+def round_corners(image):
     # Supersampled mask for smooth corners.
+    image = image.convert("RGB")
     scale = 4
-    mask = Image.new("L", (window.width * scale, window.height * scale), 0)
+    mask = Image.new("L", (image.width * scale, image.height * scale), 0)
     ImageDraw.Draw(mask).rounded_rectangle(
         (0, 0, mask.width - 1, mask.height - 1), radius=CORNER_RADIUS * scale, fill=255
     )
-    window = window.convert("RGBA")
-    window.putalpha(mask.resize(window.size, Image.LANCZOS))
-    return window
+    image = image.convert("RGBA")
+    image.putalpha(mask.resize(image.size, Image.LANCZOS))
+    return image
 
 
 def resize_to_width(image, width):
@@ -57,9 +66,9 @@ def resize_to_width(image, width):
 
 def build_shots():
     for path in sorted(glob.glob(os.path.join(CAPTURES, "shots", "*.png"))):
-        add_window_chrome(Image.open(path)).save(
-            os.path.join(ASSETS, os.path.basename(path)), optimize=True
-        )
+        image = Image.open(path)
+        output = image if is_compact(image) else round_corners(image)
+        output.save(os.path.join(ASSETS, os.path.basename(path)), optimize=True)
 
 
 def build_tour():
@@ -79,7 +88,7 @@ def build_tour():
             durations[-1] += 1000 / TOUR_FPS
             continue
         previous = source
-        frames.append(add_window_chrome(Image.open(files[source]), rounded=False))
+        frames.append(fit_to_window(Image.open(files[source])))
         durations.append(1000 / TOUR_FPS)
     durations[-1] += TOUR_END_HOLD_MS
     durations = [round(d) for d in durations]

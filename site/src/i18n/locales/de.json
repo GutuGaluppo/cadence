@@ -61,7 +61,7 @@
       },
       {
         "title": "Kompakter Desktop-Fluss",
-        "description": "Der Zugriff über das Tray-Symbol und ein einziges, fokussiertes Fenster halten die App aus dem Weg. Aufgaben sind nur einen Klick entfernt in einem schnellen Modal, und die vollständige Aufgabenverwaltung lebt in einem eigenen Panel — der Startbildschirm wächst nie über einen Timer und ein paar Schaltflächen hinaus.",
+        "description": "Der Timer öffnet sich als kompakter Kreis auf dem Desktop, mit den vier Aktionen in einem Bogen darunter. Das Schließen des Fensters hält Cadence in der Menüleiste, Beenden schließt die App. Einstellungen, Aufgaben und die Aufgabenliste öffnen sich im vollständigen Fenster, sodass der Startbildschirm ein Timer mit ein paar Schaltflächen bleibt.",
         "caption": "Aufgabe wählen, ohne den Timer zu verlassen"
       }
     ]
