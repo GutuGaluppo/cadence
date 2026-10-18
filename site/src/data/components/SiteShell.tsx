@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import appIcon from "../../assets/app-icon.png";
+import appIcon from "../../assets/app-icon.svg";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { toSitePath } from "../../lib/sitePaths";
 

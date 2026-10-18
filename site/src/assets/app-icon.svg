@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!--
+    Cadence app icon, redrawn as a vector for the site's small placements
+    (36–44 CSS px). Geometry and colors are measured from cadence_icon.png;
+    ring strokes are thickened (optical sizing) so they stay above one device
+    pixel at 36px instead of washing out, as the thin artwork strokes do.
+  -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#A2A2F5"/>
+      <stop offset="0.08" stop-color="#9292ED"/>
+      <stop offset="0.25" stop-color="#6E6CD1"/>
+      <stop offset="0.41" stop-color="#544FB6"/>
+      <stop offset="0.58" stop-color="#3D3593"/>
+      <stop offset="0.74" stop-color="#2A2170"/>
+      <stop offset="0.9" stop-color="#1D135B"/>
+      <stop offset="1" stop-color="#180D4F"/>
+    </linearGradient>
+    <!-- Soft light from the top, darker toward the side edges, as in the artwork. -->
+    <radialGradient id="sheen" cx="0.5" cy="0" r="0.75">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E4E2FF"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="100" height="100" rx="22.5" fill="url(#bg)"/>
+  <rect width="100" height="100" rx="22.5" fill="url(#sheen)"/>
+
+  <g fill="none" stroke="url(#ring)">
+    <circle cx="50" cy="50" r="31.6" stroke-width="2.7"/>
+    <circle cx="50" cy="50" r="25.6" stroke-width="2.3" stroke-opacity="0.92"/>
+    <circle cx="50" cy="50" r="20.3" stroke-width="2" stroke-opacity="0.75"/>
+    <circle cx="50" cy="50" r="15.1" stroke-width="1.7" stroke-opacity="0.55"/>
+  </g>
+</svg>

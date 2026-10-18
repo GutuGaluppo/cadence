@@ -27,11 +27,16 @@ export function useTimerEngine() {
     return () => clearInterval(interval);
   }, [state, tick]);
 
-  // Clear tray title when timer is not running
+  // Keep the tray menu countdown in sync while the timer is not running,
+  // e.g. when the mode, task or durations change.
   useEffect(() => {
-    if (state !== "running") {
-      const { timeLeft } = useTimerStore.getState();
-      emitTimerTick(timeLeft, false);
-    }
+    if (state === "running") return;
+
+    emitTimerTick(useTimerStore.getState().timeLeft, false);
+    return useTimerStore.subscribe((current, previous) => {
+      if (current.state !== "running" && current.timeLeft !== previous.timeLeft) {
+        emitTimerTick(current.timeLeft, false);
+      }
+    });
   }, [state]);
 }

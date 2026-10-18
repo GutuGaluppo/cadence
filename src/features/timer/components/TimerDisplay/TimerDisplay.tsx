@@ -1,3 +1,4 @@
+import { useIsCompactTimer } from "@/app/window/useCompactWindow";
 import { TaskListModal } from "../TaskListModal";
 import ControlsPanel from "../ControlPanel";
 import TimerRing from "../TimerRing";
@@ -6,12 +7,15 @@ import { useInitializeTimerDisplay } from "./useInitializeTimerDisplay";
 
 export function TimerDisplay() {
   useInitializeTimerDisplay();
+  const compact = useIsCompactTimer();
 
   return (
-    <TimerWrapper>
-      <ControlsPanel />
+    // Compact: the whole window around the circle is the drag handle. Only the
+    // element carrying the attribute drags, so the action buttons stay clickable.
+    <TimerWrapper compact={compact} data-tauri-drag-region={compact || undefined}>
+      <ControlsPanel compact={compact} />
 
-      <TimerDashboard>
+      <TimerDashboard compact={compact}>
         <TimerPanel>
           <TimerRing />
         </TimerPanel>

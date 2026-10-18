@@ -95,7 +95,12 @@ export default function TimerRing() {
   return (
     <RingContainer>
       <TimerFace className="timer-face">
-        <RingSvg height="100%" viewBox="0 0 200 200" width="100%">
+        <RingSvg
+          data-tauri-drag-region
+          height="100%"
+          viewBox="0 0 200 200"
+          width="100%"
+        >
           <defs>
             <linearGradient
               gradientUnits="userSpaceOnUse"

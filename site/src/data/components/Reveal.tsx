@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import { useSiteReady } from "./SiteLoader";
 
 type RevealTag = "div" | "section" | "article";
 
@@ -19,6 +20,7 @@ const tagMap = {
 
 export function Reveal({ children, delay = 0, className, as = "div", id }: RevealProps) {
 	const shouldReduceMotion = useReducedMotion();
+	const siteReady = useSiteReady();
 	const MotionTag = tagMap[as];
 
 	if (shouldReduceMotion) {
@@ -35,7 +37,7 @@ export function Reveal({ children, delay = 0, className, as = "div", id }: Revea
 			className={className}
 			id={id}
 			initial={{ opacity: 0, y: 26 }}
-			whileInView={{ opacity: 1, y: 0 }}
+			whileInView={siteReady ? { opacity: 1, y: 0 } : undefined}
 			viewport={{ once: true, margin: "-80px" }}
 			transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
 		>

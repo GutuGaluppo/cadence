@@ -1,8 +1,10 @@
 import { useAppViewStore } from "@/app/store/useAppViewStore";
+import { useIsCompactTimer } from "@/app/window/useCompactWindow";
+import { WindowControls } from "@/app/window/WindowControls";
 import { TimerDisplay } from "@/features/timer/components/TimerDisplay";
 import { AnimatePresence, motion } from "motion/react";
 import { lazy, Suspense } from "react";
-import { MainContainer, ViewFallback } from "./styled";
+import { DragStrip, MainContainer, ViewFallback } from "./styled";
 
 const DurationStepperPanel = lazy(
   () => import("@/features/settings/DurationStepperPanel"),
@@ -36,9 +38,13 @@ function LazyViewFallback() {
 
 export default function MainLayout() {
   const view = useAppViewStore((state) => state.view);
+  const compact = useIsCompactTimer();
 
   return (
-    <MainContainer>
+    <MainContainer compact={compact}>
+      {!compact && <DragStrip data-tauri-drag-region />}
+      {!compact && <WindowControls />}
+
       <AnimatePresence mode="wait">
         {view === "timer" && (
           <motion.div key="timer" {...slide}>

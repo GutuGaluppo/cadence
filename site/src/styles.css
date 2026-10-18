@@ -99,8 +99,8 @@ a {
 .brand-mark {
     width: 44px;
     height: 44px;
-    border-radius: 16px;
-    object-fit: cover;
+    /* Matches the icon's own corner (22.5%), so the shadow follows its shape. */
+    border-radius: 10px;
     box-shadow: var(--shadow-soft);
 }
 
@@ -607,7 +607,7 @@ a {
 .content-card-icon {
     width: 36px;
     height: 36px;
-    border-radius: 11px;
+    border-radius: 8px;
     box-shadow: var(--shadow-soft);
     flex-shrink: 0;
 }
@@ -938,6 +938,16 @@ a {
     border-radius: 999px;
     background: var(--gold);
     flex-shrink: 0;
+}
+
+/* Fake loader: the app's splash over the home page (see SiteLoader). */
+.site-loader {
+    cursor: pointer;
+}
+
+/* Skipping replaces the splash's own timeline with a short fade. */
+.site-loader--skipping .sp {
+    animation: sp-exit 0.35s var(--ease-out) forwards;
 }
 
 ::view-transition-old(root),

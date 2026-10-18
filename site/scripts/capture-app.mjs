@@ -61,7 +61,7 @@ async function openApp(browser, theme) {
 		theme,
 	);
 	await page.goto(APP_URL, { waitUntil: "networkidle0" });
-	await sleep(4000); // splash screen
+	await sleep(6000); // splash screen (5.4s, see src/features/splash)
 	return page;
 }
 
