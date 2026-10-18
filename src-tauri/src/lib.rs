@@ -1,7 +1,7 @@
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::TrayIconBuilder,
-    AppHandle, Listener, Manager, RunEvent, Runtime, WindowEvent,
+    AppHandle, Listener, Manager, Runtime, WindowEvent,
 };
 use tauri_plugin_sql::{Builder as SqlBuilder, Migration, MigrationKind};
 
@@ -131,7 +131,7 @@ pub fn run() {
         .run(|app, event| {
             // Clicking the Dock icon brings the hidden window back.
             #[cfg(target_os = "macos")]
-            if let RunEvent::Reopen { .. } = event {
+            if let tauri::RunEvent::Reopen { .. } = event {
                 show_main_window(app);
             }
             #[cfg(not(target_os = "macos"))]
