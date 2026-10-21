@@ -5,6 +5,7 @@ import {
   PanelHeaderTitle,
   PanelPage,
 } from "@/shared/components/PanelLayout";
+import { InlineAction } from "@/features/timer/components/shared/styled";
 import { useTimerStore } from "@/features/timer/store/useTimerStore";
 import { Task, TimerState } from "@/types";
 import { Checkbox, IconButton } from "@mui/material";
@@ -60,6 +61,15 @@ export const TasksPage: React.FC = () => {
       <PanelHeader>
         <PanelBackButton inline onClick={() => setView("timer")} />
         <PanelHeaderTitle>Tasks</PanelHeaderTitle>
+        {Boolean(activeTaskId) && (
+          <InlineAction
+            onClick={() => setView("task-detail")}
+            style={{ marginLeft: "auto" }}
+            type="button"
+          >
+            Edit active
+          </InlineAction>
+        )}
       </PanelHeader>
 
       <TaskListScroll>

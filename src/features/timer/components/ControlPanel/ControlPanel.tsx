@@ -1,8 +1,7 @@
 import { useAppViewStore } from "@/app/store/useAppViewStore";
 import { Tooltip } from "@mui/material";
-import { ClipboardList, ListChecks, RotateCcw, Settings } from "lucide-react";
+import { ListChecks, RotateCcw, Settings } from "lucide-react";
 import { useTimerStore } from "../../store/useTimerStore";
-import { useTaskListModalStore } from "../../store/useTaskListModalStore";
 import { CircleButton } from "../shared/styled";
 import {
   ArcSlot,
@@ -22,7 +21,7 @@ interface ControlPanelProps {
 // from straight down (0°) so they read as a smile under the timer.
 const ARC_CENTER = { x: 130, y: 125 };
 const ARC_RADIUS = 165;
-const ARC_ANGLES = [-36, -12, 12, 36];
+const ARC_ANGLES = [-24, 0, 24];
 
 function arcPosition(angleDeg: number) {
   const radians = (angleDeg * Math.PI) / 180;
@@ -35,14 +34,12 @@ function arcPosition(angleDeg: number) {
 export default function ControlPanel({ compact = false }: ControlPanelProps) {
   const reset = useTimerStore((state) => state.reset);
   const setView = useAppViewStore((state) => state.setView);
-  const openTaskListModal = useTaskListModalStore((state) => state.open);
 
   if (compact) {
     const actions = [
       { title: "Reset timer", label: "Reset timer", icon: RotateCcw, onClick: reset },
       { title: "Settings", label: "Open settings", icon: Settings, onClick: () => setView("settings") },
-      { title: "Task list", label: "Open task list", icon: ListChecks, onClick: openTaskListModal },
-      { title: "Manage tasks", label: "Open task management", icon: ClipboardList, onClick: () => setView("tasks") },
+      { title: "Task list", label: "Open task list", icon: ListChecks, onClick: () => setView("tasks") },
     ];
 
     return (
@@ -81,17 +78,8 @@ export default function ControlPanel({ compact = false }: ControlPanelProps) {
 
       <BottomControlsRow>
         <Tooltip title="Task list">
-          <CircleButton aria-label="Open task list" onClick={openTaskListModal}>
+          <CircleButton aria-label="Open task list" onClick={() => setView("tasks")}>
             <ListChecks size={22} />
-          </CircleButton>
-        </Tooltip>
-
-        <Tooltip title="Manage tasks">
-          <CircleButton
-            aria-label="Open task management"
-            onClick={() => setView("tasks")}
-          >
-            <ClipboardList size={22} />
           </CircleButton>
         </Tooltip>
       </BottomControlsRow>

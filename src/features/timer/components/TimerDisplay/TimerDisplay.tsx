@@ -1,5 +1,4 @@
 import { useIsCompactTimer } from "@/app/window/useCompactWindow";
-import { TaskListModal } from "../TaskListModal";
 import ControlsPanel from "../ControlPanel";
 import TimerRing from "../TimerRing";
 import { TimerDashboard, TimerPanel, TimerWrapper } from "./styled";
@@ -20,8 +19,6 @@ export function TimerDisplay() {
           <TimerRing />
         </TimerPanel>
       </TimerDashboard>
-
-      <TaskListModal />
     </TimerWrapper>
   );
 }
