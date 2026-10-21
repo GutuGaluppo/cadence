@@ -1,6 +1,11 @@
 import { IconButton } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
+// Dark mode surface of the timer disc and action buttons: the app icon's
+// vertical indigo gradient with its soft top sheen.
+export const APP_ICON_GRADIENT =
+  "radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 75%), linear-gradient(180deg, #3D3593 0%, #2A2170 45%, #180D4F 100%)";
+
 export const CircleButton = styled(IconButton)(({ theme }) => ({
   width: 36,
   height: 36,

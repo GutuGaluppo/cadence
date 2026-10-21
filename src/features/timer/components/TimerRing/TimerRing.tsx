@@ -41,8 +41,8 @@ const DARK_MODE_COLORS: Record<
   { accent: string; gradient: [string, string] }
 > = {
   [TimerMode.FOCUS]: {
-    accent: "#A8E6E0",
-    gradient: ["#D2F4F0", "#3C8F92"],
+    accent: "#B7AEFF",
+    gradient: ["#DDD8FF", "#6E66D8"],
   },
   [TimerMode.SHORT_BREAK]: {
     accent: "#9FE8C4",

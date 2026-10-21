@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-import { CircleButton } from "../shared/styled";
+import { APP_ICON_GRADIENT, CircleButton } from "../shared/styled";
 
 // Dark mode hover: mentolado background with a petrol icon.
 const DARK_HOVER_BACKGROUND = "#CDF2EC";
@@ -60,7 +60,8 @@ export const CompactCircleButton = styled(CircleButton)(({ theme }) => {
     height: 44,
     borderRadius: "50%",
     border: "none",
-    backgroundColor: theme.palette.background.paper,
+    // Shorthand so the dark gradient's image is replaced on hover too.
+    background: isDark ? APP_ICON_GRADIENT : theme.palette.background.paper,
     color: theme.palette.text.secondary,
     transition: [
       "background-color 0.2s ease",
@@ -68,7 +69,7 @@ export const CompactCircleButton = styled(CircleButton)(({ theme }) => {
       `transform 0.25s ${EASE_OUT}`,
     ].join(", "),
     "&:hover": {
-      backgroundColor: isDark ? DARK_HOVER_BACKGROUND : alpha(accent, 0.12),
+      background: isDark ? DARK_HOVER_BACKGROUND : alpha(accent, 0.12),
       color: isDark ? DARK_HOVER_ICON : accent,
       transform: "translateY(-2px)",
     },

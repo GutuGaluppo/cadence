@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { APP_ICON_GRADIENT } from "../shared/styled";
 
 export const TimerWrapper = styled(Box, {
   shouldForwardProp: (prop) => prop !== "compact",
@@ -39,7 +40,12 @@ export const TimerDashboard = styled(Box, {
         margin: "0 auto",
         borderRadius: "50%",
         overflow: "hidden",
-        backgroundColor: theme.palette.background.default,
+        // Dark mode: the app icon's vertical indigo gradient (lighter at the
+        // top, deepening to the bottom) with its soft top sheen.
+        background:
+          theme.palette.mode === "dark"
+            ? APP_ICON_GRADIENT
+            : theme.palette.background.default,
       }
     : {
         width: "100%",
