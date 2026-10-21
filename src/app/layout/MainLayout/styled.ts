@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
+import { APP_ICON_GRADIENT } from "@/features/timer/components/shared/styled";
 
 export const MainContainer = styled(Box, {
   shouldForwardProp: (prop) => prop !== "compact",
@@ -7,14 +8,18 @@ export const MainContainer = styled(Box, {
   width: "100vw",
   height: "100vh",
   // The native window is transparent: the card (rounded, bordered) is drawn here.
-  backgroundColor: compact ? "transparent" : theme.palette.background.default,
+  // Dark panels share the timer disc's icon gradient.
+  background: compact
+    ? "transparent"
+    : theme.palette.mode === "dark"
+      ? APP_ICON_GRADIENT
+      : theme.palette.background.default,
   border: compact ? "none" : `1px solid ${alpha(theme.palette.text.primary, 0.1)}`,
   borderRadius: compact ? 0 : 16,
   padding: compact ? 0 : "clamp(16px, 4vw, 24px)",
   overflow: "hidden",
   position: "relative",
   isolation: "isolate",
-  transition: "background-color 0.2s ease",
   "& > div": {
     height: "100%",
   },

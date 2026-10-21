@@ -106,7 +106,11 @@ export function TaskListModal() {
   };
 
   return (
-    <Modal onClose={close} open={isOpen}>
+    <Modal
+      onClose={close}
+      open={isOpen}
+      slotProps={{ backdrop: { invisible: true } }}
+    >
       <ModalPanel>
         <ModalHeaderRow>
           <ModalTitle>Tasks</ModalTitle>

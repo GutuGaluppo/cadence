@@ -1,5 +1,4 @@
 import { useAppViewStore } from "@/app/store/useAppViewStore";
-import { useTaskListModalStore } from "@/features/timer/store/useTaskListModalStore";
 import { isTauriRuntime } from "@/shared/isTauriRuntime";
 import { useEffect } from "react";
 
@@ -10,14 +9,14 @@ const FULL_WINDOW_MIN_SIZE = { width: 300, height: 420 };
 
 /**
  * The timer view is always the compact circle, whether it is running or not,
- * so the app opens reduced. Opening any panel (settings, tasks, task list)
- * brings back the full window.
+ * so the app opens reduced. The task list is a modal over that circle, so it
+ * keeps the compact window; opening any panel (settings, tasks) brings back
+ * the full window.
  */
 export function useIsCompactTimer(): boolean {
   const view = useAppViewStore((store) => store.view);
-  const isTaskListOpen = useTaskListModalStore((store) => store.isOpen);
 
-  return view === "timer" && !isTaskListOpen;
+  return view === "timer";
 }
 
 export function useCompactWindow(compact: boolean) {

@@ -18,7 +18,7 @@ const DESIGN_TOKENS = {
     surface: "#1F2127",
     border: "rgba(205, 199, 255, 0.14)",
     primaryText: "#E5E5E5",
-    secondaryText: "rgba(229, 229, 229, 0.62)",
+    secondaryText: "rgba(229, 229, 229, 0.78)",
     accent: "#B7AEFF",
     accentContrast: "#101216",
     accentFaint: "rgba(183, 174, 255, 0.18)",

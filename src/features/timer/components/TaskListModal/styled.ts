@@ -1,12 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
+import { APP_ICON_GRADIENT } from "../shared/styled";
 
 export const ModalPanel = styled(Box)(({ theme }) => ({
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "min(280px, calc(100vw - 48px))",
+  width: "min(220px, calc(100vw - 32px))",
   maxHeight: "calc(100vh - 96px)",
   display: "flex",
   flexDirection: "column",
@@ -14,8 +15,10 @@ export const ModalPanel = styled(Box)(({ theme }) => ({
   padding: "18px",
   borderRadius: "20px",
   border: `1px solid ${alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.24 : 0.12)}`,
-  backgroundColor: alpha(theme.palette.background.paper, theme.palette.mode === "dark" ? 0.96 : 0.98),
-  backdropFilter: "blur(16px)",
+  background:
+    theme.palette.mode === "dark"
+      ? APP_ICON_GRADIENT
+      : alpha(theme.palette.background.paper, 0.98),
   boxShadow: theme.palette.mode === "dark"
     ? "0 24px 48px rgba(0, 0, 0, 0.45)"
     : "0 24px 48px rgba(0, 0, 0, 0.16)",
@@ -72,9 +75,12 @@ export const TaskPreviewCard = styled("button", {
       ? alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.28 : 0.18)
       : alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.16 : 0.08)
   }`,
-  background: isActive
-    ? `linear-gradient(135deg, ${alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.22 : 0.08)}, ${alpha(theme.palette.background.paper, theme.palette.mode === "dark" ? 0.96 : 0.94)})`
-    : alpha(theme.palette.background.paper, theme.palette.mode === "dark" ? 0.92 : 0.88),
+  background:
+    theme.palette.mode === "dark"
+      ? alpha("#FFFFFF", isActive ? 0.16 : 0.08)
+      : isActive
+        ? `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.08)}, ${alpha(theme.palette.background.paper, 0.94)})`
+        : alpha(theme.palette.background.paper, 0.88),
   opacity: isCompleted ? 0.62 : 1,
   cursor: "pointer",
   transition:
@@ -136,7 +142,7 @@ export const EmptyTasksState = styled(Box)(({ theme }) => ({
   padding: "16px",
   borderRadius: "16px",
   border: `1px dashed ${alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.26 : 0.16)}`,
-  background: alpha(theme.palette.background.paper, theme.palette.mode === "dark" ? 0.48 : 0.5),
+  background: theme.palette.mode === "dark" ? alpha("#FFFFFF", 0.06) : alpha(theme.palette.background.paper, 0.5),
   textAlign: "center",
 }));
 

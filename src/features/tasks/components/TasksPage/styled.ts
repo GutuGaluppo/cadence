@@ -18,9 +18,11 @@ export const TaskCard = styled(Box)<{ active?: boolean }>(({ active, theme }) =>
   borderRadius: "10px",
   backgroundColor: active
     ? alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.18 : 0.08)
-    : alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.08 : 0.04),
+    : alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.12 : 0.04),
   border: `1px solid ${
-    active ? alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.3 : 0.2) : "transparent"
+    active
+      ? alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.3 : 0.2)
+      : alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.1 : 0)
   }`,
   cursor: "pointer",
   transition: "background-color 0.2s ease, border-color 0.2s ease",
