@@ -65,7 +65,7 @@ export default function ControlPanel({ compact = false }: ControlPanelProps) {
       <ControlsRow>
         <Tooltip title="Reset timer">
           <CircleButton aria-label="Reset timer" onClick={reset}>
-            <RotateCcw size={20} />
+            <RotateCcw size={22} />
           </CircleButton>
         </Tooltip>
 
@@ -74,7 +74,7 @@ export default function ControlPanel({ compact = false }: ControlPanelProps) {
             aria-label="Open settings"
             onClick={() => setView("settings")}
           >
-            <Settings size={20} />
+            <Settings size={22} />
           </CircleButton>
         </Tooltip>
       </ControlsRow>
@@ -82,7 +82,7 @@ export default function ControlPanel({ compact = false }: ControlPanelProps) {
       <BottomControlsRow>
         <Tooltip title="Task list">
           <CircleButton aria-label="Open task list" onClick={openTaskListModal}>
-            <ListChecks size={20} />
+            <ListChecks size={22} />
           </CircleButton>
         </Tooltip>
 
@@ -91,7 +91,7 @@ export default function ControlPanel({ compact = false }: ControlPanelProps) {
             aria-label="Open task management"
             onClick={() => setView("tasks")}
           >
-            <ClipboardList size={20} />
+            <ClipboardList size={22} />
           </CircleButton>
         </Tooltip>
       </BottomControlsRow>

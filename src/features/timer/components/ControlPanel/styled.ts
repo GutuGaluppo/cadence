@@ -2,6 +2,10 @@ import { Box } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import { CircleButton } from "../shared/styled";
 
+// Dark mode hover: mentolado background with a petrol icon.
+const DARK_HOVER_BACKGROUND = "#CDF2EC";
+const DARK_HOVER_ICON = "#1E5A63";
+
 export const ControlsRow = styled(Box)({
   position: "absolute",
   top: "10px",
@@ -63,16 +67,10 @@ export const CompactCircleButton = styled(CircleButton)(({ theme }) => {
       "color 0.2s ease",
       `transform 0.25s ${EASE_OUT}`,
     ].join(", "),
-    "& svg": {
-      transition: `transform 0.25s ${EASE_OUT}`,
-    },
     "&:hover": {
-      backgroundColor: alpha(accent, isDark ? 0.24 : 0.12),
-      color: accent,
+      backgroundColor: isDark ? DARK_HOVER_BACKGROUND : alpha(accent, 0.12),
+      color: isDark ? DARK_HOVER_ICON : accent,
       transform: "translateY(-2px)",
-    },
-    "&:hover svg": {
-      transform: "scale(1.08)",
     },
     "&:active": {
       transform: "translateY(0) scale(0.94)",
@@ -85,9 +83,6 @@ export const CompactCircleButton = styled(CircleButton)(({ theme }) => {
     "@media (prefers-reduced-motion: reduce)": {
       transition: "background-color 0.2s ease, color 0.2s ease",
       "&:hover, &:active": {
-        transform: "none",
-      },
-      "&:hover svg": {
         transform: "none",
       },
     },
