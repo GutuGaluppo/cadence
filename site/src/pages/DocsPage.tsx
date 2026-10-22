@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import appIcon from "../assets/app-icon.png";
+import appIcon from "../assets/app-icon.svg";
 import appHomeShot from "../assets/app-home-light.png";
 import appTaskModalShot from "../assets/app-task-modal-light.png";
 import appTasksShot from "../assets/app-tasks-light.png";

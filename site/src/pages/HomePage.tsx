@@ -12,6 +12,7 @@ import { Reveal } from "../data/components/Reveal";
 import { ScreenGallery } from "../data/components/ScreenGallery";
 import { SectionHeading } from "../data/components/SectionHeading";
 import { SiteShell } from "../data/components/SiteShell";
+import { useSiteReady } from "../data/components/SiteLoader";
 import { externalLinks } from "../data/siteContent";
 import { toSitePath } from "../lib/sitePaths";
 
@@ -39,6 +40,7 @@ type TWorkflowItem = { index: string; title: string; description: string };
 export function HomePage() {
 	const { t } = useTranslation();
 	const shouldReduceMotion = useReducedMotion();
+	const siteReady = useSiteReady();
 	const [downloadLabel, setDownloadLabel] = useState(() =>
 		t("hero.downloadLatest"),
 	);
@@ -105,7 +107,7 @@ export function HomePage() {
 						className="hero-copy"
 						variants={heroContainer}
 						initial={shouldReduceMotion ? "show" : "hidden"}
-						animate="show"
+						animate={siteReady ? "show" : "hidden"}
 					>
 						<motion.p className="eyebrow" variants={heroItem}>
 							{t("hero.eyebrow")}
@@ -147,7 +149,7 @@ export function HomePage() {
 
 					<motion.div
 						initial={shouldReduceMotion ? "show" : { opacity: 0, scale: 0.96 }}
-						animate={{ opacity: 1, scale: 1 }}
+						animate={siteReady ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
 						transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
 					>
 						<ProductPreview />

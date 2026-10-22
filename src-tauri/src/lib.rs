@@ -1,10 +1,14 @@
-#[cfg(target_os = "macos")]
-use tauri::Listener;
 use tauri::{
-    tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-    Manager,
+    menu::{Menu, MenuItem, PredefinedMenuItem},
+    tray::TrayIconBuilder,
+    AppHandle, Listener, Manager, Runtime, WindowEvent,
 };
 use tauri_plugin_sql::{Builder as SqlBuilder, Migration, MigrationKind};
+
+#[cfg(target_os = "macos")]
+mod tray_badge;
+#[cfg(target_os = "macos")]
+mod tray_ripple;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -57,56 +61,88 @@ pub fn run() {
                 .build(),
         )
         .plugin(tauri_plugin_opener::init())
+        .on_window_event(|window, event| {
+            // Closing the window only hides it; the app (and the timer) keeps
+            // running in the menu bar until the user quits.
+            if let WindowEvent::CloseRequested { api, .. } = event {
+                if window.label() == "main" {
+                    api.prevent_close();
+                    let _ = window.hide();
+                }
+            }
+        })
         .setup(|app| {
+            let tray_icon = tauri::include_image!("icons/tray-icon.png");
+            // The menu bar icon has its own colors, whatever the system
+            // appearance, so it is not a template image there.
+            #[cfg(target_os = "macos")]
+            let tray_rings = tray_icon.clone();
+            #[cfg(target_os = "macos")]
+            let tray_icon = tray_badge::badge(&tray_rings);
+
+            let countdown = MenuItem::with_id(app, "countdown", "--:--", false, None::<&str>)?;
+            let open = MenuItem::with_id(app, "open", "Open Cadence", true, None::<&str>)?;
+            // Closing the window keeps the app in the menu bar, so Quit lives here.
+            let quit = MenuItem::with_id(app, "quit", "Quit Cadence", true, None::<&str>)?;
+            let menu = Menu::with_items(
+                app,
+                &[
+                    &countdown,
+                    &PredefinedMenuItem::separator(app)?,
+                    &open,
+                    &PredefinedMenuItem::separator(app)?,
+                    &quit,
+                ],
+            )?;
+
             #[cfg_attr(not(target_os = "macos"), allow(unused_variables))]
             let tray = TrayIconBuilder::new()
-                .icon(tauri::include_image!("icons/tray-icon.png"))
-                .icon_as_template(true)
+                .icon(tray_icon.clone())
+                .icon_as_template(cfg!(not(target_os = "macos")))
                 .tooltip("Cadence")
-                .on_tray_icon_event(|tray, event| {
-                    if let TrayIconEvent::Click {
-                        button: MouseButton::Left,
-                        button_state: MouseButtonState::Up,
-                        ..
-                    } = event
-                    {
-                        let app = tray.app_handle();
-                        if let Some(window) = app.get_webview_window("main") {
-                            if window.is_visible().unwrap_or(false) {
-                                let _ = window.hide();
-                            } else {
-                                let _ = window.show();
-                                let _ = window.set_focus();
-                            }
-                        }
-                    }
+                .menu(&menu)
+                .show_menu_on_left_click(true)
+                .on_menu_event(|app, event| match event.id().as_ref() {
+                    "open" => show_main_window(app),
+                    "quit" => app.exit(0),
+                    _ => {}
                 })
                 .build(app)?;
 
-            // Only the macOS menu bar can show the countdown next to the tray icon.
+            // Only the macOS menu bar icon is animated while the timer runs.
             #[cfg(target_os = "macos")]
-            {
-                let tray_for_listener = tray.clone();
-                app.listen("timer-tick", move |event: tauri::Event| {
-                    if let Ok(payload) = serde_json::from_str::<serde_json::Value>(event.payload())
-                    {
-                        let time_left = payload["timeLeft"].as_i64().unwrap_or(0);
-                        let is_running = payload["isRunning"].as_bool().unwrap_or(false);
+            let ripple = tray_ripple::TrayRipple::spawn(tray.clone(), &tray_rings);
 
-                        let title = if is_running {
-                            let mins = time_left / 60;
-                            let secs = time_left % 60;
-                            Some(format!("{:02}:{:02}", mins, secs))
-                        } else {
-                            None
-                        };
-                        let _ = tray_for_listener.set_title(title.as_deref());
-                    }
-                });
-            }
+            app.listen("timer-tick", move |event: tauri::Event| {
+                if let Ok(payload) = serde_json::from_str::<serde_json::Value>(event.payload()) {
+                    let time_left = payload["timeLeft"].as_i64().unwrap_or(0);
+                    let _ =
+                        countdown.set_text(format!("{:02}:{:02}", time_left / 60, time_left % 60));
+
+                    #[cfg(target_os = "macos")]
+                    ripple.set_running(payload["isRunning"].as_bool().unwrap_or(false));
+                }
+            });
 
             Ok(())
         })
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while building tauri application")
+        .run(|app, event| {
+            // Clicking the Dock icon brings the hidden window back.
+            #[cfg(target_os = "macos")]
+            if let tauri::RunEvent::Reopen { .. } = event {
+                show_main_window(app);
+            }
+            #[cfg(not(target_os = "macos"))]
+            let _ = (app, event);
+        });
+}
+
+fn show_main_window<R: Runtime>(app: &AppHandle<R>) {
+    if let Some(window) = app.get_webview_window("main") {
+        let _ = window.unminimize();
+        let _ = window.show();
+        let _ = window.set_focus();
+    }
 }

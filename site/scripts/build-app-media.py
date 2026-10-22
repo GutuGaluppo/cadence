@@ -1,7 +1,8 @@
 """Turns the raw captures from capture-app.mjs into the site's app assets.
 
-Adds the macOS title bar (traffic lights) the Tauri window draws natively,
-rounds the static shots' corners, and encodes the tour as GIF + animated WebP.
+Rounds the corners of the full-window shots (the app draws its own window
+controls now), keeps the reduced timer's shots as transparent PNGs, and encodes
+the tour as GIF + animated WebP. The tour only shows the reduced timer, on a transparent background.
 
 Usage: python3 site/scripts/build-app-media.py [captureDir]   (needs Pillow)
 """
@@ -16,39 +17,59 @@ from PIL import Image, ImageDraw
 CAPTURES = sys.argv[1] if len(sys.argv) > 1 else ".app-captures"
 ASSETS = os.path.join(os.path.dirname(__file__), "..", "src", "assets")
 
-# Measured at 2x from a real macOS window of the app.
-TITLE_BAR = 56
-LIGHTS = ((32, (255, 95, 87)), (78, (254, 188, 46)), (124, (40, 200, 64)))
-LIGHT_Y, LIGHT_R = 26, 12
+# Captures are 2x. The full window is 350x520 and the reduced timer 260x348
+# (see WINDOW and COMPACT in capture-app.mjs).
+WINDOW_SIZE = (700, 1040)
+COMPACT_WIDTH = 520
 CORNER_RADIUS = 24
 
+TOUR_PADDING = 80  # px at 2x
 TOUR_FPS = 15
 TOUR_END_HOLD_MS = 1200
 GIF_WIDTH = 480
 WEBP_WIDTH = 600
 
 
-def add_window_chrome(image, rounded=True):
-    image = image.convert("RGB")
-    width, height = image.size
-    background = image.getpixel((4, 4))
-    window = Image.new("RGB", (width, height + TITLE_BAR), background)
-    window.paste(image, (0, TITLE_BAR))
-    draw = ImageDraw.Draw(window)
-    for x, color in LIGHTS:
-        draw.ellipse((x - LIGHT_R, LIGHT_Y - LIGHT_R, x + LIGHT_R, LIGHT_Y + LIGHT_R), fill=color)
-    if not rounded:
-        return window
+def is_compact(image):
+    return image.width == COMPACT_WIDTH
 
+
+def is_clipped(image):
+    """A reduced capture taken mid-resize has the circle running off its right edge."""
+    if not is_compact(image):
+        return False
+    edge = image.convert("RGBA").crop(
+        (image.width - 6, 40, image.width - 2, image.height - 40)
+    )
+    return any(pixel[3] > 24 for pixel in edge.getdata())
+
+
+def round_corners(image):
     # Supersampled mask for smooth corners.
     scale = 4
-    mask = Image.new("L", (window.width * scale, window.height * scale), 0)
+    mask = Image.new("L", (image.width * scale, image.height * scale), 0)
     ImageDraw.Draw(mask).rounded_rectangle(
         (0, 0, mask.width - 1, mask.height - 1), radius=CORNER_RADIUS * scale, fill=255
     )
-    window = window.convert("RGBA")
-    window.putalpha(mask.resize(window.size, Image.LANCZOS))
-    return window
+    image = image.convert("RGBA")
+    image.putalpha(mask.resize(image.size, Image.LANCZOS))
+    return image
+
+
+def flatten(image):
+    """GIF has no soft alpha; it is only the fallback, so flatten it on white."""
+    base = Image.new("RGB", image.size, (255, 255, 255))
+    base.paste(image, mask=image.getchannel("A"))
+    return base
+
+
+def pad(image):
+    """Transparent margin so the site's drop shadow is never cut at the image edge."""
+    canvas = Image.new(
+        "RGBA", (image.width + 2 * TOUR_PADDING, image.height + 2 * TOUR_PADDING), (0, 0, 0, 0)
+    )
+    canvas.paste(image, (TOUR_PADDING, TOUR_PADDING))
+    return canvas
 
 
 def resize_to_width(image, width):
@@ -57,9 +78,9 @@ def resize_to_width(image, width):
 
 def build_shots():
     for path in sorted(glob.glob(os.path.join(CAPTURES, "shots", "*.png"))):
-        add_window_chrome(Image.open(path)).save(
-            os.path.join(ASSETS, os.path.basename(path)), optimize=True
-        )
+        image = Image.open(path)
+        output = image if is_compact(image) else round_corners(image)
+        output.save(os.path.join(ASSETS, os.path.basename(path)), optimize=True)
 
 
 def build_tour():
@@ -78,14 +99,20 @@ def build_tour():
         if source == previous:
             durations[-1] += 1000 / TOUR_FPS
             continue
+        shot = Image.open(files[source])
+        if is_clipped(shot) and frames:
+            # Hold the last clean frame instead of showing the cropped one.
+            durations[-1] += 1000 / TOUR_FPS
+            previous = source
+            continue
         previous = source
-        frames.append(add_window_chrome(Image.open(files[source]), rounded=False))
+        frames.append(pad(shot.convert("RGBA")))
         durations.append(1000 / TOUR_FPS)
     durations[-1] += TOUR_END_HOLD_MS
     durations = [round(d) for d in durations]
 
     gif_frames = [
-        resize_to_width(f, GIF_WIDTH).quantize(
+        flatten(resize_to_width(f, GIF_WIDTH)).quantize(
             colors=128, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE
         )
         for f in frames
@@ -108,7 +135,11 @@ def build_tour():
         duration=durations,
         loop=0,
         quality=82,
-        method=6,
+        method=4,
+        # Every frame a keyframe: delta-coded frames left ghost copies of the
+        # previous view when the window changes size.
+        kmin=1,
+        kmax=1,
     )
     print(f"Tour: {len(frames)} frames, {sum(durations) / 1000:.1f}s")
 

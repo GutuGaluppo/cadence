@@ -99,7 +99,6 @@ export const PlayPauseButton = styled(IconButton)(({ theme }) => ({
   opacity: 0,
   transform: "scale(0.92)",
   pointerEvents: "none",
-  boxShadow: "0 14px 28px rgba(26,18,72,0.18)",
   transition:
     "opacity 0.22s ease, transform 0.22s ease, background-color 0.2s ease",
   "&:hover": {

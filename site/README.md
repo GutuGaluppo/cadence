@@ -48,8 +48,10 @@ pnpm site:capture   # captura no Chrome headless e exporta para src/assets/
 
 Requer Google Chrome instalado (ou `CHROME_PATH`) e Python 3 com Pillow.
 O script popula tarefas de exemplo via `localStorage`, captura cada tela em
-2x nos temas claro e escuro e grava o fluxo de navegação do tour. A barra de
-título com os botões do macOS é adicionada em `site/scripts/build-app-media.py`.
+2x nos temas claro e escuro e grava o fluxo de navegação do tour. O timer em
+modo reduzido é capturado como PNG transparente; os botões de janela já são
+desenhados pelo próprio app. `site/scripts/build-app-media.py` só arredonda os
+cantos e centraliza o modo reduzido no GIF/WebP do tour.
 
 ## Publicação
 

@@ -61,7 +61,7 @@
       },
       {
         "title": "Flujo compacto en escritorio",
-        "description": "El acceso desde la bandeja y una única ventana enfocada mantienen la app fuera de tu camino. Las tareas están a un clic en un modal rápido, y la gestión completa vive en su propio panel — la pantalla principal nunca crece más allá de un temporizador y unos pocos botones.",
+        "description": "El temporizador se abre como un círculo compacto en el escritorio, con sus cuatro acciones en arco debajo. Cerrar la ventana mantiene Cadence en la barra de menús, y Salir lo cierra. Configuración, tareas y la lista de tareas se abren en una ventana completa, así la pantalla principal sigue siendo un temporizador con unos pocos botones.",
         "caption": "Elige la tarea sin salir del temporizador"
       }
     ]
@@ -338,7 +338,7 @@
   },
   "preview": {
     "screenshotAlt": "App de escritorio Cadence mostrando un temporizador de enfoque de 25 minutos en una pantalla principal limpia y única",
-    "tourAlt": "Grabación de pantalla de Cadence: eligiendo una tarea en el modal rápido, iniciando una sesión de enfoque, abriendo la gestión de tareas y cambiando al modo oscuro",
+    "tourAlt": "Grabación de pantalla del temporizador reducido de Cadence: pasando el cursor por los botones de acción, iniciando una sesión de enfoque, pausando y reiniciando",
     "tourHint": "Grabación real de la app — sin mockups."
   },
   "lang": {

@@ -61,7 +61,7 @@
       },
       {
         "title": "Compact desktop flow",
-        "description": "Tray access and a single, focused window keep the app out of your way. Tasks live one click away in a quick modal, and full task management sits in its own panel — so the home screen never grows beyond a timer and a few buttons.",
+        "description": "The timer opens as a compact circle on your desktop, with its four actions on an arc beneath it. Closing the window keeps Cadence in the menu bar, and Quit ends it. Settings, tasks and the task list open in a full window, so the home screen stays a timer and a few buttons.",
         "caption": "Pick a task without leaving the timer"
       }
     ]
@@ -338,7 +338,7 @@
   },
   "preview": {
     "screenshotAlt": "Cadence desktop app showing a 25 minute focus timer and a clean, single-view home screen",
-    "tourAlt": "Screen recording of Cadence: picking a task from the quick modal, starting a focus session, opening task management, and switching to dark mode",
+    "tourAlt": "Screen recording of Cadence's reduced timer: hovering the action buttons, starting a focus session, pausing and resetting",
     "tourHint": "Real recording of the app — no mockups."
   },
   "lang": {

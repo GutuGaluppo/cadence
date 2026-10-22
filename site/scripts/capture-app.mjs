@@ -18,8 +18,18 @@ const CHROME_PATH =
 const OUT = path.resolve(process.argv[2] ?? ".app-captures");
 // Matches the Tauri window's inner size in src-tauri/tauri.conf.json.
 const WINDOW = { width: 350, height: 520 };
+// The timer view is the reduced circle; these match COMPACT_WINDOW_SIZE in
+// src/app/window/useCompactWindow.ts.
+const COMPACT = { width: 260, height: 348 };
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// The app switches to the reduced window itself when the timer view is shown;
+// the viewport has to follow so each capture matches the native window size.
+async function setSize(page, size) {
+	await page.setViewport({ ...size, deviceScaleFactor: 2 });
+	await sleep(400);
+}
 
 const now = Date.now();
 const demoTasks = [
@@ -49,7 +59,8 @@ const demoTasks = [
 
 async function openApp(browser, theme) {
 	const page = await browser.newPage();
-	await page.setViewport({ ...WINDOW, deviceScaleFactor: 2 });
+	// The app opens on the timer, which is the reduced window.
+	await page.setViewport({ ...COMPACT, deviceScaleFactor: 2 });
 	await page.goto(APP_URL);
 	await page.evaluate(
 		(tasks, themeMode) => {
@@ -61,7 +72,7 @@ async function openApp(browser, theme) {
 		theme,
 	);
 	await page.goto(APP_URL, { waitUntil: "networkidle0" });
-	await sleep(4000); // splash screen
+	await sleep(6000); // splash screen (5.4s, see src/features/splash)
 	return page;
 }
 
@@ -93,27 +104,42 @@ async function click(page, target, wait = 900) {
 
 async function captureScreens(browser, theme) {
 	const page = await openApp(browser, theme);
-	const shot = (name) =>
-		page.screenshot({ path: path.join(OUT, "shots", `app-${name}-${theme}.png`) });
+	// Compact screens are transparent PNGs: the circle floats with no card behind it.
+	const shot = (name, { compact = false } = {}) =>
+		page.screenshot({
+			path: path.join(OUT, "shots", `app-${name}-${theme}.png`),
+			omitBackground: compact,
+		});
 
-	await shot("home");
-	await click(page, '[aria-label="Open task list"]');
+	await shot("home", { compact: true });
+	await click(page, '[aria-label="Open task list"]', 600);
+	await setSize(page, WINDOW);
 	await click(page, "Write the Q4", 500);
 	await shot("task-modal");
-	await click(page, '[aria-label="Close"]');
+	await click(page, '[aria-label="Close"]', 600);
+	await setSize(page, COMPACT);
 	await click(page, '[aria-label="Start timer"]', 0);
-	await page.mouse.move(2, 2); // keep the hover overlay off the ring
+	await page.mouse.move(-1, -1); // leave the window so no hover controls show
+	// Headless Chrome can keep the hover state after the pointer leaves, which
+	// would leave the action arc half-faded in the capture. Hide it explicitly.
+	const hideArc = await page.addStyleTag({
+		content: ".compact-controls { opacity: 0 !important; }",
+	});
 	await sleep(4200);
-	await shot("running");
-	await click(page, '[aria-label="Open task management"]', 1000);
+	await shot("running", { compact: true });
+	await hideArc.evaluate((style) => style.remove());
+	await click(page, '[aria-label="Open task management"]', 600);
+	await setSize(page, WINDOW);
 	await shot("tasks");
 	await click(page, "New Task", 600);
 	await page.type("input[type=text]", "Plan the sprint retro", { delay: 20 });
 	await sleep(400);
 	await shot("task-create");
-	await click(page, '[aria-label="Go back"]');
-	await click(page, '[aria-label="Go back"]');
-	await click(page, '[aria-label="Open settings"]', 1000);
+	await click(page, '[aria-label="Go back"]', 600);
+	await click(page, '[aria-label="Go back"]', 600);
+	await setSize(page, COMPACT);
+	await click(page, '[aria-label="Open settings"]', 600);
+	await setSize(page, WINDOW);
 	await shot("settings");
 	await page.close();
 }
@@ -121,17 +147,41 @@ async function captureScreens(browser, theme) {
 async function recordTour(browser) {
 	const page = await openApp(browser, "light");
 
+	// The clip follows the window size, which changes with the view: the timer
+	// is the reduced circle, every panel and the task list is the full window.
+	let current = COMPACT;
+	// While the viewport changes the layout lags behind the clip and frames come
+	// out cropped, so the recorder holds the last good frame until it settles.
+	let resizing = false;
+	const resize = async (next) => {
+		resizing = true;
+		await setSize(page, next);
+		current = next;
+		resizing = false;
+	};
+
+	// Tooltips pop in and out without the fade, so no frame catches one half
+	// transparent (it would also show the page through it on the transparent GIF).
+	await page.addStyleTag({
+		content:
+			".MuiTooltip-popper,.MuiTooltip-tooltip{transition:none!important;animation:none!important}",
+	});
+
 	// Visit every lazy view once so no "Loading..." fallback lands in the GIF.
 	for (const label of ["Open task management", "Open settings"]) {
-		await click(page, `[aria-label="${label}"]`, 1200);
-		await click(page, '[aria-label="Go back"]');
+		await click(page, `[aria-label="${label}"]`, 600);
+		await resize(WINDOW);
+		await click(page, '[aria-label="Go back"]', 1200);
+		await resize(COMPACT);
 	}
-	await click(page, '[aria-label="Open task management"]');
+	await click(page, '[aria-label="Open task management"]', 600);
+	await resize(WINDOW);
 	await click(page, "New Task");
 	await click(page, '[aria-label="Go back"]');
 	await click(page, '[aria-label="Go back"]');
+	await resize(COMPACT);
 
-	let cursor = [250, 420];
+	let cursor = [130, 125];
 	await page.mouse.move(...cursor);
 	await sleep(1200);
 
@@ -154,14 +204,22 @@ async function recordTour(browser) {
 	// Raw CDP captures: page.screenshot() re-applies device metrics per call,
 	// which throws off concurrent mouse coordinates.
 	const cdp = await page.createCDPSession();
+	// Transparent page background: the circle floats on the site, no white card.
+	await cdp.send("Emulation.setDefaultBackgroundColorOverride", {
+		color: { r: 0, g: 0, b: 0, a: 0 },
+	});
 	const frames = [];
 	let recording = true;
 	const recorder = (async () => {
 		while (recording) {
+			if (resizing) {
+				await sleep(15);
+				continue;
+			}
 			const t = Date.now() / 1000;
 			const { data } = await cdp.send("Page.captureScreenshot", {
 				format: "png",
-				clip: { x: 0, y: 0, ...WINDOW, scale: 2 },
+				clip: { x: 0, y: 0, ...current, scale: 2 },
 			});
 			frames.push({ t, data });
 		}
@@ -180,20 +238,24 @@ async function recordTour(browser) {
 		await sleep(hold);
 	};
 
+	// The tour stays on the reduced timer: hover the actions, run a few seconds
+	// of a session, pause and reset. No panel or full window is opened.
 	await sleep(1300);
-	await tap('[aria-label="Open task list"]', 1100);
-	await tap("Write the Q4", 700);
-	await tap('[aria-label="Close"]', 800);
+	for (const label of ["Open task list", "Open settings", "Open task management"]) {
+		await glide(await locate(page, `[aria-label="${label}"]`));
+		await sleep(1800); // long enough for the tooltip to finish fading in
+	}
+	await glide([130, 125]);
 	await tap('[aria-label="Start timer"]', 250);
-	await glide([250, 420]);
-	await sleep(3000);
-	await tap('[aria-label="Open task management"]', 1300);
-	await tap('[aria-label="Go back"]', 700);
-	await tap('[aria-label="Open settings"]', 1000);
-	await tap("Dark", 1200);
-	await tap('[aria-label="Go back"]', 300);
-	await glide([250, 420]);
-	await sleep(2400);
+	await glide([130, 125]);
+	await page.mouse.move(-1, -1, { steps: 8 }); // leave the window: no hover controls
+	cursor = [-1, -1];
+	await sleep(3200);
+	await glide([130, 125]);
+	await tap('[aria-label="Pause timer"]', 900);
+	await tap('[aria-label="Reset timer"]', 1400);
+	await glide([130, 125]);
+	await sleep(1200);
 
 	recording = false;
 	await recorder;

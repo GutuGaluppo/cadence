@@ -1,3 +1,4 @@
+import { useCompactWindow, useIsCompactTimer } from "@/app/window/useCompactWindow";
 import { useSettingsStore } from "@/features/settings/store/store";
 import { useTimerEngine } from "@/features/timer/hooks/useTimerEngine";
 import { isTauriRuntime } from "@/shared/isTauriRuntime";
@@ -8,6 +9,7 @@ import { createMuiAppTheme, createStyledTheme } from "../theme/theme";
 
 export function AppProviders({ children }: { children: ReactNode }) {
   useTimerEngine();
+  useCompactWindow(useIsCompactTimer());
   const loadSettings = useSettingsStore((state) => state.loadSettings);
   const alwaysOnTop = useSettingsStore((state) => state.settings.alwaysOnTop);
   const themeMode = useSettingsStore((state) => state.settings.themeMode);
